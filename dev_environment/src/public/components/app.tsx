@@ -19,7 +19,7 @@ import {
 import { CoreStart } from '../../../../src/core/public';
 import { NavigationPublicPluginStart } from '../../../../src/plugins/navigation/public';
 
-import { PLUGIN_ID, PLUGIN_NAME } from '../../common';
+import { PLUGIN_ID, PLUGIN_NAME, SERVER_TODO_ROUTE_PATH_EXAMPLE } from '../../common';
 
 interface ToDoPluginAppDeps {
   basename: string;
@@ -39,7 +39,7 @@ export const ToDoPluginApp = ({
 
   const onClickHandler = () => {
     // Use the core http service to make a response to the server API.
-    http.get('/api/custom_plugin/example').then((res) => {
+    http.get(SERVER_TODO_ROUTE_PATH_EXAMPLE).then((res) => {
       setTimestamp(res.time);
       // Use the core notifications service to display a success message.
       notifications.toasts.addSuccess(

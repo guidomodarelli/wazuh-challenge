@@ -1,10 +1,10 @@
 import './index.scss';
 
-import { CustomPluginPlugin } from './plugin';
+import { ToDoPlugin } from './plugin';
 
 // This exports static code and TypeScript types,
 // as well as, OpenSearch Dashboards Platform `plugin()` initializer.
 export function plugin() {
-  return new CustomPluginPlugin();
+  return new ToDoPlugin();
 }
-export { CustomPluginPluginSetup, CustomPluginPluginStart } from './types';
+export { ToDoPluginSetup, ToDoPluginStart } from './types';

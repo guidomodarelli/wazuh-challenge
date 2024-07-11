@@ -47,6 +47,6 @@ services:
     entrypoint: [ "tail", "-f", "/dev/null" ]
     volumes:
       # Mount the src/ directory as a plugin
-      - ./src:/home/node/kbn/plugins/custom_plugin
+      - ./src:/home/node/kbn/plugins/todo_plugin
       # Mount the OpenSearch Dashboards configuration file to the container
       - ./config/opensearch_dashboards.yml:/home/node/kbn/config/opensearch_dashboards.yml

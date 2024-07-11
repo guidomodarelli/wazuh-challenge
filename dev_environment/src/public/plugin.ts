@@ -1,18 +1,17 @@
 import { i18n } from '@osd/i18n';
 import { AppMountParameters, CoreSetup, CoreStart, Plugin } from '../../../src/core/public';
 import {
-  CustomPluginPluginSetup,
-  CustomPluginPluginStart,
+  ToDoPluginSetup,
+  ToDoPluginStart,
   AppPluginStartDependencies,
 } from './types';
 import { PLUGIN_NAME } from '../common';
 
-export class CustomPluginPlugin
-  implements Plugin<CustomPluginPluginSetup, CustomPluginPluginStart> {
-  public setup(core: CoreSetup): CustomPluginPluginSetup {
+export class ToDoPlugin implements Plugin<ToDoPluginSetup, ToDoPluginStart> {
+  public setup(core: CoreSetup): ToDoPluginSetup {
     // Register an application into the side navigation menu
     core.application.register({
-      id: 'customPlugin',
+      id: 'todoPlugin',
       title: PLUGIN_NAME,
       async mount(params: AppMountParameters) {
         // Load application bundle
@@ -37,7 +36,7 @@ export class CustomPluginPlugin
     };
   }
 
-  public start(core: CoreStart): CustomPluginPluginStart {
+  public start(core: CoreStart): ToDoPluginStart {
     return {};
   }
 

@@ -21,19 +21,19 @@ import { NavigationPublicPluginStart } from '../../../../src/plugins/navigation/
 
 import { PLUGIN_ID, PLUGIN_NAME } from '../../common';
 
-interface CustomPluginAppDeps {
+interface ToDoPluginAppDeps {
   basename: string;
   notifications: CoreStart['notifications'];
   http: CoreStart['http'];
   navigation: NavigationPublicPluginStart;
 }
 
-export const CustomPluginApp = ({
+export const ToDoPluginApp = ({
   basename,
   notifications,
   http,
   navigation,
-}: CustomPluginAppDeps) => {
+}: ToDoPluginAppDeps) => {
   // Use React hooks to manage state.
   const [timestamp, setTimestamp] = useState<string | undefined>();
 
@@ -43,7 +43,7 @@ export const CustomPluginApp = ({
       setTimestamp(res.time);
       // Use the core notifications service to display a success message.
       notifications.toasts.addSuccess(
-        i18n.translate('customPlugin.dataUpdated', {
+        i18n.translate('todoPlugin.dataUpdated', {
           defaultMessage: 'Data updated',
         })
       );
@@ -67,7 +67,7 @@ export const CustomPluginApp = ({
                 <EuiTitle size="l">
                   <h1>
                     <FormattedMessage
-                      id="customPlugin.helloWorldText"
+                      id="todoPlugin.helloWorldText"
                       defaultMessage="{name}"
                       values={{ name: PLUGIN_NAME }}
                     />
@@ -79,7 +79,7 @@ export const CustomPluginApp = ({
                   <EuiTitle>
                     <h2>
                       <FormattedMessage
-                        id="customPlugin.congratulationsTitle"
+                        id="todoPlugin.congratulationsTitle"
                         defaultMessage="Congratulations, you have successfully created a new OpenSearch Dashboards Plugin!"
                       />
                     </h2>
@@ -89,20 +89,20 @@ export const CustomPluginApp = ({
                   <EuiText>
                     <p>
                       <FormattedMessage
-                        id="customPlugin.content"
+                        id="todoPlugin.content"
                         defaultMessage="Look through the generated code and check out the plugin development documentation."
                       />
                     </p>
                     <EuiHorizontalRule />
                     <p>
                       <FormattedMessage
-                        id="customPlugin.timestampText"
+                        id="todoPlugin.timestampText"
                         defaultMessage="Last timestamp: {time}"
                         values={{ time: timestamp ? timestamp : 'Unknown' }}
                       />
                     </p>
                     <EuiButton type="primary" size="s" onClick={onClickHandler}>
-                      <FormattedMessage id="customPlugin.buttonText" defaultMessage="Get data" />
+                      <FormattedMessage id="todoPlugin.buttonText" defaultMessage="Get data" />
                     </EuiButton>
                   </EuiText>
                 </EuiPageContentBody>

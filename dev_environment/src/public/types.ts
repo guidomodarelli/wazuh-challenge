@@ -1,10 +1,8 @@
 import { NavigationPublicPluginStart } from '../../../src/plugins/navigation/public';
 
-export interface CustomPluginPluginSetup {
-  getGreeting: () => string;
-}
+export interface ToDoPluginSetup {}
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface CustomPluginPluginStart {}
+export interface ToDoPluginStart {}
 
 export interface AppPluginStartDependencies {
   navigation: NavigationPublicPluginStart;

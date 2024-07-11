@@ -1,4 +1,4 @@
-# custom_plugin
+# todo_plugin
 
 A OpenSearch Dashboards plugin
 

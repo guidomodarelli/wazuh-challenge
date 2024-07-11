@@ -1,5 +1,5 @@
 {
-  "name": "custom-plugin-opensearch-dashboards",
+  "name": "todo-plugin-opensearch-dashboards",
   "version": "0.0.0",
   "private": true,
   "scripts": {

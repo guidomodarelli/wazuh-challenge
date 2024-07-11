@@ -1,4 +1,4 @@
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface CustomPluginPluginSetup {}
+export interface ToDoPluginSetup {}
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface CustomPluginPluginStart {}
+export interface ToDoPluginStart {}

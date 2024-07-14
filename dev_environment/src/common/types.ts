@@ -21,9 +21,9 @@ export interface TodoItem {
   priority: Priority;
   createdAt: string;
   dueDate?: string;
-  completedAt?: string;
+  completedDate?: string;
   plannedDate?: string;
-  startedAt?: string;
+  startedDate?: string;
 }
 
 export type CreateTodoItem = OmitStrict<TodoItem, 'id' | 'createdAt'>;

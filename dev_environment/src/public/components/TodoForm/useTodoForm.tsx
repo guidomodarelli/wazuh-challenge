@@ -20,14 +20,13 @@ function useTodoForm({ onSuccess, defaultValues }: UseTodoFormProps) {
   const { handleSubmit, control, setValue, formState, trigger, reset } = useForm<FieldValues>({
     resolver: zodResolver(schema),
     defaultValues: {
-      title: '',
-      status: [Status.NOT_STARTED],
-      priority: [Priority.LOW],
-      dueDate: undefined,
-      plannedDate: undefined,
-      startedDate: undefined,
-      completedDate: undefined,
-      ...defaultValues,
+      title: defaultValues.title ?? '',
+      status: defaultValues.status ?? [Status.NOT_STARTED],
+      priority: defaultValues.priority ?? [Priority.LOW],
+      dueDate: defaultValues.dueDate ?? undefined,
+      plannedDate: defaultValues.plannedDate ?? undefined,
+      startedDate: defaultValues.startedDate ?? undefined,
+      completedDate: defaultValues.completedDate ?? undefined,
     },
   });
   const { errors } = formState;
@@ -112,7 +111,11 @@ function useTodoForm({ onSuccess, defaultValues }: UseTodoFormProps) {
       startedDate: data.startedDate?.toISOString(),
       completedDate: data.completedDate?.toISOString(),
     };
-    createTodo(newTodo);
+    if (!!itemIdToUpdate) {
+      updateTodo(itemIdToUpdate, newTodo)
+    } else {
+      createTodo(newTodo);
+    }
     reset();
     onSuccess?.();
   };

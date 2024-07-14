@@ -18,6 +18,7 @@ import './TodoForm.styles.scss';
 import { FieldValues, schema } from './schema';
 import { TodoContext } from '../../context/todo.context';
 import { Option } from "../../types/option";
+import { mapOptions } from "../../utils/map_options";
 
 interface TodoFormProps {
   id: string;
@@ -44,13 +45,6 @@ const TodoForm = ({ id, update, onSuccess }: TodoFormProps) => {
       plannedDate: undefined,
     },
   });
-
-  const statusOptions: Option<string>[] = Object.values(Status).map((value) => ({
-    label: value,
-  }));
-  const priorityOptions: Option<string>[] = Object.values(Priority).map((value) => ({
-    label: value,
-  }));
 
   const renderStatusOptions = (value: EuiComboBoxOptionOption<Option<typeof Status>>) => (
     <TodoStatus variant={value.label as Status} />
@@ -130,7 +124,7 @@ const TodoForm = ({ id, update, onSuccess }: TodoFormProps) => {
                 inputRef={ref}
                 isInvalid={isInvalid(otherFields.name)}
                 fullWidth
-                options={statusOptions}
+                options={mapOptions(Status)}
                 onChange={(options) => onChange(options.map((option) => option.label))}
                 singleSelection={true}
                 selectedOptions={options?.map((option) => ({ label: option }))}
@@ -155,7 +149,7 @@ const TodoForm = ({ id, update, onSuccess }: TodoFormProps) => {
                 inputRef={ref}
                 isInvalid={isInvalid(otherFields.name)}
                 fullWidth
-                options={priorityOptions}
+                options={mapOptions(Priority)}
                 onChange={(options) => onChange(options.map((option) => option.label))}
                 singleSelection={true}
                 selectedOptions={options.map((option) => ({ label: option }))}
@@ -180,7 +174,6 @@ const TodoForm = ({ id, update, onSuccess }: TodoFormProps) => {
                 selected={moment(value)}
                 onChange={changePlannedDateHandler}
                 onClear={() => changePlannedDateHandler()}
-                inline
                 placeholder={'Select a date'}
               />
             </EuiFormRow>
@@ -201,7 +194,6 @@ const TodoForm = ({ id, update, onSuccess }: TodoFormProps) => {
                 selected={moment(value)}
                 onChange={changeDueDateHandler}
                 onClear={() => changeDueDateHandler()}
-                inline
                 placeholder={'Select a due date'}
               />
             </EuiFormRow>

@@ -20,6 +20,18 @@ export const schema = z
         message: MIN_DATE_MESSAGE(new Date()),
       })
       .optional(),
+    startedDate: z
+      .date()
+      .min(new Date(), {
+        message: MIN_DATE_MESSAGE(new Date()),
+      })
+      .optional(),
+    completedDate: z
+      .date()
+      .min(new Date(), {
+        message: MIN_DATE_MESSAGE(new Date()),
+      })
+      .optional(),
   })
   .refine(
     ({ dueDate, plannedDate }) => {
@@ -31,6 +43,18 @@ export const schema = z
     {
       message: MUST_BE_GREATER_THAN_OR_EQUAL_TO('due date', 'planned date'),
       path: ['dueDate'],
+    }
+  )
+  .refine(
+    ({ startedDate, completedDate }) => {
+      if (startedDate && completedDate) {
+        return moment(completedDate).startOf('day') >= moment(startedDate).startOf('day');
+      }
+      return true;
+    },
+    {
+      message: MUST_BE_GREATER_THAN_OR_EQUAL_TO('completed date', 'started date'),
+      path: ['completedDate'],
     }
   );
 

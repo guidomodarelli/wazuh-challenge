@@ -249,6 +249,20 @@ function useTodoTable({ onEdit }: UseTodoTableProps) {
   };
 
   /**
+   * The function `unselectItem` updates the `itemIdToSelectedMap` by setting the value of a specific item to `false`.
+   * @param {string} itemId - a string that represents the unique identifier of the item that needs to be unselected.
+   */
+  const deselectItem = (itemId: string) => {
+    setItemIdToSelectedMap((previousItemIdToSelectedMap) => {
+      const newItemIdToSelectedMap = {
+        ...previousItemIdToSelectedMap,
+        [itemId]: false,
+      };
+      return newItemIdToSelectedMap;
+    });
+  };
+
+  /**
    * The `isPopoverOpen` function returns the value associated with the `itemId` key in the
    * `itemIdToOpenActionsPopoverMap` object.
    * @param {string} itemId - represents the unique identifier of an item.
@@ -348,7 +362,7 @@ function useTodoTable({ onEdit }: UseTodoTableProps) {
                       icon="trash"
                       onClick={() => {
                         removeTodo(item.id);
-                        toggleItem(item.id);
+                        deselectItem(item.id);
                         closePopover(item.id);
                       }}
                     >

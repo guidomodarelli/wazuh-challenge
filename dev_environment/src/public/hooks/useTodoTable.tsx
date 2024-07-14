@@ -81,12 +81,6 @@ const useTodoTable = () => {
       render: (value: Priority) => <TodoPriority variant={value} />,
     },
     {
-      field: 'createdAt',
-      label: 'Created at',
-      'data-test-subj': 'createdAtCell',
-      render: (value: TodoItem['createdAt']) => <EuiText>{value}</EuiText>,
-    },
-    {
       field: 'plannedDate',
       label: 'Planned at',
       'data-test-subj': 'plannedDateCell',
@@ -103,6 +97,13 @@ const useTodoTable = () => {
       label: 'Completed at',
       'data-test-subj': 'completedAtCell',
       render: (value: TodoItem['completedAt']) => <EuiText>{value}</EuiText>,
+    },
+    {
+      field: 'createdAt',
+      label: 'Created at',
+      'data-test-subj': 'createdAtCell',
+      render: (value: TodoItem['createdAt']) =>
+        value ? <EuiText>{new Date(value).toLocaleDateString()}</EuiText> : <></>,
     },
     {
       field: 'actions',

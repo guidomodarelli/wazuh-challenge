@@ -69,7 +69,7 @@ const TodoForm = ({ id, update, onSuccess }: TodoFormProps) => {
    */
   const changePlannedDateHandler = (moment?: Moment | null) => {
     setValue('plannedDate', moment?.toDate());
-    trigger('plannedDate')
+    trigger('plannedDate');
     trigger('dueDate');
   };
 

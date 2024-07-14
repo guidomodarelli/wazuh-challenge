@@ -26,4 +26,4 @@ export interface TodoItem {
   startedAt?: string;
 }
 
-export type CreateTodoItem = OmitStrict<TodoItem, 'id' | 'status' | 'createdAt'>;
+export type CreateTodoItem = OmitStrict<TodoItem, 'id' | 'createdAt'>;

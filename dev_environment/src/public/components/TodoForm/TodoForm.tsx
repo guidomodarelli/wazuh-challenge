@@ -41,6 +41,7 @@ const TodoForm = ({ id, update, onSuccess }: TodoFormProps) => {
     resolver: zodResolver(schema),
     defaultValues: {
       title: '',
+      status: [Status.NOT_STARTED],
       priority: [Priority.LOW],
       dueDate: undefined,
       plannedDate: undefined,
@@ -85,6 +86,7 @@ const TodoForm = ({ id, update, onSuccess }: TodoFormProps) => {
     const newTodo: CreateTodoItem = {
       ...data,
       priority: data.priority[0],
+      status: data.status[0],
       dueDate: data.dueDate?.toISOString(),
       plannedDate: data.plannedDate?.toISOString(),
     };

@@ -68,7 +68,7 @@ export function getServices({ http }: CoreStart): Services {
       try {
         await http.delete(SERVER_TODO_ROUTE_PATH_DELETE_IDS, {
           query: {
-            ids: todoIds,
+            ids: JSON.stringify(todoIds),
           },
         });
         return;

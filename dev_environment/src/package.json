@@ -7,5 +7,10 @@
     "plugin-helpers": "node ../../scripts/plugin_helpers",
     "osd": "node ../../scripts/osd",
     "test": "node test/jest"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^3.9.0",
+    "react-hook-form": "^7.52.1",
+    "zod": "^3.23.8"
   }
 }

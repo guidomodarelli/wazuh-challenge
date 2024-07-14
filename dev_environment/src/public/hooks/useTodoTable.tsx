@@ -316,15 +316,6 @@ function useTodoTable() {
                       Edit
                     </EuiContextMenuItem>,
                     <EuiContextMenuItem
-                      key="B"
-                      icon="copy"
-                      onClick={() => {
-                        closePopover(item.id);
-                      }}
-                    >
-                      Duplicate
-                    </EuiContextMenuItem>,
-                    <EuiContextMenuItem
                       key="C"
                       icon="trash"
                       onClick={() => {

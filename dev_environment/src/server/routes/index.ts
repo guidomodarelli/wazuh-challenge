@@ -73,8 +73,6 @@ export function defineRoutes(router: IRouter) {
       path: `${SERVER_TODO_BASE_ROUTE_PATH}/{id}`,
       validate: {
         params: schema.object({
-          // This parameter name matches the one in POST_MESSAGE_ROUTE_PATH: `api/post_message/{id}`.
-          // Params are often used for ids like this.
           id: schema.string(),
         }),
       },

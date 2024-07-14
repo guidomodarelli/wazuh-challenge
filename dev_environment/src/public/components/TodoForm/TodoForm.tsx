@@ -17,10 +17,7 @@ import TodoStatus from '../TodoBadges/TodoBadgeStatus';
 import './TodoForm.styles.scss';
 import { FieldValues, schema } from './schema';
 import { TodoContext } from '../../context/todo.context';
-
-interface Option<T> {
-  label: T;
-}
+import { Option } from "../../types/option";
 
 interface TodoFormProps {
   id: string;

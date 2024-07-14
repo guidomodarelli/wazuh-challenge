@@ -50,7 +50,6 @@ interface State {
 const useTodoTable = () => {
   const { todoItems, removeTodo } = useContext(TodoContext);
   const [itemIdToSelectedMap, setItemIdToSelectedMap] = useState<State['itemIdToSelectedMap']>({});
-  const [itemIdToEditableMap, setItemIdToEditableMap] = useState<State['itemIdToEditableMap']>({});
   const [itemIdToOpenActionsPopoverMap, setItemIdToOpenActionsPopoverMap] = useState<
     State['itemIdToOpenActionsPopoverMap']
   >({});

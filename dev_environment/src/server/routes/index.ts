@@ -6,9 +6,10 @@ import { IRouter, OpenSearchClient } from '../../../../src/core/server';
 import {
   SERVER_TODO_BASE_ROUTE_PATH,
   SERVER_TODO_ROUTE_PATH_CREATE,
+  SERVER_TODO_ROUTE_PATH_DELETE_IDS,
   SERVER_TODO_ROUTE_PATH_GET_ALL,
 } from '../../common';
-import { Status } from "../../common/types";
+import { Status } from '../../common/types';
 import { TODO_INDEX } from '../constants';
 
 async function createIndexIfNotExists(openSearchClient: OpenSearchClient) {
@@ -84,6 +85,35 @@ export function defineRoutes(router: IRouter) {
       const id = request.params.id;
 
       await openSearchClient.delete({ index: TODO_INDEX, id });
+      return response.ok();
+    }
+  );
+  router.delete(
+    {
+      path: SERVER_TODO_ROUTE_PATH_DELETE_IDS,
+      validate: {
+        query: schema.object({
+          ids: schema.arrayOf(schema.string()),
+        }),
+      },
+    },
+    async (context, request, response) => {
+      const openSearchClient = context.core.opensearch.client.asCurrentUser;
+      createIndexIfNotExists(openSearchClient);
+
+      const deleteIds = request.query.ids;
+
+      openSearchClient.deleteByQuery({
+        index: TODO_INDEX,
+        body: {
+          query: {
+            ids: {
+              values: deleteIds,
+            },
+          },
+        },
+      });
+
       return response.ok();
     }
   );

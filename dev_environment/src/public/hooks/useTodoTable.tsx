@@ -48,7 +48,7 @@ interface State {
 }
 
 function useTodoTable() {
-  const { todoItems, removeTodo } = useContext(TodoContext);
+  const { todoItems, removeTodo, deleteTodosByIds } = useContext(TodoContext);
   const [itemIdToSelectedMap, setItemIdToSelectedMap] = useState<State['itemIdToSelectedMap']>({});
   const [itemIdToOpenActionsPopoverMap, setItemIdToOpenActionsPopoverMap] = useState<
     State['itemIdToOpenActionsPopoverMap']
@@ -128,6 +128,15 @@ function useTodoTable() {
   };
 
   /**
+   * The function `getAllItemsSelected` filters `todoItems` to return only the items that are selected based on the
+   * `isItemSelected` function.
+   * @returns an array of todo items that have been selected.
+   */
+  const getAllItemIdsSelected = () => {
+    return todoItems.filter((item) => isItemSelected(item.id)).map((item) => item.id);
+  };
+
+  /**
    * The `toggleAll` function toggles the selection status of all todo items.
    */
   const toggleAll = () => {
@@ -188,6 +197,13 @@ function useTodoTable() {
     return headers.length ? headers : null;
   };
 
+  /**
+   * The function `areAnyRowsSelected` checks if any rows are selected based on the `itemIdToSelectedMap` object.
+   * @returns a boolean value indicating whether any rows are selected.
+   * It checks if there is at least one key in the `itemIdToSelectedMap` object for which the corresponding value is
+   * `true`. If such a key exists, the function returns `true`, indicating that at least one row is selected. Otherwise,
+   * it returns `false`.
+   */
   const areAnyRowsSelected = () => {
     return (
       Object.keys(itemIdToSelectedMap).findIndex((id) => {
@@ -365,11 +381,20 @@ function useTodoTable() {
     return rows;
   };
 
+  /* If there are rows selected, it will display a "Delete selected" button with a danger color. The button's
+onClick event handler will call the `deleteTodosByIds` function with the IDs of all selected items. */
   let optionalActionButtons;
   if (!!areAnyRowsSelected()) {
     optionalActionButtons = (
       <EuiFlexItem grow={false}>
-        <EuiButton color="danger">Delete selected</EuiButton>
+        <EuiButton
+          onClick={() => {
+            deleteTodosByIds(...getAllItemIdsSelected());
+          }}
+          color="danger"
+        >
+          Delete selected
+        </EuiButton>
       </EuiFlexItem>
     );
   }

@@ -47,7 +47,7 @@ interface State {
   lastItemIndex: number;
 }
 
-const useTodoTable = () => {
+function useTodoTable() {
   const { todoItems, removeTodo } = useContext(TodoContext);
   const [itemIdToSelectedMap, setItemIdToSelectedMap] = useState<State['itemIdToSelectedMap']>({});
   const [itemIdToOpenActionsPopoverMap, setItemIdToOpenActionsPopoverMap] = useState<
@@ -376,6 +376,6 @@ const useTodoTable = () => {
     renderHeaderCells,
     optionalActionButtons,
   };
-};
+}
 
 export default useTodoTable;

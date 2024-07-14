@@ -26,4 +26,4 @@ export interface TodoItem {
   startedDate?: string;
 }
 
-export type CreateTodoItem = OmitStrict<TodoItem, 'id' | 'createdAt'>;
+export type TodoItemRequest = OmitStrict<TodoItem, 'id' | 'createdAt'>;

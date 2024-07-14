@@ -8,22 +8,16 @@ import { FieldValues, schema } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import TodoBadgeStatus from '../TodoBadges/TodoBadgeStatus';
-import TodoBadgePriority from "../TodoBadges/TodoBadgePriority";
+import TodoBadgePriority from '../TodoBadges/TodoBadgePriority';
 
 interface UseTodoFormProps {
   onSuccess?: () => void;
+  defaultValues?: Partial<FieldValues>;
 }
 
-function useTodoForm({ onSuccess }: UseTodoFormProps) {
+function useTodoForm({ onSuccess, defaultValues }: UseTodoFormProps) {
   const { createTodo } = React.useContext(TodoContext);
-  const {
-    handleSubmit,
-    control,
-    setValue,
-    formState,
-    trigger,
-    reset,
-  } = useForm<FieldValues>({
+  const { handleSubmit, control, setValue, formState, trigger, reset } = useForm<FieldValues>({
     resolver: zodResolver(schema),
     defaultValues: {
       title: '',
@@ -33,6 +27,7 @@ function useTodoForm({ onSuccess }: UseTodoFormProps) {
       plannedDate: undefined,
       startedDate: undefined,
       completedDate: undefined,
+      ...defaultValues,
     },
   });
   const { errors } = formState;
@@ -114,6 +109,8 @@ function useTodoForm({ onSuccess }: UseTodoFormProps) {
       status: data.status[0],
       dueDate: data.dueDate?.toISOString(),
       plannedDate: data.plannedDate?.toISOString(),
+      startedDate: data.startedDate?.toISOString(),
+      completedDate: data.completedDate?.toISOString(),
     };
     createTodo(newTodo);
     reset();
@@ -131,7 +128,7 @@ function useTodoForm({ onSuccess }: UseTodoFormProps) {
     changeStartedDateHandler,
     changeDueDateHandler,
     changeCompletedDateHandler,
-  }
+  };
 }
 
 export default useTodoForm;

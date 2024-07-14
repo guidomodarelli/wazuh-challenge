@@ -13,14 +13,16 @@ import { Priority, Status } from '../../../common/types';
 import { mapOptions } from '../../utils/map_options';
 import './TodoForm.styles.scss';
 import useTodoForm from './useTodoForm';
+import { FieldValues } from "./schema";
 
 interface TodoFormProps {
   id: string;
   update?: boolean;
   onSuccess?: () => void;
+  defaultValues?: Partial<FieldValues>;
 }
 
-const TodoForm = ({ id, update, onSuccess }: TodoFormProps) => {
+const TodoForm = ({ id, update, onSuccess, defaultValues }: TodoFormProps) => {
   const {
     onSubmit,
     control,
@@ -32,7 +34,7 @@ const TodoForm = ({ id, update, onSuccess }: TodoFormProps) => {
     changeDueDateHandler,
     changeStartedDateHandler,
     changeCompletedDateHandler,
-  } = useTodoForm({ onSuccess });
+  } = useTodoForm({ onSuccess, defaultValues });
 
   return (
     <div className="todo-form-container">

@@ -10,12 +10,14 @@ import {
 import React from 'react';
 import TodoForm from './TodoForm';
 import { FormattedMessage } from '@osd/i18n/react';
+import { FieldValues } from "./schema";
 
 interface FlyoutFormProps {
   onClose: () => void;
+  defaultValues?: Partial<FieldValues>;
 }
 
-const FlyoutForm = ({ onClose }: FlyoutFormProps) => {
+const FlyoutForm = ({ onClose, defaultValues }: FlyoutFormProps) => {
   const formId = 'todo-form';
 
   return (
@@ -28,7 +30,7 @@ const FlyoutForm = ({ onClose }: FlyoutFormProps) => {
         </EuiTitle>
       </EuiFlyoutHeader>
       <EuiFlyoutBody>
-        <TodoForm id={formId} onSuccess={onClose} />
+        <TodoForm id={formId} onSuccess={onClose} defaultValues={defaultValues} />
       </EuiFlyoutBody>
       <EuiFlyoutFooter className="footer">
         <EuiButtonEmpty onClick={onClose}>

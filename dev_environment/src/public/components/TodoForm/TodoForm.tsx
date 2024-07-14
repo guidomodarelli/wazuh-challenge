@@ -118,33 +118,31 @@ const TodoForm = ({ id, update, onSuccess }: TodoFormProps) => {
             </EuiFormRow>
           )}
         />
-        {update && (
-          <Controller
-            control={control}
-            name="status"
-            render={({ field: { ref, value: options, onChange, ...otherFields } }) => (
-              <EuiFormRow
-                label="Status"
-                fullWidth
+        <Controller
+          control={control}
+          name="status"
+          render={({ field: { ref, value: options, onChange, ...otherFields } }) => (
+            <EuiFormRow
+              label="Status"
+              fullWidth
+              isInvalid={isInvalid(otherFields.name)}
+              error={errors[otherFields.name]?.message}
+            >
+              <EuiComboBox
+                {...otherFields}
+                inputRef={ref}
                 isInvalid={isInvalid(otherFields.name)}
-                error={errors[otherFields.name]?.message}
-              >
-                <EuiComboBox
-                  {...otherFields}
-                  inputRef={ref}
-                  isInvalid={isInvalid(otherFields.name)}
-                  fullWidth
-                  options={statusOptions}
-                  onChange={(options) => onChange(options.map((option) => option.label))}
-                  singleSelection={true}
-                  selectedOptions={options?.map((option) => ({ label: option }))}
-                  renderOption={renderStatusOptions}
-                  isClearable={false}
-                />
-              </EuiFormRow>
-            )}
-          />
-        )}
+                fullWidth
+                options={statusOptions}
+                onChange={(options) => onChange(options.map((option) => option.label))}
+                singleSelection={true}
+                selectedOptions={options?.map((option) => ({ label: option }))}
+                renderOption={renderStatusOptions}
+                isClearable={false}
+              />
+            </EuiFormRow>
+          )}
+        />
         <Controller
           control={control}
           name="priority"

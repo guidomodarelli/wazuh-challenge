@@ -21,6 +21,7 @@ export interface Services {
 
 export function getServices({ http }: CoreStart): Services {
   const services: Services = {
+    /* The `fetchTodos` function fetches all todo items from the server. */
     async fetchTodos() {
       try {
         const searchHits = await http.get<OpenSearchSearchHit[]>(SERVER_TODO_ROUTE_PATH_GET_ALL);
@@ -36,6 +37,8 @@ export function getServices({ http }: CoreStart): Services {
         return err as HttpFetchError;
       }
     },
+
+    /* The `createNewTodo` function is responsible for creating a new todo item on the server. */
     async createNewTodo(newTodoItem: TodoItemRequest) {
       try {
         const response = await http.post(SERVER_TODO_ROUTE_PATH_CREATE, {
@@ -46,6 +49,8 @@ export function getServices({ http }: CoreStart): Services {
         return error as HttpFetchError;
       }
     },
+
+    /* The `updateTodo` function is responsible for updating an existing todo item on the server. */
     async updateTodo(itemIdToUpdate, updatedTodo) {
       try {
         await http.put(`${SERVER_TODO_BASE_ROUTE_PATH}/${itemIdToUpdate}`, {
@@ -56,6 +61,8 @@ export function getServices({ http }: CoreStart): Services {
         return error as HttpFetchError;
       }
     },
+
+    /* The `deleteTodo` function is responsible for deleting a specific todo item from the server. */
     async deleteTodo(todoId) {
       try {
         await http.delete(`${SERVER_TODO_BASE_ROUTE_PATH}/${todoId}`);
@@ -64,6 +71,9 @@ export function getServices({ http }: CoreStart): Services {
         return error as HttpFetchError;
       }
     },
+
+    /* The `deleteTodosByIds` function is responsible for deleting multiple todo items from the server based on their
+    IDs. */
     async deleteTodosByIds(...todoIds) {
       try {
         await http.delete(SERVER_TODO_ROUTE_PATH_DELETE_IDS, {

@@ -1,8 +1,10 @@
 import {
+  EuiButton,
   EuiButtonIcon,
   EuiCheckbox,
   EuiContextMenuItem,
   EuiContextMenuPanel,
+  EuiFlexItem,
   EuiPopover,
   EuiScreenReaderOnly,
   EuiTableHeaderCell,
@@ -359,10 +361,20 @@ const useTodoTable = () => {
     return rows;
   };
 
+  let optionalActionButtons;
+  if (!!areAnyRowsSelected()) {
+    optionalActionButtons = (
+      <EuiFlexItem grow={false}>
+        <EuiButton color="danger">Delete selected</EuiButton>
+      </EuiFlexItem>
+    );
+  }
+
   return {
     columns,
     renderRows,
     renderHeaderCells,
+    optionalActionButtons,
   };
 };
 

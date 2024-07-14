@@ -83,19 +83,22 @@ function useTodoTable() {
       field: 'plannedDate',
       label: 'Planned at',
       'data-test-subj': 'plannedDateCell',
-      render: (value: TodoItem['plannedDate']) => <EuiText>{value}</EuiText>,
+      render: (value: TodoItem['plannedDate']) =>
+        value ? <EuiText>{new Date(value).toLocaleDateString()}</EuiText> : <></>,
     },
     {
       field: 'startedAt',
       label: 'Started at',
       'data-test-subj': 'startedAtCell',
-      render: (value: TodoItem['startedAt']) => <EuiText>{value}</EuiText>,
+      render: (value: TodoItem['startedAt']) =>
+        value ? <EuiText>{new Date(value).toLocaleDateString()}</EuiText> : <></>,
     },
     {
       field: 'completedAt',
       label: 'Completed at',
       'data-test-subj': 'completedAtCell',
-      render: (value: TodoItem['completedAt']) => <EuiText>{value}</EuiText>,
+      render: (value: TodoItem['completedAt']) =>
+        value ? <EuiText>{new Date(value).toLocaleDateString()}</EuiText> : <></>,
     },
     {
       field: 'createdAt',

@@ -155,10 +155,10 @@ function useTodoTable() {
   };
 
   /**
-   * The `renderSelectAll` function returns a checkbox component for selecting all rows.
+   * The `renderSelectAllCheckbox` function returns a checkbox component for selecting all rows.
    * @returns an `EuiCheckbox` component.
    */
-  const renderSelectAll = () => {
+  const renderSelectAllCheckbox = () => {
     return (
       <EuiCheckbox
         id={'selectAllCheckboxDesktop'}
@@ -178,7 +178,7 @@ function useTodoTable() {
       if (column.isCheckbox) {
         headers.push(
           <EuiTableHeaderCellCheckbox key={column.id} width={column.width}>
-            {renderSelectAll()}
+            {renderSelectAllCheckbox()}
           </EuiTableHeaderCellCheckbox>
         );
       } else if (column.isVisuallyHiddenLabel) {

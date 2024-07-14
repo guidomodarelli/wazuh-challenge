@@ -2,19 +2,22 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppMountParameters, CoreStart } from '../../../src/core/public';
 import { AppPluginStartDependencies } from './types';
-import { ToDoPluginApp } from './components/app';
+import { ToDoPluginApp } from './components/App';
+import { Services } from './services';
 
 export const renderApp = (
   { notifications, http }: CoreStart,
+  services: Services,
   { navigation }: AppPluginStartDependencies,
-  { appBasePath, element }: AppMountParameters
+  { history, element }: AppMountParameters
 ) => {
   ReactDOM.render(
     <ToDoPluginApp
-      basename={appBasePath}
+      basename={history.location.pathname}
       notifications={notifications}
       http={http}
       navigation={navigation}
+      services={services}
     />,
     element
   );

@@ -1,3 +1,5 @@
+import { ApiResponse } from '@opensearch-project/opensearch';
+import { SearchResponse } from '@opensearch-project/opensearch/api/types';
 import { schema } from '@osd/config-schema';
 import { v4 as UUID } from 'uuid';
 import { IRouter, OpenSearchClient } from '../../../../src/core/server';
@@ -6,9 +8,8 @@ import {
   SERVER_TODO_ROUTE_PATH_CREATE,
   SERVER_TODO_ROUTE_PATH_GET_ALL,
 } from '../../common';
+import { Status } from "../../common/types";
 import { TODO_INDEX } from '../constants';
-import { ApiResponse } from '@opensearch-project/opensearch';
-import { SearchResponse } from '@opensearch-project/opensearch/api/types';
 
 async function createIndexIfNotExists(openSearchClient: OpenSearchClient) {
   if (!(await openSearchClient.indices.exists({ index: TODO_INDEX }))) {
@@ -23,6 +24,7 @@ export function defineRoutes(router: IRouter) {
       validate: {
         body: schema.object({
           title: schema.string({ minLength: 3 }),
+          status: schema.maybe(schema.string()),
           priority: schema.string(),
           dueDate: schema.maybe(schema.string()),
           plannedDate: schema.maybe(schema.string()),
@@ -34,6 +36,8 @@ export function defineRoutes(router: IRouter) {
       createIndexIfNotExists(openSearchClient);
       const newTodo = {
         id: UUID(),
+        createdAt: new Date().toISOString(),
+        status: Status.NOT_STARTED,
         ...request.body,
       };
       await openSearchClient.create({

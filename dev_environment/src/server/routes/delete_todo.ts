@@ -4,6 +4,10 @@ import { TODO_INDEX } from '../constants';
 import { schemeIds, schemeParamId } from '../scheme';
 import { createIndexIfNotExists } from '../utils/create_index';
 
+/**
+ * The function `defineRouteDeleteTodo` defines a route for deleting a todo item in an OpenSearch index based on the
+ * provided ID.
+ */
 export function defineRouteDeleteTodo(router: IRouter) {
   router.delete(
     {
@@ -24,6 +28,10 @@ export function defineRouteDeleteTodo(router: IRouter) {
   );
 }
 
+/**
+ * The function `defineRouteDeleteTodos` defines a route for deleting todos in an OpenSearch index based on the provided
+ * IDs.
+ */
 export function defineRouteDeleteTodos(router: IRouter) {
   router.delete(
     {

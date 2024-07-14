@@ -5,6 +5,9 @@ import { SERVER_TODO_ROUTE_PATH_GET_ALL } from '../../common';
 import { TODO_INDEX } from '../constants';
 import { createIndexIfNotExists } from '../utils/create_index';
 
+/**
+ * The function `defineRouteGetTodos` defines a route to retrieve all todos from an OpenSearch index.
+ */
 export function defineRouteGetTodos(router: IRouter) {
   router.get(
     {

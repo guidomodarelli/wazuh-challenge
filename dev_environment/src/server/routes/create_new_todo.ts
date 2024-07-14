@@ -6,6 +6,9 @@ import { TODO_INDEX } from '../constants';
 import { schemeTodo } from '../scheme';
 import { createIndexIfNotExists } from '../utils/create_index';
 
+/**
+ * The function `defineRouteCreateNewTodo` defines a route for creating a new todo item in a OpenSearch index.
+ */
 export function defineRouteCreateNewTodo(router: IRouter) {
   router.post(
     {

@@ -149,6 +149,7 @@ function useTodoTable() {
         aria-label="Select all rows"
         title="Select all rows"
         checked={areAllItemsSelected()}
+        // @ts-expect-error
         onChange={toggleAll.bind(this)}
       />
     );

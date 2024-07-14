@@ -81,9 +81,16 @@ function useTodoTable() {
     },
     {
       id: 'plannedDate',
-      label: 'Planned at',
+      label: 'Planned Date',
       'data-test-subj': 'plannedDateCell',
       render: (value: TodoItem['plannedDate']) =>
+        value ? <EuiText>{new Date(value).toLocaleDateString()}</EuiText> : <></>,
+    },
+    {
+      id: 'dueDate',
+      label: 'Due Date',
+      'data-test-subj': 'plannedDateCell',
+      render: (value: TodoItem['dueDate']) =>
         value ? <EuiText>{new Date(value).toLocaleDateString()}</EuiText> : <></>,
     },
     {

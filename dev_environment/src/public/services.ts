@@ -4,6 +4,7 @@ import { OpenSearchSearchHit } from 'src/plugins/discover/public/application/doc
 import {
   SERVER_TODO_BASE_ROUTE_PATH,
   SERVER_TODO_ROUTE_PATH_CREATE,
+  SERVER_TODO_ROUTE_PATH_DELETE_IDS,
   SERVER_TODO_ROUTE_PATH_GET_ALL,
 } from '../common';
 
@@ -11,6 +12,7 @@ export interface Services {
   fetchTodos: () => Promise<TodoItem[] | HttpFetchError>;
   createNewTodo: (newTodoItem: CreateTodoItem) => Promise<TodoItem | HttpFetchError>;
   deleteTodo: (todoId: string) => Promise<undefined | HttpFetchError>;
+  deleteTodosByIds: (...todoIds: string[]) => Promise<undefined | HttpFetchError>;
 }
 
 export function getServices({ http }: CoreStart): Services {
@@ -43,6 +45,18 @@ export function getServices({ http }: CoreStart): Services {
     async deleteTodo(todoId) {
       try {
         await http.delete(`${SERVER_TODO_BASE_ROUTE_PATH}/${todoId}`);
+        return;
+      } catch (error) {
+        return error as HttpFetchError;
+      }
+    },
+    async deleteTodosByIds(...todoIds) {
+      try {
+        await http.delete(SERVER_TODO_ROUTE_PATH_DELETE_IDS, {
+          query: {
+            ids: todoIds,
+          },
+        });
         return;
       } catch (error) {
         return error as HttpFetchError;

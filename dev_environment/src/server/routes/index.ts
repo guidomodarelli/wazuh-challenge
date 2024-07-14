@@ -18,21 +18,21 @@ async function createIndexIfNotExists(openSearchClient: OpenSearchClient) {
   }
 }
 
+const schemeTodo = schema.object({
+  title: schema.string({ minLength: 3 }),
+  status: schema.maybe(schema.string()),
+  priority: schema.string(),
+  dueDate: schema.maybe(schema.string()),
+  plannedDate: schema.maybe(schema.string()),
+  startedDate: schema.maybe(schema.string()),
+  completedDate: schema.maybe(schema.string()),
+});
+
 export function defineRoutes(router: IRouter) {
   router.post(
     {
       path: SERVER_TODO_ROUTE_PATH_CREATE,
-      validate: {
-        body: schema.object({
-          title: schema.string({ minLength: 3 }),
-          status: schema.maybe(schema.string()),
-          priority: schema.string(),
-          dueDate: schema.maybe(schema.string()),
-          plannedDate: schema.maybe(schema.string()),
-          startedDate: schema.maybe(schema.string()),
-          completedDate: schema.maybe(schema.string()),
-        }),
-      },
+      validate: { body: schemeTodo },
     },
     async (context, request, response) => {
       const openSearchClient = context.core.opensearch.client.asCurrentUser;
@@ -69,6 +69,32 @@ export function defineRoutes(router: IRouter) {
       return response.ok({
         body: todos.body.hits.hits,
       });
+    }
+  );
+  router.put(
+    {
+      path: `${SERVER_TODO_BASE_ROUTE_PATH}/{id}`,
+      validate: {
+        params: schema.object({
+          id: schema.string(),
+        }),
+        body: schemeTodo,
+      },
+    },
+    async (context, request, response) => {
+      const openSearchClient = context.core.opensearch.client.asCurrentUser;
+      createIndexIfNotExists(openSearchClient);
+
+      const id = request.params.id;
+
+      await openSearchClient.update({
+        index: TODO_INDEX,
+        id,
+        body: {
+          doc: request.body,
+        },
+      });
+      return response.ok();
     }
   );
   router.delete(

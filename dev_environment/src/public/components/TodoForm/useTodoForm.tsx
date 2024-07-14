@@ -1,7 +1,7 @@
 import { EuiComboBoxOptionOption } from '@elastic/eui';
 import { Moment } from 'moment';
 import React from 'react';
-import { CreateTodoItem, Priority, Status } from '../../../common/types';
+import { TodoItemRequest, Priority, Status, TodoItem } from '../../../common/types';
 import { TodoContext } from '../../context/todo.context';
 import { Option } from '../../types/option';
 import { FieldValues, schema } from './schema';
@@ -12,11 +12,12 @@ import TodoBadgePriority from '../TodoBadges/TodoBadgePriority';
 
 interface UseTodoFormProps {
   onSuccess?: () => void;
+  itemIdToUpdate?: string;
   defaultValues?: Partial<FieldValues>;
 }
 
-function useTodoForm({ onSuccess, defaultValues }: UseTodoFormProps) {
-  const { createTodo } = React.useContext(TodoContext);
+function useTodoForm({ onSuccess, itemIdToUpdate, defaultValues = {} }: UseTodoFormProps) {
+  const { createTodo, updateTodo } = React.useContext(TodoContext);
   const { handleSubmit, control, setValue, formState, trigger, reset } = useForm<FieldValues>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -102,7 +103,7 @@ function useTodoForm({ onSuccess, defaultValues }: UseTodoFormProps) {
    * @param data - It is being used to create a new todo item (`newTodo`).
    */
   const submitHandler: SubmitHandler<FieldValues> = (data: FieldValues) => {
-    const newTodo: CreateTodoItem = {
+    const newTodo: TodoItemRequest = {
       ...data,
       priority: data.priority[0],
       status: data.status[0],

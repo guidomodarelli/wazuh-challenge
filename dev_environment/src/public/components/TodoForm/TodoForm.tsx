@@ -17,12 +17,12 @@ import { FieldValues } from "./schema";
 
 interface TodoFormProps {
   id: string;
-  update?: boolean;
+  itemIdToUpdate?: string;
   onSuccess?: () => void;
   defaultValues?: Partial<FieldValues>;
 }
 
-const TodoForm = ({ id, update, onSuccess, defaultValues }: TodoFormProps) => {
+const TodoForm = ({ id, itemIdToUpdate, onSuccess, defaultValues = {} }: TodoFormProps) => {
   const {
     onSubmit,
     control,
@@ -34,7 +34,7 @@ const TodoForm = ({ id, update, onSuccess, defaultValues }: TodoFormProps) => {
     changeDueDateHandler,
     changeStartedDateHandler,
     changeCompletedDateHandler,
-  } = useTodoForm({ onSuccess, defaultValues });
+  } = useTodoForm({ onSuccess, itemIdToUpdate, defaultValues });
 
   return (
     <div className="todo-form-container">
@@ -102,7 +102,7 @@ const TodoForm = ({ id, update, onSuccess, defaultValues }: TodoFormProps) => {
                 options={mapOptions(Priority)}
                 onChange={(options) => onChange(options.map((option) => option.label))}
                 singleSelection={true}
-                selectedOptions={options.map((option) => ({ label: option }))}
+                selectedOptions={options?.map((option) => ({ label: option }))}
                 renderOption={renderPriorityOptions}
                 isClearable={false}
               />

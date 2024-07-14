@@ -14,11 +14,11 @@ import { FieldValues } from './schema';
 
 interface FlyoutFormProps {
   onClose: () => void;
-  update?: boolean;
+  itemIdToUpdate?: string;
   defaultValues?: Partial<FieldValues>;
 }
 
-const FlyoutForm = ({ onClose, update, defaultValues }: FlyoutFormProps) => {
+const FlyoutForm = ({ onClose, itemIdToUpdate, defaultValues = {} }: FlyoutFormProps) => {
   const formId = 'todo-form';
 
   return (
@@ -26,7 +26,7 @@ const FlyoutForm = ({ onClose, update, defaultValues }: FlyoutFormProps) => {
       <EuiFlyoutHeader hasBorder>
         <EuiTitle>
           <h2>
-            {update ? (
+            {!!itemIdToUpdate ? (
               <FormattedMessage id="todoPlugin.title.updateTodo" defaultMessage="Update TODO" />
             ) : (
               <FormattedMessage id="todoPlugin.title.createTodo" defaultMessage="Create new TODO" />
@@ -35,14 +35,14 @@ const FlyoutForm = ({ onClose, update, defaultValues }: FlyoutFormProps) => {
         </EuiTitle>
       </EuiFlyoutHeader>
       <EuiFlyoutBody>
-        <TodoForm id={formId} onSuccess={onClose} update={update} defaultValues={defaultValues} />
+        <TodoForm id={formId} onSuccess={onClose} itemIdToUpdate={itemIdToUpdate} defaultValues={defaultValues} />
       </EuiFlyoutBody>
       <EuiFlyoutFooter className="footer">
         <EuiButtonEmpty onClick={onClose}>
           <FormattedMessage id="todoPlugin.button.cancel" defaultMessage="Cancel" />
         </EuiButtonEmpty>
         <EuiButton type="submit" form={formId} fill color="primary">
-          {update ? (
+          {!!itemIdToUpdate ? (
             <FormattedMessage id="todoPlugin.button.update" defaultMessage="Update" />
           ) : (
             <FormattedMessage id="todoPlugin.button.create" defaultMessage="Create" />

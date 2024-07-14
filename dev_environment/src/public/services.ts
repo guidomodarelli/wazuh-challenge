@@ -1,5 +1,5 @@
 import { CoreStart, HttpFetchError } from 'opensearch-dashboards/public';
-import { TodoItem, CreateTodoItem } from '../common/types';
+import { TodoItem, TodoItemRequest } from '../common/types';
 import { OpenSearchSearchHit } from 'src/plugins/discover/public/application/doc_views/doc_views_types';
 import {
   SERVER_TODO_BASE_ROUTE_PATH,
@@ -10,7 +10,11 @@ import {
 
 export interface Services {
   fetchTodos: () => Promise<TodoItem[] | HttpFetchError>;
-  createNewTodo: (newTodoItem: CreateTodoItem) => Promise<TodoItem | HttpFetchError>;
+  createNewTodo: (newTodoItem: TodoItemRequest) => Promise<TodoItem | HttpFetchError>;
+  updateTodo: (
+    itemIdToUpdate: string,
+    updatedTodo: TodoItemRequest
+  ) => Promise<undefined | HttpFetchError>;
   deleteTodo: (todoId: string) => Promise<undefined | HttpFetchError>;
   deleteTodosByIds: (...todoIds: string[]) => Promise<undefined | HttpFetchError>;
 }
@@ -32,12 +36,22 @@ export function getServices({ http }: CoreStart): Services {
         return err as HttpFetchError;
       }
     },
-    async createNewTodo(newTodoItem: CreateTodoItem) {
+    async createNewTodo(newTodoItem: TodoItemRequest) {
       try {
         const response = await http.post(SERVER_TODO_ROUTE_PATH_CREATE, {
           body: JSON.stringify(newTodoItem),
         });
         return response as TodoItem;
+      } catch (error) {
+        return error as HttpFetchError;
+      }
+    },
+    async updateTodo(itemIdToUpdate, updatedTodo) {
+      try {
+        await http.put(`${SERVER_TODO_BASE_ROUTE_PATH}/${itemIdToUpdate}`, {
+          body: JSON.stringify(updatedTodo),
+        });
+        return;
       } catch (error) {
         return error as HttpFetchError;
       }

@@ -47,7 +47,11 @@ interface State {
   lastItemIndex: number;
 }
 
-function useTodoTable() {
+interface UseTodoTableProps {
+  onEdit: (todoItemId: string) => void;
+}
+
+function useTodoTable({ onEdit }: UseTodoTableProps) {
   const { todoItems, removeTodo, deleteTodosByIds } = useContext(TodoContext);
   const [itemIdToSelectedMap, setItemIdToSelectedMap] = useState<State['itemIdToSelectedMap']>({});
   const [itemIdToOpenActionsPopoverMap, setItemIdToOpenActionsPopoverMap] = useState<
@@ -333,6 +337,7 @@ function useTodoTable() {
                       key="A"
                       icon="pencil"
                       onClick={() => {
+                        onEdit(item.id);
                         closePopover(item.id);
                       }}
                     >
@@ -343,6 +348,7 @@ function useTodoTable() {
                       icon="trash"
                       onClick={() => {
                         removeTodo(item.id);
+                        toggleItem(item.id);
                         closePopover(item.id);
                       }}
                     >
@@ -397,6 +403,7 @@ onClick event handler will call the `deleteTodosByIds` function with the IDs of 
         <EuiButton
           onClick={() => {
             deleteTodosByIds(...getAllItemIdsSelected());
+            setItemIdToSelectedMap({});
           }}
           color="danger"
         >

@@ -1,14 +1,14 @@
 import { i18n } from '@osd/i18n';
 import { CoreStart } from 'opensearch-dashboards/public';
 import React, { createContext, useState } from 'react';
-import { CreateTodoItem, TodoItem } from '../../common/types';
+import { TodoItemRequest, TodoItem } from '../../common/types';
 import { Services } from '../services';
 import { isError } from '../utils/is_error';
 
 interface ToDoContextType {
   todoItems: TodoItem[];
-  createTodo: (item: CreateTodoItem) => void;
-  updateTodo: (itemToUpdate: TodoItem) => void;
+  createTodo: (item: TodoItemRequest) => void;
+  updateTodo: (itemIdToUpdate: string, itemToUpdate: TodoItemRequest) => void;
   removeTodo: (todoId: TodoItem['id']) => void;
   deleteTodosByIds: (...ids: string[]) => void;
 }
@@ -30,7 +30,7 @@ interface ToDoProviderProps {
 function ToDoProvider({
   children,
   notifications,
-  services: { fetchTodos, createNewTodo, deleteTodo, deleteTodosByIds },
+  services: { fetchTodos, createNewTodo, updateTodo, deleteTodo, deleteTodosByIds },
 }: ToDoProviderProps) {
   const [todoItems, setTodoItems] = useState<TodoItem[]>([]);
 
@@ -46,7 +46,7 @@ function ToDoProvider({
 
   const value: ToDoContextType = {
     todoItems,
-    async createTodo(newTodoItem: CreateTodoItem) {
+    async createTodo(newTodoItem: TodoItemRequest) {
       const response = await createNewTodo(newTodoItem);
       if (isError(response)) {
         // TODO: Handle error
@@ -59,17 +59,24 @@ function ToDoProvider({
         setTodoItems([response, ...todoItems]);
       }
     },
-    updateTodo(itemToUpdate: TodoItem) {
-      const newTodos = todoItems.map((previousTodo) => {
-        if (previousTodo.id === itemToUpdate.id) {
-          return {
-            ...previousTodo,
-            ...itemToUpdate,
-          };
-        }
-        return previousTodo;
-      });
-      setTodoItems(newTodos);
+    async updateTodo(itemIdToUpdate: string, updatedItem: TodoItemRequest) {
+      const response = await updateTodo(itemIdToUpdate, updatedItem);
+      if (isError(response)) {
+        // TODO: Handle Error
+      } else {
+        notifications.toasts.addSuccess(
+          i18n.translate('todoPlugin.todoItemUpdatedSuccessfully', {
+            defaultMessage: 'Todo item updated successfully',
+          })
+        );
+        const newTodos = todoItems.map((previousTodo) => {
+          if (previousTodo.id === itemIdToUpdate) {
+            return { ...previousTodo, ...updatedItem };
+          }
+          return previousTodo;
+        });
+        setTodoItems(newTodos);
+      }
     },
     async removeTodo(todoId: TodoItem['id']) {
       const response = await deleteTodo(todoId);

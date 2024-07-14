@@ -1,24 +1,18 @@
 import {
   EuiComboBox,
-  EuiComboBoxOptionOption,
   EuiDatePicker,
   EuiFieldText,
   EuiForm,
   EuiFormErrorText,
   EuiFormRow,
 } from '@elastic/eui';
-import { zodResolver } from '@hookform/resolvers/zod';
-import moment, { Moment } from 'moment';
+import moment from 'moment';
 import React from 'react';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { CreateTodoItem, Priority, Status } from '../../../common/types';
-import TodoPriority from '../TodoBadges/TodoBadgePriority';
-import TodoStatus from '../TodoBadges/TodoBadgeStatus';
+import { Controller } from 'react-hook-form';
+import { Priority, Status } from '../../../common/types';
+import { mapOptions } from '../../utils/map_options';
 import './TodoForm.styles.scss';
-import { FieldValues, schema } from './schema';
-import { TodoContext } from '../../context/todo.context';
-import { Option } from "../../types/option";
-import { mapOptions } from "../../utils/map_options";
+import useTodoForm from './useTodoForm';
 
 interface TodoFormProps {
   id: string;
@@ -27,113 +21,22 @@ interface TodoFormProps {
 }
 
 const TodoForm = ({ id, update, onSuccess }: TodoFormProps) => {
-  const { createTodo } = React.useContext(TodoContext);
   const {
-    handleSubmit,
+    onSubmit,
     control,
-    setValue,
+    isInvalid,
     formState: { errors },
-    trigger,
-    reset,
-  } = useForm<FieldValues>({
-    resolver: zodResolver(schema),
-    defaultValues: {
-      title: '',
-      status: [Status.NOT_STARTED],
-      priority: [Priority.LOW],
-      dueDate: undefined,
-      plannedDate: undefined,
-      startedDate: undefined,
-      completedDate: undefined,
-    },
-  });
-
-  /**
-   * The function `renderStatusOptions` renders a `TodoStatus` component based on the label value of the provided
-   * `EuiComboBoxOptionOption` option.
-   * @param value - an object that represents an option in a combo box, where the `label` property is of type `Status`.
-   */
-  const renderStatusOptions = (value: EuiComboBoxOptionOption<Option<typeof Status>>) => (
-    <TodoStatus variant={value.label as Status} />
-  );
-
-  /**
-   * The function `renderPriorityOptions` renders a `TodoPriority` component based on the selected value from a combo
-   * box.
-   * @param value - an object likely contains information about a priority option for a todo item.
-   */
-  const renderPriorityOptions = (value: EuiComboBoxOptionOption<Option<typeof Priority>>) => (
-    <TodoPriority variant={value.label as Priority} />
-  );
-
-  /**
-   * The function `changePlannedDateHandler` updates the value of the 'plannedDate' field and triggers validation for
-   * 'plannedDate' and 'dueDate'.
-   */
-  const changePlannedDateHandler = (moment?: Moment | null) => {
-    setValue('plannedDate', moment?.toDate());
-    trigger('plannedDate');
-    trigger('dueDate');
-  };
-
-  /**
-   * The `changeDueDateHandler` function sets the value of a form field to the selected date and triggers a validation
-   * check.
-   */
-  const changeDueDateHandler = (moment?: Moment | null) => {
-    setValue('dueDate', moment?.toDate());
-    trigger('dueDate');
-  };
-
-  /**
-   * The function `changeStartedDateHandler` updates the value of the 'startedDate' field and triggers validation for
-   * 'startedDate' and 'completedDate'.
-   */
-  const changeStartedDateHandler = (moment?: Moment | null) => {
-    setValue('startedDate', moment?.toDate());
-    trigger('startedDate');
-    trigger('completedDate');
-  };
-
-  /**
-   * The function `changeCompletedDateHandler` sets the value of a completed date field and triggers a validation check.
-   */
-  const changeCompletedDateHandler = (moment?: Moment | null) => {
-    setValue('completedDate', moment?.toDate());
-    trigger('completedDate');
-  };
-
-  /**
-   * The function `isInvalid` checks if there is an error message for a specific field in a set of `FieldValues`.
-   * @param {keyof FieldValues | 'root'} field - a key of `FieldValues` or the string `'root'`.
-   * @returns a boolean value indicating whether there is a message associated with the `field` in the `errors` object.
-   * If there is a message, it will return `true`, otherwise it will return `false`.
-   */
-  const isInvalid = (field: keyof FieldValues | 'root') => {
-    return !!errors[field]?.message;
-  };
-
-  /**
-   * The submitHandler function creates a new todo item based on the form data, then calls the createTodo function,
-   * resets the form, and triggers the onSuccess callback if provided.
-   * @param data - It is being used to create a new todo item (`newTodo`).
-   */
-  const submitHandler: SubmitHandler<FieldValues> = (data: FieldValues) => {
-    const newTodo: CreateTodoItem = {
-      ...data,
-      priority: data.priority[0],
-      status: data.status[0],
-      dueDate: data.dueDate?.toISOString(),
-      plannedDate: data.plannedDate?.toISOString(),
-    };
-    createTodo(newTodo);
-    reset();
-    onSuccess?.();
-  };
+    renderStatusOptions,
+    renderPriorityOptions,
+    changePlannedDateHandler,
+    changeDueDateHandler,
+    changeStartedDateHandler,
+    changeCompletedDateHandler,
+  } = useTodoForm({ onSuccess });
 
   return (
     <div className="todo-form-container">
-      <EuiForm id={id} component="form" onSubmit={handleSubmit(submitHandler)}>
+      <EuiForm id={id} component="form" onSubmit={onSubmit}>
         <Controller
           control={control}
           name="title"

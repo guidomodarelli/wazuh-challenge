@@ -23,7 +23,7 @@ import TodoStatus from '../components/TodoBadges/TodoBadgeStatus';
 import { TodoContext } from '../context/todo.context';
 
 interface Column<T> {
-  field: string;
+  id: string;
   label?: string;
   isVisuallyHiddenLabel?: boolean;
   isSortable?: boolean;
@@ -56,59 +56,59 @@ function useTodoTable() {
 
   const columns: Column<TodoItem>[] = [
     {
-      field: 'checkbox',
+      id: 'checkbox',
       isCheckbox: true,
       textOnly: false,
       width: '32px',
     },
     {
-      field: 'title',
+      id: 'title',
       label: 'Title',
       'data-test-subj': 'titleCell',
       render: (value: TodoItem['title']) => <EuiText>{value}</EuiText>,
     },
     {
-      field: 'status',
+      id: 'status',
       label: 'Status',
       'data-test-subj': 'statusCell',
       render: (value: Status) => <TodoStatus variant={value} />,
     },
     {
-      field: 'priority',
+      id: 'priority',
       label: 'Priority',
       'data-test-subj': 'priorityCell',
       render: (value: Priority) => <TodoPriority variant={value} />,
     },
     {
-      field: 'plannedDate',
+      id: 'plannedDate',
       label: 'Planned at',
       'data-test-subj': 'plannedDateCell',
       render: (value: TodoItem['plannedDate']) =>
         value ? <EuiText>{new Date(value).toLocaleDateString()}</EuiText> : <></>,
     },
     {
-      field: 'startedAt',
+      id: 'startedAt',
       label: 'Started at',
       'data-test-subj': 'startedAtCell',
       render: (value: TodoItem['startedAt']) =>
         value ? <EuiText>{new Date(value).toLocaleDateString()}</EuiText> : <></>,
     },
     {
-      field: 'completedAt',
+      id: 'completedAt',
       label: 'Completed at',
       'data-test-subj': 'completedAtCell',
       render: (value: TodoItem['completedAt']) =>
         value ? <EuiText>{new Date(value).toLocaleDateString()}</EuiText> : <></>,
     },
     {
-      field: 'createdAt',
+      id: 'createdAt',
       label: 'Created at',
       'data-test-subj': 'createdAtCell',
       render: (value: TodoItem['createdAt']) =>
         value ? <EuiText>{new Date(value).toLocaleDateString()}</EuiText> : <></>,
     },
     {
-      field: 'actions',
+      id: 'actions',
       label: 'Actions',
       'data-test-subj': 'actionsCell',
       isVisuallyHiddenLabel: true,
@@ -161,13 +161,13 @@ function useTodoTable() {
     columns.forEach((column, columnIndex) => {
       if (column.isCheckbox) {
         headers.push(
-          <EuiTableHeaderCellCheckbox key={column.field} width={column.width}>
+          <EuiTableHeaderCellCheckbox key={column.id} width={column.width}>
             {renderSelectAll()}
           </EuiTableHeaderCellCheckbox>
         );
       } else if (column.isVisuallyHiddenLabel) {
         headers.push(
-          <EuiTableHeaderCell key={column.field} width={column.width}>
+          <EuiTableHeaderCell key={column.id} width={column.width}>
             <EuiScreenReaderOnly>
               <span>{column.label}</span>
             </EuiScreenReaderOnly>
@@ -176,7 +176,7 @@ function useTodoTable() {
       } else {
         headers.push(
           <EuiTableHeaderCell
-            key={column.field}
+            key={column.id}
             align={columns[columnIndex].alignment}
             width={column.width}
           >
@@ -266,13 +266,13 @@ function useTodoTable() {
   const renderRows = () => {
     const renderRow = (item: TodoItem) => {
       const cells = columns.map((column) => {
-        const cell = item[column.field as keyof TodoItem];
+        const cell = item[column.id as keyof TodoItem];
 
         let child;
 
         if (column.isCheckbox) {
           return (
-            <EuiTableRowCellCheckbox key={column.field}>
+            <EuiTableRowCellCheckbox key={column.id}>
               <EuiCheckbox
                 id={`${item.id}-checkbox`}
                 checked={isItemSelected(item.id)}
@@ -287,7 +287,7 @@ function useTodoTable() {
 
         if (column.isActionsPopover) {
           return (
-            <EuiTableRowCell key={column.field} textOnly={false} hasActions={true} align="right">
+            <EuiTableRowCell key={column.id} textOnly={false} hasActions={true} align="right">
               <EuiPopover
                 id={`${item.id}-actions`}
                 button={
@@ -349,7 +349,7 @@ function useTodoTable() {
 
         return (
           <EuiTableRowCell
-            key={column.field}
+            key={column.id}
             align={column.alignment}
             textOnly={column.textOnly || false}
           >

@@ -46,6 +46,7 @@ function ToDoProvider({
 
   const value: ToDoContextType = {
     todoItems,
+    /* The `createTodo` function is responsible for creating a new todo item. */
     async createTodo(newTodoItem: TodoItemRequest) {
       const response = await createNewTodo(newTodoItem);
       if (isError(response)) {
@@ -59,6 +60,8 @@ function ToDoProvider({
         setTodoItems([response, ...todoItems]);
       }
     },
+
+    /* The `updateTodo` function is responsible for updating an existing todo item. */
     async updateTodo(itemIdToUpdate: string, updatedItem: TodoItemRequest) {
       const response = await updateTodo(itemIdToUpdate, updatedItem);
       if (isError(response)) {
@@ -78,6 +81,8 @@ function ToDoProvider({
         setTodoItems(newTodos);
       }
     },
+
+    /* The `removeTodo` function is responsible for deleting a specific todo item from the list of todo items.  */
     async removeTodo(todoId: TodoItem['id']) {
       const response = await deleteTodo(todoId);
       if (isError(response)) {
@@ -91,6 +96,9 @@ function ToDoProvider({
         setTodoItems(todoItems.filter((todo) => todo.id !== todoId));
       }
     },
+
+    /* The `deleteTodosByIds` function in the code snippet is responsible for deleting multiple todo items by their IDs.
+    */
     async deleteTodosByIds(...ids) {
       const response = await deleteTodosByIds(...ids);
       if (isError(response)) {

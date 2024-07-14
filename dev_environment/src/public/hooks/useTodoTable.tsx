@@ -275,6 +275,7 @@ function useTodoTable() {
               <EuiCheckbox
                 id={`${item.id}-checkbox`}
                 checked={isItemSelected(item.id)}
+                // @ts-expect-error
                 onChange={toggleItem.bind(this, item.id)}
                 title="Select this row"
                 aria-label="Select this row"

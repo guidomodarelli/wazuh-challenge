@@ -11,7 +11,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import moment, { Moment } from 'moment';
 import React from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { Priority, Status } from '../../../common/types';
+import { CreateTodoItem, Priority, Status } from '../../../common/types';
 import TodoPriority from '../TodoBadges/TodoBadgePriority';
 import TodoStatus from '../TodoBadges/TodoBadgeStatus';
 import './TodoForm.styles.scss';
@@ -68,6 +68,7 @@ const TodoForm = ({ id, update, onSuccess }: TodoFormProps) => {
    */
   const changePlannedDateHandler = (moment?: Moment | null) => {
     setValue('plannedDate', moment?.toDate());
+    trigger('plannedDate')
     trigger('dueDate');
   };
 
@@ -81,9 +82,11 @@ const TodoForm = ({ id, update, onSuccess }: TodoFormProps) => {
   };
 
   const submitHandler: SubmitHandler<FieldValues> = (data) => {
-    const newTodo = {
+    const newTodo: CreateTodoItem = {
       ...data,
       priority: data.priority[0],
+      dueDate: data.dueDate?.toISOString(),
+      plannedDate: data.plannedDate?.toISOString(),
     };
     createTodo(newTodo);
     reset();

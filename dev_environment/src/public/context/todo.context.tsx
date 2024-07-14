@@ -1,17 +1,16 @@
 import { i18n } from '@osd/i18n';
 import { CoreStart } from 'opensearch-dashboards/public';
 import React, { createContext, useState } from 'react';
-import { TodoItem } from '../../common/types';
+import { CreateTodoItem, TodoItem } from '../../common/types';
 import { Services } from '../services';
 import { isError } from '../utils/is_error';
-
-type CreateTodoItem = Omit<TodoItem, 'id' | 'status' | 'createdAt'>;
 
 interface ToDoContextType {
   todoItems: TodoItem[];
   createTodo: (item: CreateTodoItem) => void;
   updateTodo: (itemToUpdate: TodoItem) => void;
   removeTodo: (todoId: TodoItem['id']) => void;
+  deleteTodosByIds: (...ids: string[]) => void;
 }
 
 export const TodoContext = createContext<ToDoContextType>({
@@ -19,6 +18,7 @@ export const TodoContext = createContext<ToDoContextType>({
   createTodo: () => null,
   updateTodo: () => null,
   removeTodo: () => null,
+  deleteTodosByIds: () => null,
 });
 
 interface ToDoProviderProps {
@@ -30,7 +30,7 @@ interface ToDoProviderProps {
 function ToDoProvider({
   children,
   notifications,
-  services: { fetchTodos, createNewTodo, deleteTodo },
+  services: { fetchTodos, createNewTodo, deleteTodo, deleteTodosByIds },
 }: ToDoProviderProps) {
   const [todoItems, setTodoItems] = useState<TodoItem[]>([]);
 
@@ -82,6 +82,19 @@ function ToDoProvider({
           })
         );
         setTodoItems(todoItems.filter((todo) => todo.id !== todoId));
+      }
+    },
+    async deleteTodosByIds(...ids) {
+      const response = await deleteTodosByIds(...ids);
+      if (isError(response)) {
+        // TODO: Handle Error
+      } else {
+        notifications.toasts.addSuccess(
+          i18n.translate('todoPlugin.todoItemsDeletedSuccessfully', {
+            defaultMessage: 'Todo items deleted successfully',
+          })
+        );
+        setTodoItems(todoItems.filter((todo) => !ids.includes(todo.id)));
       }
     },
   };

@@ -7,7 +7,7 @@ import {
 } from '@elastic/eui';
 import React, { useState } from 'react';
 import useTodoTable from '../../hooks/useTodoTable';
-import FlyoutForm from "../TodoForm/FlyoutForm";
+import FlyoutForm from '../TodoForm/FlyoutForm';
 import './TodoTable.styles.scss';
 
 const Todos = () => {
@@ -22,13 +22,18 @@ const Todos = () => {
     setIsFlyoutVisible(false);
   };
 
+  let flyout;
+  if (isFlyoutVisible) {
+    flyout = <FlyoutForm onClose={closeFlyout} />;
+  }
+
   return (
     <>
-      {isFlyoutVisible ? <FlyoutForm onClose={closeFlyout} /> : <></>}
       <EuiButton iconSide="right" fill iconType="plus" onClick={openFlyout}>
         New
       </EuiButton>
       <EuiSpacer />
+      {flyout}
       <EuiTable>
         <EuiTableHeader>{renderHeaderCells()}</EuiTableHeader>
         <EuiTableBody>{renderRows()}</EuiTableBody>

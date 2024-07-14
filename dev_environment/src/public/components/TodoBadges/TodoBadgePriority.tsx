@@ -13,7 +13,7 @@ interface TodoPriorityProps {
   variant: Priority;
 }
 
-const TodoPriority = ({variant}: TodoPriorityProps) => {
+const TodoBadgePriority = ({variant}: TodoPriorityProps) => {
   switch (variant) {
     case Priority.MEDIUM:
       return <TodoPrioritys.Medium />;
@@ -26,4 +26,4 @@ const TodoPriority = ({variant}: TodoPriorityProps) => {
   }
 };
 
-export default TodoPriority;
+export default TodoBadgePriority;

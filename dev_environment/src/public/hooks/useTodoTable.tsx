@@ -18,8 +18,8 @@ import {
 } from '@elastic/eui';
 import React, { ReactNode, useState, useContext } from 'react';
 import { Priority, Status, TodoItem } from '../../common/types';
-import TodoPriority from '../components/TodoBadges/TodoBadgePriority';
-import TodoStatus from '../components/TodoBadges/TodoBadgeStatus';
+import TodoBadgePriority from '../components/TodoBadges/TodoBadgePriority';
+import TodoBadgeStatus from '../components/TodoBadges/TodoBadgeStatus';
 import { TodoContext } from '../context/todo.context';
 
 interface Column<T> {
@@ -71,13 +71,13 @@ function useTodoTable() {
       id: 'status',
       label: 'Status',
       'data-test-subj': 'statusCell',
-      render: (value: Status) => <TodoStatus variant={value} />,
+      render: (value: Status) => <TodoBadgeStatus variant={value} />,
     },
     {
       id: 'priority',
       label: 'Priority',
       'data-test-subj': 'priorityCell',
-      render: (value: Priority) => <TodoPriority variant={value} />,
+      render: (value: Priority) => <TodoBadgePriority variant={value} />,
     },
     {
       id: 'plannedDate',

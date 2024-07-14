@@ -13,7 +13,7 @@ interface TodoStatusProps {
   variant: Status;
 }
 
-const TodoStatus = ({ variant }: TodoStatusProps) => {
+const TodoBadgeStatus = ({ variant }: TodoStatusProps) => {
   switch (variant) {
     case Status.DONE:
       return <TodoStatuses.Success />;
@@ -26,4 +26,4 @@ const TodoStatus = ({ variant }: TodoStatusProps) => {
   }
 };
 
-export default TodoStatus;
+export default TodoBadgeStatus;

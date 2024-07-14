@@ -29,6 +29,8 @@ export function defineRoutes(router: IRouter) {
           priority: schema.string(),
           dueDate: schema.maybe(schema.string()),
           plannedDate: schema.maybe(schema.string()),
+          startedDate: schema.maybe(schema.string()),
+          completedDate: schema.maybe(schema.string()),
         }),
       },
     },

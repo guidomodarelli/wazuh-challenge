@@ -1,11 +1,16 @@
 import { CoreStart, HttpFetchError } from 'opensearch-dashboards/public';
 import { TodoItem, CreateTodoItem } from '../common/types';
 import { OpenSearchSearchHit } from 'src/plugins/discover/public/application/doc_views/doc_views_types';
-import { SERVER_TODO_ROUTE_PATH_CREATE, SERVER_TODO_ROUTE_PATH_GET_ALL } from '../common';
+import {
+  SERVER_TODO_BASE_ROUTE_PATH,
+  SERVER_TODO_ROUTE_PATH_CREATE,
+  SERVER_TODO_ROUTE_PATH_GET_ALL,
+} from '../common';
 
 export interface Services {
   fetchTodos: () => Promise<TodoItem[] | HttpFetchError>;
   createNewTodo: (newTodoItem: CreateTodoItem) => Promise<TodoItem | HttpFetchError>;
+  deleteTodo: (todoId: string) => Promise<undefined | HttpFetchError>;
 }
 
 export function getServices({ http }: CoreStart): Services {
@@ -31,6 +36,14 @@ export function getServices({ http }: CoreStart): Services {
           body: JSON.stringify(newTodoItem),
         });
         return response as TodoItem;
+      } catch (error) {
+        return error as HttpFetchError;
+      }
+    },
+    async deleteTodo(todoId) {
+      try {
+        await http.delete(`${SERVER_TODO_BASE_ROUTE_PATH}/${todoId}`);
+        return;
       } catch (error) {
         return error as HttpFetchError;
       }

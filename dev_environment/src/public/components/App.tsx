@@ -4,7 +4,7 @@ import { CoreStart } from '../../../../src/core/public';
 import { NavigationPublicPluginStart } from '../../../../src/plugins/navigation/public';
 import Providers from '../providers';
 import { Services } from '../services';
-import MainPage from "../pages/MainPage";
+import MainPage from '../pages/MainPage';
 
 interface ToDoPluginAppDeps {
   basename: string;

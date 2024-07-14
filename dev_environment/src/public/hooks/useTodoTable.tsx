@@ -313,7 +313,7 @@ const useTodoTable = () => {
                       key="C"
                       icon="trash"
                       onClick={() => {
-                        removeTodo(item);
+                        removeTodo(item.id);
                         closePopover(item.id);
                       }}
                     >

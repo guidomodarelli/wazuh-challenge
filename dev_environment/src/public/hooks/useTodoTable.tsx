@@ -187,6 +187,14 @@ function useTodoTable() {
     return headers.length ? headers : null;
   };
 
+  const areAnyRowsSelected = () => {
+    return (
+      Object.keys(itemIdToSelectedMap).findIndex((id) => {
+        return itemIdToSelectedMap[id];
+      }) !== -1
+    );
+  };
+
   /**
    * The `isItemSelected` function checks if an item with a specific ID is selected based on a mapping of item IDs to
    * selection status.

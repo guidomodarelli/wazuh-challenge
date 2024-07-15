@@ -44,8 +44,17 @@ function ToDoProvider({
   const [todoItems, setTodoItems] = useState<TodoItem[]>([]);
   const [search, setSearch] = useState('');
 
-  const filteredTodoItems = todoItems.filter((todoItem) => {
-    return todoItem.title.toLowerCase().includes(search.toLowerCase());
+  const filteredTodoItems = todoItems.filter(({ title, tags, assignee }) => {
+    const lcTitle = title.toLowerCase();
+    const lcAssignee = assignee?.toLowerCase() ?? '';
+    const lcSearch = search.toLowerCase();
+
+    // You can complicate it as much as you want
+    return (
+      lcTitle.includes(lcSearch) ||
+      lcAssignee.includes(lcSearch) ||
+      tags?.some((tag) => tag.toLowerCase().includes(lcSearch))
+    );
   });
 
   React.useEffect(() => {

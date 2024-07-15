@@ -13,6 +13,7 @@ import useTodoTable from '../../hooks/useTodoTable';
 import FlyoutForm from '../TodoForm/FlyoutForm';
 import './TodoTable.styles.scss';
 import { FieldValues } from '../TodoForm/schema';
+import { Link } from 'react-router-dom';
 
 const Todos = () => {
   const [isFlyoutVisible, setIsFlyoutVisible] = useState(false);
@@ -59,6 +60,14 @@ const Todos = () => {
           <EuiButton iconSide="right" fill iconType="plus" onClick={openFlyout}>
             New
           </EuiButton>
+        </EuiFlexItem>
+        <EuiFlexItem grow={false}>
+          <EuiButton>Add sample data</EuiButton>
+        </EuiFlexItem>
+        <EuiFlexItem grow={false}>
+          <Link to="/charts">
+            <EuiButton>Charts</EuiButton>
+          </Link>
         </EuiFlexItem>
         {optionalActionButtons}
       </EuiFlexGroup>

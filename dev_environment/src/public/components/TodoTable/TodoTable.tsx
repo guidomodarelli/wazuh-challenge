@@ -10,7 +10,7 @@ import {
 } from '@elastic/eui';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { TodoContext } from '../../context/todo.context';
+import { useTodoContext } from '../../context/todo.context';
 import useTodoTable from '../../hooks/useTodoTable';
 import FlyoutForm from '../TodoForm/FlyoutForm';
 import { FieldValues } from '../TodoForm/schema';
@@ -19,7 +19,7 @@ import './TodoTable.styles.scss';
 const Todos = () => {
   const [isFlyoutVisible, setIsFlyoutVisible] = useState(false);
   const [itemIdToUpdate, setItemIdToUpdate] = useState<string | undefined>(undefined);
-  const { todoItems, search, setSearch, addSampleData } = React.useContext(TodoContext);
+  const { todoItems, search, setSearch, addSampleData } = useTodoContext();
   const { renderRows, renderHeaderCells, optionalActionButtons } = useTodoTable({
     onEdit(todoItemId) {
       setItemIdToUpdate(todoItemId);

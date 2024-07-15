@@ -30,6 +30,8 @@ export const TodoContext = createContext<ToDoContextType>({
   addSampleData: () => null,
 });
 
+export const useTodoContext = () => React.useContext(TodoContext);
+
 interface ToDoProviderProps {
   children?: React.ReactNode;
   notifications: CoreStart['notifications'];

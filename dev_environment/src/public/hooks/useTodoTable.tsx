@@ -18,11 +18,11 @@ import {
   HorizontalAlignment,
   RIGHT_ALIGNMENT,
 } from '@elastic/eui';
-import React, { ReactNode, useState, useContext } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { Priority, Status, TodoItem } from '../../common/types';
 import TodoBadgePriority from '../components/TodoBadges/TodoBadgePriority';
 import TodoBadgeStatus from '../components/TodoBadges/TodoBadgeStatus';
-import { TodoContext } from '../context/todo.context';
+import { useTodoContext } from '../context/todo.context';
 
 interface Column<T> {
   id: string;
@@ -54,7 +54,7 @@ interface UseTodoTableProps {
 }
 
 function useTodoTable({ onEdit }: UseTodoTableProps) {
-  const { filteredTodoItems: todoItems, removeTodo, deleteTodosByIds } = useContext(TodoContext);
+  const { filteredTodoItems: todoItems, removeTodo, deleteTodosByIds } = useTodoContext();
   const [itemIdToSelectedMap, setItemIdToSelectedMap] = useState<State['itemIdToSelectedMap']>({});
   const [itemIdToOpenActionsPopoverMap, setItemIdToOpenActionsPopoverMap] = useState<
     State['itemIdToOpenActionsPopoverMap']

@@ -3,7 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Priority, Status, TodoItemRequest } from '../../../common/types';
-import { TodoContext } from '../../context/todo.context';
+import { useTodoContext } from '../../context/todo.context';
 import { Option } from '../../types/option';
 import TodoBadgePriority from '../TodoBadges/TodoBadgePriority';
 import TodoBadgeStatus from '../TodoBadges/TodoBadgeStatus';
@@ -16,7 +16,7 @@ interface UseTodoFormProps {
 }
 
 function useTodoForm({ onSuccess, itemIdToUpdate, defaultValues = {} }: UseTodoFormProps) {
-  const { createTodo, updateTodo } = React.useContext(TodoContext);
+  const { createTodo, updateTodo } = useTodoContext();
   const { handleSubmit, control, formState, reset } = useForm<FieldValues>({
     resolver: zodResolver(schema),
     defaultValues: {

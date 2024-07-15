@@ -7,6 +7,9 @@ import { isError } from '../utils/is_error';
 
 interface ToDoContextType {
   todoItems: TodoItem[];
+  filteredTodoItems: TodoItem[];
+  search: string;
+  setSearch: (search: string) => void;
   createTodo: (item: TodoItemRequest) => void;
   updateTodo: (itemIdToUpdate: string, itemToUpdate: TodoItemRequest) => void;
   removeTodo: (todoId: TodoItem['id']) => void;
@@ -15,6 +18,9 @@ interface ToDoContextType {
 
 export const TodoContext = createContext<ToDoContextType>({
   todoItems: [],
+  filteredTodoItems: [],
+  search: '',
+  setSearch: () => null,
   createTodo: () => null,
   updateTodo: () => null,
   removeTodo: () => null,
@@ -33,6 +39,11 @@ function ToDoProvider({
   services: { fetchTodos, createNewTodo, updateTodo, deleteTodo, deleteTodosByIds },
 }: ToDoProviderProps) {
   const [todoItems, setTodoItems] = useState<TodoItem[]>([]);
+  const [search, setSearch] = useState('');
+
+  const filteredTodoItems = todoItems.filter((todoItem) => {
+    return todoItem.title.toLowerCase().includes(search.toLowerCase());
+  });
 
   React.useEffect(() => {
     fetchTodos().then((response) => {
@@ -46,6 +57,9 @@ function ToDoProvider({
 
   const value: ToDoContextType = {
     todoItems,
+    filteredTodoItems,
+    search,
+    setSearch,
     /* The `createTodo` function is responsible for creating a new todo item. */
     async createTodo(newTodoItem: TodoItemRequest) {
       const response = await createNewTodo(newTodoItem);
@@ -98,7 +112,7 @@ function ToDoProvider({
     },
 
     /* The `deleteTodosByIds` function in the code snippet is responsible for deleting multiple todo items by their IDs.
-    */
+     */
     async deleteTodosByIds(...ids) {
       const response = await deleteTodosByIds(...ids);
       if (isError(response)) {

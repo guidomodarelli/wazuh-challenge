@@ -1,5 +1,6 @@
 import {
   EuiButton,
+  EuiFieldSearch,
   EuiFlexGroup,
   EuiFlexItem,
   EuiSpacer,
@@ -8,23 +9,24 @@ import {
   EuiTableHeader,
 } from '@elastic/eui';
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { TodoContext } from '../../context/todo.context';
 import useTodoTable from '../../hooks/useTodoTable';
 import FlyoutForm from '../TodoForm/FlyoutForm';
-import './TodoTable.styles.scss';
 import { FieldValues } from '../TodoForm/schema';
-import { Link } from 'react-router-dom';
+import './TodoTable.styles.scss';
 
 const Todos = () => {
   const [isFlyoutVisible, setIsFlyoutVisible] = useState(false);
   const [itemIdToUpdate, setItemIdToUpdate] = useState<string | undefined>(undefined);
-  const { todoItems } = React.useContext(TodoContext);
+  const { todoItems, search, setSearch } = React.useContext(TodoContext);
   const { renderRows, renderHeaderCells, optionalActionButtons } = useTodoTable({
     onEdit(todoItemId) {
       setItemIdToUpdate(todoItemId);
       openFlyout();
     },
   });
+  const history = useHistory();
 
   const openFlyout = () => {
     setIsFlyoutVisible(true);
@@ -65,12 +67,16 @@ const Todos = () => {
           <EuiButton>Add sample data</EuiButton>
         </EuiFlexItem>
         <EuiFlexItem grow={false}>
-          <Link to="/charts">
-            <EuiButton>Charts</EuiButton>
-          </Link>
+          <EuiButton onClick={() => history.push('/charts')}>Charts</EuiButton>
         </EuiFlexItem>
         {optionalActionButtons}
       </EuiFlexGroup>
+      <EuiFieldSearch
+        placeholder="Search TODO items by title"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        isClearable
+      />
       <EuiSpacer size="m" />
       <EuiTable>
         <EuiTableHeader>{renderHeaderCells()}</EuiTableHeader>

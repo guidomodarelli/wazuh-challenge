@@ -53,7 +53,7 @@ interface UseTodoTableProps {
 }
 
 function useTodoTable({ onEdit }: UseTodoTableProps) {
-  const { todoItems, removeTodo, deleteTodosByIds } = useContext(TodoContext);
+  const { filteredTodoItems: todoItems, removeTodo, deleteTodosByIds } = useContext(TodoContext);
   const [itemIdToSelectedMap, setItemIdToSelectedMap] = useState<State['itemIdToSelectedMap']>({});
   const [itemIdToOpenActionsPopoverMap, setItemIdToOpenActionsPopoverMap] = useState<
     State['itemIdToOpenActionsPopoverMap']

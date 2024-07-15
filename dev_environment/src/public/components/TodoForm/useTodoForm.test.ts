@@ -38,7 +38,6 @@ describe('useTodoForm', () => {
     const { result } = renderHook(() => useTodoForm({ onSuccess }));
 
     act(() => {
-      result.current.onSubmit();
       result.current.submitHandler({
         title: '',
         status: [Status.NOT_STARTED],

@@ -10,7 +10,7 @@ const TodoPrioritys = {
 };
 
 interface TodoPriorityProps {
-  variant: Priority;
+  variant?: Priority;
 }
 
 const TodoBadgePriority = ({variant}: TodoPriorityProps) => {

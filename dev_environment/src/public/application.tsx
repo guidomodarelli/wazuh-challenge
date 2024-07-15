@@ -9,11 +9,11 @@ export const renderApp = (
   { notifications, http }: CoreStart,
   services: Services,
   { navigation }: AppPluginStartDependencies,
-  { history, element }: AppMountParameters
+  { appBasePath, element }: AppMountParameters
 ) => {
   ReactDOM.render(
     <ToDoPluginApp
-      basename={history.location.pathname}
+      basename={appBasePath}
       notifications={notifications}
       http={http}
       navigation={navigation}

@@ -41,12 +41,6 @@ const Todos = () => {
       ...itemToUpdate,
       status: itemToUpdate?.status ? [itemToUpdate.status] : undefined,
       priority: itemToUpdate?.priority ? [itemToUpdate.priority] : undefined,
-      dueDate: itemToUpdate?.dueDate ? new Date(itemToUpdate?.dueDate) : undefined,
-      plannedDate: itemToUpdate?.plannedDate ? new Date(itemToUpdate?.plannedDate) : undefined,
-      startedDate: itemToUpdate?.startedDate ? new Date(itemToUpdate?.startedDate) : undefined,
-      completedDate: itemToUpdate?.completedDate
-        ? new Date(itemToUpdate?.completedDate)
-        : undefined,
     };
     flyout = (
       <FlyoutForm

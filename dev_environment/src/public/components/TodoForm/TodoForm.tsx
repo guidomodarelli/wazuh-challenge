@@ -1,19 +1,19 @@
 import {
+  EuiCheckbox,
   EuiComboBox,
-  EuiDatePicker,
   EuiFieldText,
   EuiForm,
   EuiFormErrorText,
   EuiFormRow,
+  htmlIdGenerator,
 } from '@elastic/eui';
-import moment from 'moment';
 import React from 'react';
 import { Controller } from 'react-hook-form';
 import { Priority, Status } from '../../../common/types';
 import { mapOptions } from '../../utils/map_options';
+import { FieldValues } from './schema';
 import './TodoForm.styles.scss';
 import useTodoForm from './useTodoForm';
-import { FieldValues } from "./schema";
 
 interface TodoFormProps {
   id: string;
@@ -30,11 +30,9 @@ const TodoForm = ({ id, itemIdToUpdate, onSuccess, defaultValues = {} }: TodoFor
     formState: { errors },
     renderStatusOptions,
     renderPriorityOptions,
-    changePlannedDateHandler,
-    changeDueDateHandler,
-    changeStartedDateHandler,
-    changeCompletedDateHandler,
   } = useTodoForm({ onSuccess, itemIdToUpdate, defaultValues });
+
+  const checkboxId = htmlIdGenerator();
 
   return (
     <div className="todo-form-container">
@@ -111,80 +109,18 @@ const TodoForm = ({ id, itemIdToUpdate, onSuccess, defaultValues = {} }: TodoFor
         />
         <Controller
           control={control}
-          name="plannedDate"
+          name="isCompleted"
           render={({ field: { ref: _ref /* Not used */, value, onChange, ...otherFields } }) => (
             <EuiFormRow
-              label="Plan to execute it"
+              label="Mark as completed"
               isInvalid={isInvalid(otherFields.name)}
               error={errors[otherFields.name]?.message}
             >
-              <EuiDatePicker
-                {...otherFields}
-                isInvalid={isInvalid(otherFields.name)}
-                selected={moment(value)}
-                onChange={changePlannedDateHandler}
-                onClear={() => changePlannedDateHandler()}
-                placeholder={'Select a date'}
-              />
-            </EuiFormRow>
-          )}
-        />
-        <Controller
-          control={control}
-          name="dueDate"
-          render={({ field: { ref: _ref /* Not used */, value, onChange, ...otherFields } }) => (
-            <EuiFormRow
-              label="Due date"
-              isInvalid={isInvalid(otherFields.name)}
-              error={errors[otherFields.name]?.message}
-            >
-              <EuiDatePicker
-                {...otherFields}
-                isInvalid={isInvalid(otherFields.name)}
-                selected={moment(value)}
-                onChange={changeDueDateHandler}
-                onClear={() => changeDueDateHandler()}
-                placeholder={'Select a due date'}
-              />
-            </EuiFormRow>
-          )}
-        />
-        <Controller
-          control={control}
-          name="startedDate"
-          render={({ field: { ref: _ref /* Not used */, value, onChange, ...otherFields } }) => (
-            <EuiFormRow
-              label="Started date"
-              isInvalid={isInvalid(otherFields.name)}
-              error={errors[otherFields.name]?.message}
-            >
-              <EuiDatePicker
-                {...otherFields}
-                isInvalid={isInvalid(otherFields.name)}
-                selected={moment(value)}
-                onChange={changeStartedDateHandler}
-                onClear={() => changeStartedDateHandler()}
-                placeholder={'Select a started date'}
-              />
-            </EuiFormRow>
-          )}
-        />
-        <Controller
-          control={control}
-          name="completedDate"
-          render={({ field: { ref: _ref /* Not used */, value, onChange, ...otherFields } }) => (
-            <EuiFormRow
-              label="Completed date"
-              isInvalid={isInvalid(otherFields.name)}
-              error={errors[otherFields.name]?.message}
-            >
-              <EuiDatePicker
-                {...otherFields}
-                isInvalid={isInvalid(otherFields.name)}
-                selected={moment(value)}
-                onChange={changeCompletedDateHandler}
-                onClear={() => changeCompletedDateHandler()}
-                placeholder={'Select a completed date'}
+              <EuiCheckbox
+                id={checkboxId()}
+                label="Is completed"
+                checked={value}
+                onChange={onChange}
               />
             </EuiFormRow>
           )}

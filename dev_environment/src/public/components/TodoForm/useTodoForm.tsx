@@ -1,14 +1,13 @@
 import { EuiComboBoxOptionOption } from '@elastic/eui';
-import { Moment } from 'moment';
+import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
-import { TodoItemRequest, Priority, Status, TodoItem } from '../../../common/types';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { Priority, Status, TodoItemRequest } from '../../../common/types';
 import { TodoContext } from '../../context/todo.context';
 import { Option } from '../../types/option';
-import { FieldValues, schema } from './schema';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import TodoBadgeStatus from '../TodoBadges/TodoBadgeStatus';
 import TodoBadgePriority from '../TodoBadges/TodoBadgePriority';
+import TodoBadgeStatus from '../TodoBadges/TodoBadgeStatus';
+import { FieldValues, schema } from './schema';
 
 interface UseTodoFormProps {
   onSuccess?: () => void;
@@ -18,16 +17,13 @@ interface UseTodoFormProps {
 
 function useTodoForm({ onSuccess, itemIdToUpdate, defaultValues = {} }: UseTodoFormProps) {
   const { createTodo, updateTodo } = React.useContext(TodoContext);
-  const { handleSubmit, control, setValue, formState, trigger, reset } = useForm<FieldValues>({
+  const { handleSubmit, control, formState, reset } = useForm<FieldValues>({
     resolver: zodResolver(schema),
     defaultValues: {
       title: defaultValues.title ?? '',
       status: defaultValues.status ?? [Status.NOT_STARTED],
       priority: defaultValues.priority ?? [Priority.LOW],
-      dueDate: defaultValues.dueDate ?? undefined,
-      plannedDate: defaultValues.plannedDate ?? undefined,
-      startedDate: defaultValues.startedDate ?? undefined,
-      completedDate: defaultValues.completedDate ?? undefined,
+      isCompleted: defaultValues.isCompleted ?? false,
     },
   });
   const { errors } = formState;
@@ -51,43 +47,6 @@ function useTodoForm({ onSuccess, itemIdToUpdate, defaultValues = {} }: UseTodoF
   );
 
   /**
-   * The function `changePlannedDateHandler` updates the value of the 'plannedDate' field and triggers validation for
-   * 'plannedDate' and 'dueDate'.
-   */
-  const changePlannedDateHandler = (moment?: Moment | null) => {
-    setValue('plannedDate', moment?.toDate());
-    trigger('plannedDate');
-    trigger('dueDate');
-  };
-
-  /**
-   * The `changeDueDateHandler` function sets the value of a form field to the selected date and triggers a validation
-   * check.
-   */
-  const changeDueDateHandler = (moment?: Moment | null) => {
-    setValue('dueDate', moment?.toDate());
-    trigger('dueDate');
-  };
-
-  /**
-   * The function `changeStartedDateHandler` updates the value of the 'startedDate' field and triggers validation for
-   * 'startedDate' and 'completedDate'.
-   */
-  const changeStartedDateHandler = (moment?: Moment | null) => {
-    setValue('startedDate', moment?.toDate());
-    trigger('startedDate');
-    trigger('completedDate');
-  };
-
-  /**
-   * The function `changeCompletedDateHandler` sets the value of a completed date field and triggers a validation check.
-   */
-  const changeCompletedDateHandler = (moment?: Moment | null) => {
-    setValue('completedDate', moment?.toDate());
-    trigger('completedDate');
-  };
-
-  /**
    * The function `isInvalid` checks if there is an error message for a specific field in a set of `FieldValues`.
    * @param {keyof FieldValues | 'root'} field - a key of `FieldValues` or the string `'root'`.
    * @returns a boolean value indicating whether there is a message associated with the `field` in the `errors` object.
@@ -107,10 +66,6 @@ function useTodoForm({ onSuccess, itemIdToUpdate, defaultValues = {} }: UseTodoF
       ...data,
       priority: data.priority[0],
       status: data.status[0],
-      dueDate: data.dueDate?.toISOString(),
-      plannedDate: data.plannedDate?.toISOString(),
-      startedDate: data.startedDate?.toISOString(),
-      completedDate: data.completedDate?.toISOString(),
     };
     if (!!itemIdToUpdate) {
       updateTodo(itemIdToUpdate, newTodo)
@@ -128,10 +83,6 @@ function useTodoForm({ onSuccess, itemIdToUpdate, defaultValues = {} }: UseTodoF
     renderStatusOptions,
     renderPriorityOptions,
     isInvalid,
-    changePlannedDateHandler,
-    changeStartedDateHandler,
-    changeDueDateHandler,
-    changeCompletedDateHandler,
   };
 }
 

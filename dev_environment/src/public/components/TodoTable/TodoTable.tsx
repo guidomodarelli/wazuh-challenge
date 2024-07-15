@@ -19,7 +19,7 @@ import './TodoTable.styles.scss';
 const Todos = () => {
   const [isFlyoutVisible, setIsFlyoutVisible] = useState(false);
   const [itemIdToUpdate, setItemIdToUpdate] = useState<string | undefined>(undefined);
-  const { todoItems, search, setSearch } = React.useContext(TodoContext);
+  const { todoItems, search, setSearch, addSampleData } = React.useContext(TodoContext);
   const { renderRows, renderHeaderCells, optionalActionButtons } = useTodoTable({
     onEdit(todoItemId) {
       setItemIdToUpdate(todoItemId);
@@ -64,13 +64,14 @@ const Todos = () => {
           </EuiButton>
         </EuiFlexItem>
         <EuiFlexItem grow={false}>
-          <EuiButton>Add sample data</EuiButton>
+          <EuiButton onClick={addSampleData}>Add sample data</EuiButton>
         </EuiFlexItem>
         <EuiFlexItem grow={false}>
           <EuiButton onClick={() => history.push('/charts')}>Charts</EuiButton>
         </EuiFlexItem>
         {optionalActionButtons}
       </EuiFlexGroup>
+      <EuiSpacer size="m" />
       <EuiFieldSearch
         placeholder="Search TODO items by title"
         value={search}

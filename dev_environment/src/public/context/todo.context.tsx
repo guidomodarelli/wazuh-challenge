@@ -1,7 +1,8 @@
+import { faker } from '@faker-js/faker';
 import { i18n } from '@osd/i18n';
 import { CoreStart } from 'opensearch-dashboards/public';
 import React, { createContext, useState } from 'react';
-import { TodoItemRequest, TodoItem } from '../../common/types';
+import { Priority, Status, TodoItem, TodoItemRequest } from '../../common/types';
 import { Services } from '../services';
 import { isError } from '../utils/is_error';
 
@@ -14,6 +15,7 @@ interface ToDoContextType {
   updateTodo: (itemIdToUpdate: string, itemToUpdate: TodoItemRequest) => void;
   removeTodo: (todoId: TodoItem['id']) => void;
   deleteTodosByIds: (...ids: string[]) => void;
+  addSampleData: () => void;
 }
 
 export const TodoContext = createContext<ToDoContextType>({
@@ -25,6 +27,7 @@ export const TodoContext = createContext<ToDoContextType>({
   updateTodo: () => null,
   removeTodo: () => null,
   deleteTodosByIds: () => null,
+  addSampleData: () => null,
 });
 
 interface ToDoProviderProps {
@@ -125,6 +128,22 @@ function ToDoProvider({
         );
         setTodoItems(todoItems.filter((todo) => !ids.includes(todo.id)));
       }
+    },
+
+    addSampleData() {
+      const newTodos: TodoItem[] = [];
+      faker.setDefaultRefDate(new Date());
+      for (let i = 0; i < 100; i++) {
+        newTodos.push({
+          id: faker.string.uuid(),
+          createdAt: faker.date.anytime().toISOString(),
+          isCompleted: faker.datatype.boolean(),
+          priority: faker.helpers.enumValue(Priority),
+          status: faker.helpers.enumValue(Status),
+          title: faker.lorem.sentence(),
+        });
+      }
+      setTodoItems([...newTodos, ...todoItems]);
     },
   };
 

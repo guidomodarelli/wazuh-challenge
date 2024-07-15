@@ -10,7 +10,7 @@ import {
 import React from 'react';
 import TodoForm from './TodoForm';
 import { FormattedMessage } from '@osd/i18n/react';
-import { FieldValues } from './schema';
+import { type FieldValues } from './schema';
 
 interface FlyoutFormProps {
   onClose: () => void;

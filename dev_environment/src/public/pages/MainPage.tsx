@@ -1,8 +1,15 @@
-import { EuiPage, EuiPageBody, EuiPageContent, EuiPageContentBody, EuiPageHeader, EuiTitle } from "@elastic/eui";
-import { FormattedMessage } from "@osd/i18n/react";
+import {
+  EuiPage,
+  EuiPageBody,
+  EuiPageContent,
+  EuiPageContentBody,
+  EuiPageHeader,
+  EuiTitle,
+} from '@elastic/eui';
+import { FormattedMessage } from '@osd/i18n/react';
 import React from 'react';
-import { PLUGIN_NAME } from "../../common";
-import Todos from "../components/TodoTable/TodoTable";
+import { PLUGIN_NAME } from '../../common';
+import Todos from '../components/TodoTable/TodoTable';
 
 interface MainPageProps {}
 

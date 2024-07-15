@@ -133,6 +133,8 @@ function ToDoProvider({
     addSampleData() {
       const newTodos: TodoItem[] = [];
       faker.setDefaultRefDate(new Date());
+      const persons = faker.helpers.multiple(faker.person.firstName, { count: 7 });
+      const tags = faker.helpers.multiple(faker.lorem.word, { count: 27 });
       for (let i = 0; i < 100; i++) {
         newTodos.push({
           id: faker.string.uuid(),
@@ -141,6 +143,8 @@ function ToDoProvider({
           priority: faker.helpers.enumValue(Priority),
           status: faker.helpers.enumValue(Status),
           title: faker.lorem.sentence(),
+          tags: faker.helpers.multiple(() => faker.helpers.arrayElement(tags), { count: 5 }),
+          assignee: faker.helpers.arrayElement(persons),
         });
       }
       setTodoItems([...newTodos, ...todoItems]);

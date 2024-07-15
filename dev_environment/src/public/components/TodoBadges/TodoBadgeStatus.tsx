@@ -10,7 +10,7 @@ const TodoStatuses = {
 };
 
 interface TodoStatusProps {
-  variant: Status;
+  variant?: Status;
 }
 
 const TodoBadgeStatus = ({ variant }: TodoStatusProps) => {

@@ -78,6 +78,7 @@ function useTodoForm({ onSuccess, itemIdToUpdate, defaultValues = {} }: UseTodoF
 
   return {
     onSubmit: handleSubmit(submitHandler),
+    submitHandler,
     control,
     formState,
     renderStatusOptions,

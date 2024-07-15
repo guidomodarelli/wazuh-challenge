@@ -1,4 +1,4 @@
-import { OmitStrict } from "./global-types";
+import { OmitStrict } from './global-types';
 
 export enum Status {
   NOT_STARTED = 'Not started',
@@ -21,6 +21,8 @@ export interface TodoItem {
   priority: Priority;
   createdAt: string;
   isCompleted: boolean;
+  tags?: string[];
+  assignee?: string;
 }
 
 export type TodoItemRequest = OmitStrict<TodoItem, 'id' | 'createdAt'>;

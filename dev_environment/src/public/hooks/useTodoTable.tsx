@@ -5,6 +5,7 @@ import {
   EuiContextMenuItem,
   EuiContextMenuPanel,
   EuiFlexItem,
+  EuiIcon,
   EuiPopover,
   EuiScreenReaderOnly,
   EuiTableHeaderCell,
@@ -84,32 +85,10 @@ function useTodoTable({ onEdit }: UseTodoTableProps) {
       render: (value: Priority) => <TodoBadgePriority variant={value} />,
     },
     {
-      id: 'plannedDate',
-      label: 'Planned Date',
-      'data-test-subj': 'plannedDateCell',
-      render: (value: TodoItem['plannedDate']) =>
-        value ? <EuiText>{new Date(value).toLocaleDateString()}</EuiText> : <></>,
-    },
-    {
-      id: 'dueDate',
-      label: 'Due Date',
-      'data-test-subj': 'plannedDateCell',
-      render: (value: TodoItem['dueDate']) =>
-        value ? <EuiText>{new Date(value).toLocaleDateString()}</EuiText> : <></>,
-    },
-    {
-      id: 'startedDate',
-      label: 'Started at',
-      'data-test-subj': 'startedDateCell',
-      render: (value: TodoItem['startedDate']) =>
-        value ? <EuiText>{new Date(value).toLocaleDateString()}</EuiText> : <></>,
-    },
-    {
-      id: 'completedDate',
-      label: 'Completed at',
-      'data-test-subj': 'completedDateCell',
-      render: (value: TodoItem['completedDate']) =>
-        value ? <EuiText>{new Date(value).toLocaleDateString()}</EuiText> : <></>,
+      id: 'isCompleted',
+      label: 'Is completed',
+      'data-test-subj': 'isCompletedCell',
+      render: (value: TodoItem['isCompleted']) => (value ? <EuiIcon type="check" /> : <></>),
     },
     {
       id: 'createdAt',

@@ -1,14 +1,14 @@
-export function mockTodoContextFn(jest: any) {
+export function mockTodoContextFn(_jest: typeof jest) {
   return {
     todoItems: [],
     filteredTodoItems: [],
     search: '',
-    setSearch: jest.fn(),
-    createTodo: jest.fn(),
-    updateTodo: jest.fn(),
-    removeTodo: jest.fn(),
-    deleteTodosByIds: jest.fn(),
-    addSampleData: jest.fn(),
+    setSearch: _jest.fn(),
+    createTodo: _jest.fn(),
+    updateTodo: _jest.fn(),
+    removeTodo: _jest.fn(),
+    deleteTodosByIds: _jest.fn(),
+    addSampleData: _jest.fn(),
   };
 }
 

@@ -1,4 +1,5 @@
 import {
+  EuiBadge,
   EuiButton,
   EuiButtonIcon,
   EuiCheckbox,
@@ -71,6 +72,26 @@ function useTodoTable({ onEdit }: UseTodoTableProps) {
       label: 'Title',
       'data-test-subj': 'titleCell',
       render: (value: TodoItem['title']) => <EuiText>{value}</EuiText>,
+    },
+    {
+      id: 'tags',
+      label: 'Tags',
+      'data-test-subj': 'tagsCell',
+      render: (tags: TodoItem['tags']) => (
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
+          {tags?.map((tag, index) => (
+            <EuiBadge key={`${tag}-${index}`} color="default">
+              {tag}
+            </EuiBadge>
+          ))}
+        </div>
+      ),
+    },
+    {
+      id: 'assignee',
+      label: 'Assignee',
+      'data-test-subj': 'assigneeCell',
+      render: (value: TodoItem['assignee']) => <EuiText>{value}</EuiText>,
     },
     {
       id: 'status',

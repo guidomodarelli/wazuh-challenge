@@ -8,6 +8,10 @@ const onClose = jest.fn();
 jest.mock('./TodoForm', () => () => <></>);
 
 describe('FlyoutForm', () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
+
   it('should display a "Create new TODO" title', () => {
     render(
       <I18nProvider>

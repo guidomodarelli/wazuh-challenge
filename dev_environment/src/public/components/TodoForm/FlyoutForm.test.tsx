@@ -4,12 +4,13 @@ import FlyoutForm from './FlyoutForm';
 import { I18nProvider } from '@osd/i18n/react';
 import { getByTestSubj } from '../../../test/utils';
 
-const onClose = jest.fn();
-jest.mock('./TodoForm', () => () => <></>);
+let onClose: jest.Mock;
 
 describe('FlyoutForm', () => {
   beforeEach(() => {
-    jest.resetAllMocks();
+    onClose = jest.fn();
+
+    jest.mock('./TodoForm', () => () => <></>);
   });
 
   it('should display a "Create new TODO" title', () => {

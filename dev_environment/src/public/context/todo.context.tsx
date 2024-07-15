@@ -147,7 +147,7 @@ function ToDoProvider({
       for (let i = 0; i < 100; i++) {
         newTodos.push({
           id: faker.string.uuid(),
-          createdAt: faker.date.recent().toISOString(),
+          createdAt: faker.date.recent({ days: 27 }).toISOString(),
           isCompleted: faker.datatype.boolean(),
           priority: faker.helpers.enumValue(Priority),
           status: faker.helpers.enumValue(Status),

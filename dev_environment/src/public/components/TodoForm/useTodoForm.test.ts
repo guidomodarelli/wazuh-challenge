@@ -1,20 +1,11 @@
-import * as TodoContext from '../../context/todo.context';
 import { act, renderHook } from '@testing-library/react-hooks';
-import useTodoForm from './useTodoForm';
-import { Priority, Status } from '../../../common/types';
 import * as ReactHookForm from 'react-hook-form';
+import { mockTodoContextFn } from '../../../__mocks__/todo-context.mock';
+import { Priority, Status } from '../../../common/types';
+import * as TodoContext from "../../context/todo.context";
+import useTodoForm from './useTodoForm';
 
-let mockTodoContext: {
-  todoItems: [];
-  filteredTodoItems: [];
-  search: string;
-  setSearch: jest.Mock;
-  createTodo: jest.Mock;
-  updateTodo: jest.Mock;
-  removeTodo: jest.Mock;
-  deleteTodosByIds: jest.Mock;
-  addSampleData: jest.Mock;
-};
+let mockTodoContext: ReturnType<typeof mockTodoContextFn>;
 
 let mockUseForm: {
   handleSubmit: jest.Mock;
@@ -30,17 +21,7 @@ describe('useTodoForm', () => {
   beforeEach(() => {
     onSuccess = jest.fn();
 
-    mockTodoContext = {
-      todoItems: [],
-      filteredTodoItems: [],
-      search: '',
-      setSearch: jest.fn(),
-      createTodo: jest.fn(),
-      updateTodo: jest.fn(),
-      removeTodo: jest.fn(),
-      deleteTodosByIds: jest.fn(),
-      addSampleData: jest.fn(),
-    };
+    mockTodoContext = mockTodoContextFn(jest);
 
     mockUseForm = {
       handleSubmit: jest.fn().mockImplementation(() => jest.fn()),

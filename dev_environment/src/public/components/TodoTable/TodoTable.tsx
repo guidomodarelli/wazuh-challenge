@@ -72,19 +72,26 @@ const Todos = () => {
     );
   }
 
+  const clickChartsHandler = () => {
+    history.push('/charts');
+  };
+
+  const changeSearchTodoHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(event.target.value);
+  };
+
+  const deleteSelectedItemsHandler = () => {
+    deleteTodosByIds(...selectedItems);
+    setSelectedItems([]);
+  };
+
   /* If there are rows selected, it will display a "Delete selected items" button with a danger color. The button's
 onClick event handler will call the `deleteTodosByIds` function with the IDs of all selected items. */
   let optionalActionButtons;
   if (selectedItems.length) {
     optionalActionButtons = (
       <EuiFlexItem grow={false}>
-        <EuiButton
-          onClick={() => {
-            deleteTodosByIds(...selectedItems);
-            setSelectedItems([]);
-          }}
-          color="danger"
-        >
+        <EuiButton onClick={deleteSelectedItemsHandler} color="danger">
           Delete selected items
         </EuiButton>
       </EuiFlexItem>
@@ -104,15 +111,15 @@ onClick event handler will call the `deleteTodosByIds` function with the IDs of 
           <EuiButton onClick={addSampleData}>Add sample data</EuiButton>
         </EuiFlexItem>
         <EuiFlexItem grow={false}>
-          <EuiButton onClick={() => history.push('/charts')}>Charts</EuiButton>
+          <EuiButton onClick={clickChartsHandler}>Charts</EuiButton>
         </EuiFlexItem>
         {optionalActionButtons}
       </EuiFlexGroup>
       <EuiSpacer size="m" />
       <EuiFieldSearch
-        placeholder="Search TODO items by title"
+        placeholder="Search Todo items"
         value={search}
-        onChange={(e) => setSearch(e.target.value)}
+        onChange={changeSearchTodoHandler}
         isClearable
       />
       <EuiSpacer size="m" />

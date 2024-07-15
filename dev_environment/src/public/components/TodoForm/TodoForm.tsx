@@ -117,6 +117,7 @@ const TodoForm = ({ id, itemIdToUpdate, onSuccess, defaultValues = {} }: TodoFor
               error={errors[otherFields.name]?.message}
             >
               <EuiCheckbox
+                {...otherFields}
                 id={checkboxId()}
                 label="Is completed"
                 checked={value}

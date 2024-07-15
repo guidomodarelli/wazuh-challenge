@@ -1,10 +1,11 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { CoreStart } from '../../../../src/core/public';
 import { NavigationPublicPluginStart } from '../../../../src/plugins/navigation/public';
+import Charts from '../pages/Charts';
+import MainPage from '../pages/MainPage';
 import Providers from '../providers';
 import { Services } from '../services';
-import MainPage from '../pages/MainPage';
 
 interface ToDoPluginAppDeps {
   basename: string;
@@ -24,7 +25,14 @@ export const ToDoPluginApp = ({
   return (
     <BrowserRouter basename={basename}>
       <Providers notifications={notifications} http={http} services={services}>
-        <MainPage />
+        <Switch>
+          <Route exact path="/">
+            <MainPage />
+          </Route>
+          <Route path="/charts">
+            <Charts />
+          </Route>
+        </Switch>
       </Providers>
     </BrowserRouter>
   );

@@ -132,7 +132,7 @@ onClick event handler will call the `deleteTodosByIds` function with the IDs of 
       />
       <EuiSpacer size="m" />
       <EuiText size="xs">
-        Showing {resultsCount} <strong>Users</strong>
+        Showing {resultsCount} <strong>Todos</strong>
       </EuiText>
       <EuiBasicTable
         tableCaption="Demo for responsive EuiBasicTable with mobile options"

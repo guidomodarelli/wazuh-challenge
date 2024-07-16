@@ -50,6 +50,7 @@ describe('TodoContext', () => {
     const todoItem1: Partial<TodoItem> = {
       id: '1',
       title: 'test-1',
+      status: Status.IN_PROGRESS,
     };
     const todoItem2: Partial<TodoItem> = {
       id: '2',

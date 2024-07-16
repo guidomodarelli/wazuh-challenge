@@ -18,7 +18,7 @@ import {
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Priority, TodoItem } from '../../../common/types';
-import { useTodoContext } from '../../context/todo.context';
+import { useTodoContext } from '../../context/TodoContext';
 
 interface ChartsProps {}
 

@@ -3,7 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Priority, Status, TodoItemRequest } from '../../../common/types';
-import { useTodoContext } from '../../context/todo.context';
+import { useTodoContext } from '../../context/TodoContext';
 import { Option } from '../../types/option';
 import TodoBadgePriority from '../TodoBadges/TodoBadgePriority';
 import TodoBadgeStatus from '../TodoBadges/TodoBadgeStatus';

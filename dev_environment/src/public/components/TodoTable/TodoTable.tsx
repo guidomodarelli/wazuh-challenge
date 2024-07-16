@@ -10,7 +10,7 @@ import {
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { TodoItem } from '../../../common/types';
-import { useTodoContext } from '../../context/todo.context';
+import { useTodoContext } from '../../context/TodoContext';
 import FlyoutForm from '../TodoForm/FlyoutForm';
 import { FieldValues } from '../TodoForm/schema';
 import './TodoTable.styles.scss';

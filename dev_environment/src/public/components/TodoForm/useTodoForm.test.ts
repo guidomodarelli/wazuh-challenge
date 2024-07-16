@@ -2,7 +2,7 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import * as ReactHookForm from 'react-hook-form';
 import { mockTodoContextFn } from '../../../__mocks__/todo-context.mock';
 import { Priority, Status } from '../../../common/types';
-import * as TodoContext from "../../context/todo.context";
+import * as TodoContext from "../../context/TodoContext";
 import useTodoForm from './useTodoForm';
 
 let mockTodoContext: ReturnType<typeof mockTodoContextFn>;

@@ -5,6 +5,7 @@ import {
   EuiFlexGroup,
   EuiFlexItem,
   EuiSpacer,
+  EuiText,
 } from '@elastic/eui';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -39,7 +40,9 @@ const Todos = () => {
       setSelectedItems([]);
     },
   });
-  const { onTableChange, pageOfItems, pagination, sorting } = useSortingAndPagination<TodoItem>({
+  const { onTableChange, pageOfItems, pagination, sorting, resultsCount } = useSortingAndPagination<
+    TodoItem
+  >({
     items: todoItems,
     defaultSortField: 'title',
   });
@@ -93,11 +96,11 @@ const Todos = () => {
   /* If there are rows selected, it will display a "Delete selected items" button with a danger color. The button's
 onClick event handler will call the `deleteTodosByIds` function with the IDs of all selected items. */
   let optionalActionButtons;
-  if (selectedItems.length) {
+  if (selectedItems.length > 0) {
     optionalActionButtons = (
       <EuiFlexItem grow={false}>
-        <EuiButton onClick={deleteSelectedItemsHandler} color="danger">
-          Delete selected items
+        <EuiButton color="danger" iconType="trash" onClick={deleteSelectedItemsHandler}>
+          Delete {selectedItems.length} Users
         </EuiButton>
       </EuiFlexItem>
     );
@@ -128,6 +131,9 @@ onClick event handler will call the `deleteTodosByIds` function with the IDs of 
         isClearable
       />
       <EuiSpacer size="m" />
+      <EuiText size="xs">
+        Showing {resultsCount} <strong>Users</strong>
+      </EuiText>
       <EuiBasicTable
         tableCaption="Demo for responsive EuiBasicTable with mobile options"
         items={pageOfItems}

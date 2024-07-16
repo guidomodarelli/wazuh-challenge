@@ -61,6 +61,11 @@ describe('TodoContext', () => {
         tags: ['tum', 'magnam', 'corporis', 'asperiores', 'accusator'],
         assignee: 'Nicholas',
       },
+      {
+        title: 'Curriculum sublime adfectus deporto',
+        tags: ['uter', 'modi', 'clementia', 'corporis', 'qui'],
+        assignee: 'Nicholas',
+      },
     ];
 
     services = {
@@ -74,8 +79,8 @@ describe('TodoContext', () => {
 
     result.current.setSearch('qui');
 
-    expect(result.current.filteredTodoItems).toHaveLength(2);
-    expect(result.current.filteredTodoItems).toEqual([todoItems[1], todoItems[2]]);
+    expect(result.current.filteredTodoItems).toHaveLength(3);
+    expect(result.current.filteredTodoItems).toEqual([todoItems[1], todoItems[2], todoItems[3]]);
 
     result.current.setSearch('consequuntur');
 
@@ -86,6 +91,11 @@ describe('TodoContext', () => {
 
     expect(result.current.filteredTodoItems).toHaveLength(1);
     expect(result.current.filteredTodoItems).toEqual([todoItems[1]]);
+
+    result.current.setSearch('Nicholas');
+
+    expect(result.current.filteredTodoItems).toHaveLength(2);
+    expect(result.current.filteredTodoItems).toEqual([todoItems[2], todoItems[3]]);
   });
 
   it('verify completedTodos count updates correctly after todo items are completed and reverted', async () => {

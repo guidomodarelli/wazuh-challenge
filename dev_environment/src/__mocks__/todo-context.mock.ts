@@ -1,9 +1,9 @@
-import { PartialRecordMock } from '../common/global-types';
+import { RecordMock } from '../common/global-types';
 import { useTodoContext } from '../public/context/TodoContext';
 
 export function mockTodoContextFn(
   _jest: typeof jest
-): PartialRecordMock<ReturnType<typeof useTodoContext>> {
+): RecordMock<ReturnType<typeof useTodoContext>> {
   return {
     todoItems: [],
     filteredTodoItems: [],

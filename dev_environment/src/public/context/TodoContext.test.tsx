@@ -10,6 +10,17 @@ import ToDoProvider, { useTodoContext } from './TodoContext';
 let notifications: RecordMock<CoreStart['notifications']>;
 let services: RecordMock<Services>;
 
+const wrapper = (
+  notifications: RecordMock<CoreStart['notifications']>,
+  services: RecordMock<Services>
+) => {
+  return ({ children }: { children?: React.ReactNode }) => (
+    <ToDoProvider notifications={notifications} services={services}>
+      {children}
+    </ToDoProvider>
+  );
+};
+
 describe('TodoContext', () => {
   beforeEach(() => {
     notifications = {
@@ -44,18 +55,8 @@ describe('TodoContext', () => {
       ...services,
       fetchTodos: jest.fn().mockResolvedValue([todoItem1, todoItem2]),
     };
-    const wrapper = ({ children }: { children?: React.ReactNode }) => (
-      <ToDoProvider notifications={notifications} services={services}>
-        {children}
-      </ToDoProvider>
-    );
-
     let { result, waitForNextUpdate } = renderHook(() => useTodoContext(), {
-      wrapper,
-      initialProps: {
-        services,
-        notifications,
-      },
+      wrapper: wrapper(notifications, services),
     });
 
     await waitForNextUpdate();

@@ -13,7 +13,6 @@ interface ToDoContextType {
   setSearch: (search: string) => void;
   createTodo: (item: TodoItemRequest) => void;
   updateTodo: (itemIdToUpdate: string, itemToUpdate: TodoItemRequest) => void;
-  removeTodo: (todoId: TodoItem['id']) => void;
   deleteTodosByIds: (...ids: string[]) => void;
   addSampleData: () => void;
 }
@@ -25,7 +24,6 @@ export const TodoContext = createContext<ToDoContextType>({
   setSearch: () => null,
   createTodo: () => null,
   updateTodo: () => null,
-  removeTodo: () => null,
   deleteTodosByIds: () => null,
   addSampleData: () => null,
 });
@@ -41,7 +39,7 @@ interface ToDoProviderProps {
 function ToDoProvider({
   children,
   notifications,
-  services: { fetchTodos, createNewTodo, updateTodo, deleteTodo, deleteTodosByIds },
+  services: { fetchTodos, createNewTodo, updateTodo, deleteTodosByIds },
 }: ToDoProviderProps) {
   const [todoItems, setTodoItems] = useState<TodoItem[]>([]);
   const [search, setSearch] = useState('');
@@ -107,21 +105,6 @@ function ToDoProvider({
           return previousTodo;
         });
         setTodoItems(newTodos);
-      }
-    },
-
-    /* The `removeTodo` function is responsible for deleting a specific todo item from the list of todo items.  */
-    async removeTodo(todoId: TodoItem['id']) {
-      const response = await deleteTodo(todoId);
-      if (isError(response)) {
-        // TODO: Handle Error
-      } else {
-        notifications.toasts.addSuccess(
-          i18n.translate('todoPlugin.todoItemDeletedSuccessfully', {
-            defaultMessage: 'Todo item deleted successfully',
-          })
-        );
-        setTodoItems(todoItems.filter((todo) => todo.id !== todoId));
       }
     },
 

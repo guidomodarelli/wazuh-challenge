@@ -15,7 +15,6 @@ export interface Services {
     itemIdToUpdate: string,
     updatedTodo: TodoItemRequest
   ) => Promise<undefined | HttpFetchError>;
-  deleteTodo: (todoId: string) => Promise<undefined | HttpFetchError>;
   deleteTodosByIds: (...todoIds: string[]) => Promise<undefined | HttpFetchError>;
 }
 
@@ -56,16 +55,6 @@ export function getServices({ http }: CoreStart): Services {
         await http.put(`${SERVER_TODO_BASE_ROUTE_PATH}/${itemIdToUpdate}`, {
           body: JSON.stringify(updatedTodo),
         });
-        return;
-      } catch (error) {
-        return error as HttpFetchError;
-      }
-    },
-
-    /* The `deleteTodo` function is responsible for deleting a specific todo item from the server. */
-    async deleteTodo(todoId) {
-      try {
-        await http.delete(`${SERVER_TODO_BASE_ROUTE_PATH}/${todoId}`);
         return;
       } catch (error) {
         return error as HttpFetchError;

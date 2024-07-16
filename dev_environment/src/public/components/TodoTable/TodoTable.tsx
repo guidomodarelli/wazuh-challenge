@@ -26,7 +26,6 @@ const Todos = () => {
     setSearch,
     addSampleData,
     deleteTodosByIds,
-    removeTodo,
   } = useTodoContext();
   const { selectedItems, setSelectedItems, selection } = useSelectedItems();
   const { columns } = useColumns({
@@ -36,7 +35,7 @@ const Todos = () => {
       setSelectedItems([]);
     },
     onActionDelete(todoItem) {
-      removeTodo(todoItem.id);
+      deleteTodosByIds(todoItem.id);
       setSelectedItems([]);
     },
   });

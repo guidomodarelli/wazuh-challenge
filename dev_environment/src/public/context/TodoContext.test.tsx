@@ -3,7 +3,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import { CoreStart } from 'opensearch-dashboards/public';
 import React from 'react';
 import { RecordMock } from '../../common/global-types';
-import { TodoItem } from '../../common/types';
+import { Status, TodoItem } from '../../common/types';
 import { Services } from '../services';
 import ToDoProvider, { useTodoContext } from './TodoContext';
 
@@ -45,7 +45,54 @@ describe('TodoContext', () => {
   });
 
   it.todo('filteredTodoItems');
-  it.todo('completedTodos');
+
+  it('verify completedTodos count updates correctly after todo items are completed and reverted', async () => {
+    const todoItem1: Partial<TodoItem> = {
+      id: '1',
+      title: 'test-1',
+    };
+    const todoItem2: Partial<TodoItem> = {
+      id: '2',
+      title: 'test-2',
+      status: Status.IN_PROGRESS,
+    };
+    const updatedTodoItem2: Partial<TodoItem> = {
+      id: '2',
+      title: 'test-2',
+      status: Status.COMPLETED,
+    };
+    const todoItem3: Partial<TodoItem> = {
+      id: '3',
+      title: 'test-3',
+      status: Status.IN_PROGRESS,
+    };
+    const updatedTodoItem3: Partial<TodoItem> = {
+      id: '3',
+      title: 'test-3',
+      status: Status.COMPLETED,
+    };
+    services = {
+      ...services,
+      fetchTodos: jest.fn().mockResolvedValue([todoItem1, todoItem2, todoItem3]),
+    };
+    let { result, waitForNextUpdate } = renderHook(() => useTodoContext(), {
+      wrapper: wrapper(notifications, services),
+    });
+    await waitForNextUpdate();
+
+    expect(result.current.completedTodos).toBe(0);
+    // @ts-expect-error
+    await result.current.updateTodo(todoItem2.id, updatedTodoItem2);
+    expect(result.current.completedTodos).toBe(1);
+    // @ts-expect-error
+    await result.current.updateTodo(todoItem3.id, updatedTodoItem3);
+    expect(result.current.completedTodos).toBe(2);
+    // @ts-expect-error
+    await result.current.updateTodo(todoItem2.id, todoItem2);
+    // @ts-expect-error
+    await result.current.updateTodo(todoItem3.id, todoItem3);
+    expect(result.current.completedTodos).toBe(0);
+  });
 
   it('should fetch and populate todoItems correctly on initial render', async () => {
     const todoItem1: Partial<TodoItem> = {

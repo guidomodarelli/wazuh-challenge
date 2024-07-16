@@ -105,4 +105,22 @@ describe('services', () => {
     });
     expect(todoReturned).toEqual(todosExpected);
   });
+
+  it('updateTodo', async () => {
+    const todoItem: Pick<TodoItem, 'id' | 'title'> = {
+      id: '1',
+      title: 'Absorbeo vulgaris speculum crapula agnosco clarus utpote',
+    };
+
+    // @ts-expect-error
+    const services = getServices({ http });
+
+    // @ts-expect-error
+    await services.updateTodo(todoItem.id, todoItem);
+
+    expect(http.put).toHaveBeenCalledTimes(1);
+    expect(http.put).toHaveBeenCalledWith(`/api/todo_plugin/${todoItem.id}`, {
+      body: JSON.stringify(todoItem),
+    });
+  });
 });

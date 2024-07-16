@@ -20,6 +20,7 @@ export function defineRouteGetTodos(router: IRouter) {
 
       const todos: ApiResponse<SearchResponse> = await openSearchClient.search({
         index: TODO_INDEX,
+        size: 1000,
       });
       return response.ok({
         body: todos.body.hits.hits,

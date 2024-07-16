@@ -3,6 +3,7 @@ import { TodoItem, TodoItemRequest } from '../common/types';
 import { OpenSearchSearchHit } from 'src/plugins/discover/public/application/doc_views/doc_views_types';
 import {
   SERVER_TODO_BASE_ROUTE_PATH,
+  SERVER_TODO_ROUTE_PATH_BULK_CREATE,
   SERVER_TODO_ROUTE_PATH_CREATE,
   SERVER_TODO_ROUTE_PATH_DELETE_IDS,
   SERVER_TODO_ROUTE_PATH_GET_ALL,
@@ -11,6 +12,7 @@ import {
 export interface Services {
   fetchTodos: () => Promise<TodoItem[] | HttpFetchError>;
   createNewTodo: (newTodoItem: TodoItemRequest) => Promise<TodoItem | HttpFetchError>;
+  bulkCreateTodos: (...newTodos: (TodoItemRequest | TodoItem)[]) => Promise<TodoItem[] | HttpFetchError>;
   updateTodo: (
     itemIdToUpdate: string,
     updatedTodo: TodoItemRequest
@@ -44,6 +46,17 @@ export function getServices({ http }: CoreStart): Services {
           body: JSON.stringify(newTodoItem),
         });
         return response as TodoItem;
+      } catch (error) {
+        return error as HttpFetchError;
+      }
+    },
+
+    async bulkCreateTodos(...newTodos) {
+      try {
+        const response = await http.post(SERVER_TODO_ROUTE_PATH_BULK_CREATE, {
+          body: JSON.stringify(newTodos),
+        });
+        return response as TodoItem[];
       } catch (error) {
         return error as HttpFetchError;
       }

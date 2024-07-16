@@ -22,7 +22,9 @@ const Todos = () => {
   const [isFlyoutVisible, setIsFlyoutVisible] = useState(false);
   const [itemIdToUpdate, setItemIdToUpdate] = useState<string | undefined>(undefined);
   const {
-    filteredTodoItems: todoItems,
+    todoItems,
+    filteredTodoItems,
+    completedTodos,
     search,
     setSearch,
     addSampleData,
@@ -43,7 +45,7 @@ const Todos = () => {
   const { onTableChange, pageOfItems, pagination, sorting, resultsCount } = useSortingAndPagination<
     TodoItem
   >({
-    items: todoItems,
+    items: filteredTodoItems,
     defaultSortField: 'title',
   });
   const history = useHistory();
@@ -76,7 +78,7 @@ const Todos = () => {
     );
   };
   if (isFlyoutVisible) {
-    const itemToUpdate = todoItems.find((item) => item.id === itemIdToUpdate);
+    const itemToUpdate = filteredTodoItems.find((item) => item.id === itemIdToUpdate);
     if (itemToUpdate) setFlyout(itemToUpdate);
   }
 
@@ -132,8 +134,9 @@ onClick event handler will call the `deleteTodosByIds` function with the IDs of 
       />
       <EuiSpacer size="m" />
       <EuiText size="xs">
-        Showing {resultsCount} <strong>Todos</strong>
+        <strong>{completedTodos}</strong> out of <strong>{todoItems.length}</strong> todos completed
       </EuiText>
+      <EuiText size="xs">Showing {resultsCount} todos</EuiText>
       <EuiBasicTable
         tableCaption="Demo for responsive EuiBasicTable with mobile options"
         items={pageOfItems}

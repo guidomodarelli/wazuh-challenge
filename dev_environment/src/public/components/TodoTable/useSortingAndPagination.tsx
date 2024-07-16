@@ -96,7 +96,7 @@ function useSortingAndPagination<T extends { [x: string]: any }>({
         <strong>
           {pageSize * pageIndex + 1}-{pageSize * pageIndex + pageSize}
         </strong>{' '}
-        of {totalItemCount}
+        of <strong>{totalItemCount}</strong>
       </>
     );
 

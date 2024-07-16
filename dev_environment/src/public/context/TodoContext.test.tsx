@@ -66,4 +66,24 @@ describe('TodoContext', () => {
     expect(todoItems[0]).toEqual(todoItem1);
     expect(todoItems[1]).toEqual(todoItem2);
   });
+
+  it('should call createNewTodo service and update context with new todo item', async () => {
+    const todoItem1: Partial<TodoItem> = {
+      title: 'test-1',
+    };
+    services.createNewTodo = jest.fn().mockResolvedValue(todoItem1);
+    let { result, waitForNextUpdate } = renderHook(() => useTodoContext(), {
+      wrapper: wrapper(notifications, services),
+    });
+    await waitForNextUpdate();
+
+    // @ts-expect-error
+    await result.current.createTodo(todoItem1);
+
+    expect(services.createNewTodo).toHaveBeenCalledTimes(1);
+    expect(services.createNewTodo).toHaveBeenCalledWith(todoItem1);
+    expect(notifications.toasts.addSuccess).toHaveBeenCalledTimes(1);
+    expect(result.current.todoItems).toHaveLength(1);
+    expect(result.current.todoItems[0]).toEqual(todoItem1);
+  });
 });

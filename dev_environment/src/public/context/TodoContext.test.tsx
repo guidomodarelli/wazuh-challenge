@@ -86,4 +86,44 @@ describe('TodoContext', () => {
     expect(result.current.todoItems).toHaveLength(1);
     expect(result.current.todoItems[0]).toEqual(todoItem1);
   });
+
+  it('should update a specific todo item and notify success', async () => {
+    const todoItem1: Partial<TodoItem> = {
+      id: '1',
+      title: 'test-1',
+    };
+    const todoItem2: Partial<TodoItem> = {
+      id: '2',
+      title: 'test-2',
+    };
+    const todoItem3: Partial<TodoItem> = {
+      id: '3',
+      title: 'test-3',
+    };
+    const updatedtodoItem2: Partial<TodoItem> = {
+      id: '2',
+      title: 'test-2-updated',
+    };
+    services = {
+      ...services,
+      fetchTodos: jest.fn().mockResolvedValue([todoItem1, todoItem2, todoItem3]),
+      updateTodo: jest.fn().mockResolvedValue([updatedtodoItem2]),
+    };
+
+    let { result, waitForNextUpdate } = renderHook(() => useTodoContext(), {
+      wrapper: wrapper(notifications, services),
+    });
+    await waitForNextUpdate();
+
+    expect(result.current.todoItems).toHaveLength(3);
+
+    // @ts-expect-error
+    await result.current.updateTodo(todoItem2.id, updatedtodoItem2);
+
+    expect(services.updateTodo).toHaveBeenCalledTimes(1);
+    expect(services.updateTodo).toHaveBeenCalledWith(todoItem2.id, updatedtodoItem2);
+    expect(notifications.toasts.addSuccess).toHaveBeenCalledTimes(1);
+    expect(result.current.todoItems).toHaveLength(3);
+    expect(result.current.todoItems[1]).toEqual(updatedtodoItem2);
+  });
 });

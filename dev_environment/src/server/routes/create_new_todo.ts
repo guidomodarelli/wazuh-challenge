@@ -24,6 +24,7 @@ export function defineRouteCreateNewTodo(router: IRouter) {
         id: UUID(),
         createdAt: new Date().toISOString(),
         status: Status.NOT_STARTED,
+        tags: [],
         ...request.body,
       };
 

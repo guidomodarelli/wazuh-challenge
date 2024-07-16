@@ -15,7 +15,7 @@ import FlyoutForm from '../TodoForm/FlyoutForm';
 import { FieldValues } from '../TodoForm/schema';
 import './TodoTable.styles.scss';
 import useColumns from './useColumns.hook';
-import useSelectedItems from './useSelectedItems.hook';
+import useSelectionItems from './useSelectionItems.hook';
 import useSortingAndPagination from './useSortingAndPagination';
 
 const Todos = () => {
@@ -30,7 +30,7 @@ const Todos = () => {
     addSampleData,
     deleteTodosByIds,
   } = useTodoContext();
-  const { selectedItems, setSelectedItems, selection } = useSelectedItems();
+  const { selectedItems, setSelectedItems, selection } = useSelectionItems();
   const { columns } = useColumns({
     onActionEdit(todoItem) {
       setItemIdToUpdate(todoItem.id);

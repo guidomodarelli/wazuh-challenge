@@ -2,7 +2,7 @@ import { EuiTableSelectionType } from '@elastic/eui';
 import { TodoItem } from '../../../common/types';
 import { useState } from 'react';
 
-function useSelectedItems() {
+function useSelectionItems() {
   const [selectedItems, setSelectedItems] = useState<TodoItem['id'][]>([]);
 
   /**
@@ -28,4 +28,4 @@ function useSelectedItems() {
   };
 }
 
-export default useSelectedItems;
+export default useSelectionItems;

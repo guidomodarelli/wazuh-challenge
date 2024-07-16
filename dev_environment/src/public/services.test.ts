@@ -71,7 +71,7 @@ describe('services', () => {
     expect(todoReturned).toEqual(todosExpected);
   });
 
-  it('bulkCreateTodos', async () => {
+  it('bulk creates and returns multiple todo items with ids', async () => {
     const todoItems: Pick<TodoItem, 'title'>[] = [
       {
         title: 'Absorbeo vulgaris speculum crapula agnosco clarus utpote',
@@ -106,7 +106,7 @@ describe('services', () => {
     expect(todoReturned).toEqual(todosExpected);
   });
 
-  it('updateTodo', async () => {
+  it('updates an existing todo item by id', async () => {
     const todoItem: Pick<TodoItem, 'id' | 'title'> = {
       id: '1',
       title: 'Absorbeo vulgaris speculum crapula agnosco clarus utpote',
@@ -124,7 +124,7 @@ describe('services', () => {
     });
   });
 
-  it('deleteTodosByIds', async () => {
+  it('deletes multiple todo items by ids', async () => {
     const todoIds: string[] = ['1', '2', '3', '4'];
     // @ts-expect-error
     const services = getServices({ http });

@@ -16,7 +16,7 @@ import { FieldValues } from '../TodoForm/schema';
 import './TodoTable.styles.scss';
 import useColumns from './useColumns.hook';
 import useSelectionItems from './useSelectionItems.hook';
-import useSortingAndPagination from './useSortingAndPagination';
+import useSortingAndPagination from './useSortingAndPagination.hook';
 
 const Todos = () => {
   const [isFlyoutVisible, setIsFlyoutVisible] = useState(false);

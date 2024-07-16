@@ -70,4 +70,39 @@ describe('services', () => {
     });
     expect(todoReturned).toEqual(todosExpected);
   });
+
+  it('bulkCreateTodos', async () => {
+    const todoItems: Pick<TodoItem, 'title'>[] = [
+      {
+        title: 'Absorbeo vulgaris speculum crapula agnosco clarus utpote',
+      },
+      {
+        title: 'Artificiose vereor asd demum',
+      },
+      {
+        title: 'Calculus talio damno quia censura absque argumentum',
+      },
+      {
+        title: 'Curriculum sublime adfectus deporto',
+      },
+    ];
+    const todosExpected = todoItems.map((item, index) => {
+      return {
+        ...item,
+        id: index,
+      };
+    });
+    http.post = jest.fn().mockResolvedValue(todosExpected);
+    // @ts-expect-error
+    const services = getServices({ http });
+
+    // @ts-expect-error
+    const todoReturned = await services.bulkCreateTodos(...todoItems);
+
+    expect(http.post).toHaveBeenCalledTimes(1);
+    expect(http.post).toHaveBeenCalledWith("/api/todo_plugin/bulkCreate", {
+      body: JSON.stringify(todoItems),
+    });
+    expect(todoReturned).toEqual(todosExpected);
+  });
 });

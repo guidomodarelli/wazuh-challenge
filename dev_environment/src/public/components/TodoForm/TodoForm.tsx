@@ -11,7 +11,7 @@ import { Priority, Status } from '../../../common/types';
 import { mapOptions } from '../../utils/map_options';
 import { FieldValues } from './schema';
 import './TodoForm.styles.scss';
-import useTodoForm from './useTodoForm';
+import useTodoForm from './useTodoForm.hook';
 
 interface TodoFormProps {
   id: string;

@@ -99,27 +99,27 @@ describe('TodoContext', () => {
   });
 
   it('verify completedTodos count updates correctly after todo items are completed and reverted', async () => {
-    const todoItem1: Partial<TodoItem> = {
+    const todoItem1: Pick<TodoItem, 'id' | 'title' | 'status'> = {
       id: '1',
       title: 'test-1',
       status: Status.IN_PROGRESS,
     };
-    const todoItem2: Partial<TodoItem> = {
+    const todoItem2: Pick<TodoItem, 'id' | 'title' | 'status'> = {
       id: '2',
       title: 'test-2',
       status: Status.IN_PROGRESS,
     };
-    const updatedTodoItem2: Partial<TodoItem> = {
+    const updatedTodoItem2: Pick<TodoItem, 'id' | 'title' | 'status'> = {
       id: '2',
       title: 'test-2',
       status: Status.COMPLETED,
     };
-    const todoItem3: Partial<TodoItem> = {
+    const todoItem3: Pick<TodoItem, 'id' | 'title' | 'status'> = {
       id: '3',
       title: 'test-3',
       status: Status.IN_PROGRESS,
     };
-    const updatedTodoItem3: Partial<TodoItem> = {
+    const updatedTodoItem3: Pick<TodoItem, 'id' | 'title' | 'status'> = {
       id: '3',
       title: 'test-3',
       status: Status.COMPLETED,
@@ -148,10 +148,10 @@ describe('TodoContext', () => {
   });
 
   it('should fetch and populate todoItems correctly on initial render', async () => {
-    const todoItem1: Partial<TodoItem> = {
+    const todoItem1: Pick<TodoItem, 'title'> = {
       title: 'test-1',
     };
-    const todoItem2: Partial<TodoItem> = {
+    const todoItem2: Pick<TodoItem, 'title'> = {
       title: 'test-2',
     };
     services = {
@@ -171,7 +171,7 @@ describe('TodoContext', () => {
   });
 
   it('should call createNewTodo service and update context with new todo item', async () => {
-    const todoItem1: Partial<TodoItem> = {
+    const todoItem1: Pick<TodoItem, 'title'> = {
       title: 'test-1',
     };
     services.createNewTodo = jest.fn().mockResolvedValue(todoItem1);
@@ -193,19 +193,19 @@ describe('TodoContext', () => {
   });
 
   it('should update a specific todo item and notify success', async () => {
-    const todoItem1: Partial<TodoItem> = {
+    const todoItem1: Pick<TodoItem, 'id' | 'title'> = {
       id: '1',
       title: 'test-1',
     };
-    const todoItem2: Partial<TodoItem> = {
+    const todoItem2: Pick<TodoItem, 'id' | 'title'> = {
       id: '2',
       title: 'test-2',
     };
-    const todoItem3: Partial<TodoItem> = {
+    const todoItem3: Pick<TodoItem, 'id' | 'title'> = {
       id: '3',
       title: 'test-3',
     };
-    const updatedtodoItem2: Partial<TodoItem> = {
+    const updatedtodoItem2: Pick<TodoItem, 'id' | 'title'> = {
       id: '2',
       title: 'test-2-updated',
     };
@@ -233,15 +233,15 @@ describe('TodoContext', () => {
   });
 
   it('should delete specified todo items by their IDs and notify success', async () => {
-    const todoItem1: Partial<TodoItem> = {
+    const todoItem1: Pick<TodoItem, 'id' | 'title'> = {
       id: '1',
       title: 'test-1',
     };
-    const todoItem2: Partial<TodoItem> = {
+    const todoItem2: Pick<TodoItem, 'id' | 'title'> = {
       id: '2',
       title: 'test-2',
     };
-    const todoItem3: Partial<TodoItem> = {
+    const todoItem3: Pick<TodoItem, 'id' | 'title'> = {
       id: '3',
       title: 'test-3',
     };
@@ -258,7 +258,6 @@ describe('TodoContext', () => {
 
     expect(result.current.todoItems).toHaveLength(3);
 
-    // @ts-expect-error
     await result.current.deleteTodosByIds(todoItem1.id, todoItem3.id);
 
     expect(services.deleteTodosByIds).toHaveBeenCalledTimes(1);

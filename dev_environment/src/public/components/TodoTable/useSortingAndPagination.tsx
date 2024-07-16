@@ -1,3 +1,4 @@
+import React from 'react';
 import { Comparators, Criteria, Direction, EuiTableSortingType } from '@elastic/eui';
 import { useState } from 'react';
 
@@ -87,11 +88,24 @@ function useSortingAndPagination<T extends { [x: string]: any }>({
     },
   };
 
+  const resultsCount =
+    pageSize === 0 ? (
+      <strong>All</strong>
+    ) : (
+      <>
+        <strong>
+          {pageSize * pageIndex + 1}-{pageSize * pageIndex + pageSize}
+        </strong>{' '}
+        of {totalItemCount}
+      </>
+    );
+
   return {
     pageOfItems,
     pagination,
     sorting,
     onTableChange,
+    resultsCount,
   };
 }
 

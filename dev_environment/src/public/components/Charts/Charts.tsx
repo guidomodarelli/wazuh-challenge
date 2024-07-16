@@ -86,6 +86,14 @@ const Charts = ({}: ChartsProps) => {
       });
   };
 
+  /**
+   * The function `groupByAssigneeAndPriority` groups todo items by assignee and priority.
+   * @returns an array of objects, where each object represents a group of todo items grouped by assignee and priority.
+   * Each object in the array contains the following properties:
+   * - `assignee`: The assignee of the todo items in the group.
+   * - `count`: The number of todo items in the group.
+   * - `priority`: The priority of the todo
+   */
   const groupByAssigneeAndPriority = () => {
     const itemsGroupedByAssignee = Object.groupBy(
       todoItems,
@@ -101,6 +109,12 @@ const Charts = ({}: ChartsProps) => {
     });
   };
 
+  /**
+   * The function `groupByAssigneeAndStatus` groups todo items by assignee and status.
+   * @returns an array of objects, where each object represents a group of todo items grouped by assignee and status.
+   * Each object in the array contains the assignee name, the count of todo items for that assignee and status
+   * combination, and the status of the todo items.
+   */
   const groupByAssigneeAndStatus = () => {
     const itemsGroupedByAssignee = Object.groupBy(
       todoItems,

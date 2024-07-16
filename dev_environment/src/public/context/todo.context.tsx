@@ -9,6 +9,7 @@ import { isError } from '../utils/is_error';
 interface ToDoContextType {
   todoItems: TodoItem[];
   filteredTodoItems: TodoItem[];
+  completedTodos: number;
   search: string;
   setSearch: (search: string) => void;
   createTodo: (item: TodoItemRequest) => void;
@@ -20,6 +21,7 @@ interface ToDoContextType {
 export const TodoContext = createContext<ToDoContextType>({
   todoItems: [],
   filteredTodoItems: [],
+  completedTodos: 0,
   search: '',
   setSearch: () => null,
   createTodo: () => null,
@@ -57,6 +59,10 @@ function ToDoProvider({
     );
   });
 
+  const completedTodos = todoItems.reduce((previous, { status }) => {
+    return status === Status.COMPLETED ? previous + 1 : previous;
+  }, 0);
+
   React.useEffect(() => {
     fetchTodos().then((response) => {
       if (isError(response)) {
@@ -70,6 +76,7 @@ function ToDoProvider({
   const value: ToDoContextType = {
     todoItems,
     filteredTodoItems,
+    completedTodos,
     search,
     setSearch,
     /* The `createTodo` function is responsible for creating a new todo item. */

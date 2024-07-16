@@ -1,5 +1,5 @@
 import { EuiBadge, EuiBasicTableColumn, EuiIcon, EuiText } from '@elastic/eui';
-import { TodoItem } from '../../../common/types';
+import { Status, TodoItem } from '../../../common/types';
 import React from 'react';
 import TodoBadgeStatus from '../TodoBadges/TodoBadgeStatus';
 import TodoBadgePriority from '../TodoBadges/TodoBadgePriority';
@@ -15,6 +15,7 @@ function useColumns({ onActionEdit: onEdit, onActionDelete: onDelete }: UseColum
       field: 'title',
       name: 'Title',
       sortable: true,
+      footer: <em>Page totals:</em>,
     },
     {
       id: 'tags',
@@ -33,12 +34,23 @@ function useColumns({ onActionEdit: onEdit, onActionDelete: onDelete }: UseColum
     {
       id: 'assignee',
       name: 'Assignee',
+      footer: ({ items }: { items: TodoItem[] }) => {
+        const uniqueUsers = new Set(items.map((todoItem) => todoItem.assignee));
+        return <>{uniqueUsers.size} users</>;
+      },
       render: ({ assignee }: TodoItem) => <EuiText>{assignee}</EuiText>,
     },
     {
       id: 'status',
       name: 'Status',
       'data-test-subj': 'statusCell',
+      footer: ({ items }: { items: TodoItem[] }) => {
+        const completedTodoItems = items.reduce(
+          (previous, { status }) => (status !== Status.DONE ? previous + 1 : previous),
+          0
+        );
+        return <>{completedTodoItems} not finished</>;
+      },
       render: ({ status }: TodoItem) => <TodoBadgeStatus variant={status} />,
     },
     {
@@ -51,6 +63,13 @@ function useColumns({ onActionEdit: onEdit, onActionDelete: onDelete }: UseColum
       id: 'isCompleted',
       name: 'Is completed',
       'data-test-subj': 'isCompletedCell',
+      footer: ({ items }: { items: TodoItem[] }) => {
+        const completedTodoItems = items.reduce(
+          (previous, { isCompleted }) => (isCompleted ? previous + 1 : previous),
+          0
+        );
+        return <>{completedTodoItems} completed</>;
+      },
       render: ({ isCompleted }: TodoItem) => (isCompleted ? <EuiIcon type="check" /> : <></>),
     },
     {

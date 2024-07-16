@@ -34,9 +34,9 @@ const Charts = ({}: ChartsProps) => {
   };
 
   /**
-   * The function `getPriorityValueAccessor` returns a numerical value based on the priority of a todo item.
+   * The function `getPriorityWeight` returns a numerical value based on the priority of a todo item.
    */
-  const getPriorityValueAccessor = (todoItem: TodoItem) => {
+  const getPriorityWeight = (todoItem: TodoItem) => {
     switch (todoItem.priority) {
       case Priority.LOW:
         return 1;
@@ -50,14 +50,14 @@ const Charts = ({}: ChartsProps) => {
   };
 
   /**
-   * The function `getAssigneeValueAccessor` returns the number of todo items assigned to the same assignee as the input
+   * The function `groupByAssignee` returns the number of todo items assigned to the same assignee as the input
    * todo item.
    * @param {TodoItem} todoItem - represents an individual todo item with properties such as `assignee`. The
-   * `getAssigneeValueAccessor` function takes a `todoItem` as input and returns the count of todo items assigned to the
+   * `groupByAssignee` function takes a `todoItem` as input and returns the count of todo items assigned to the
    * same assignee as the input `todoItem`.
    * @returns the number of todo items assigned to the same assignee as the input `todoItem`.
    */
-  const getAssigneeValueAccessor = (todoItem: TodoItem) => {
+  const groupByAssignee = (todoItem: TodoItem) => {
     const itemsGroupedByAssignee = Object.groupBy(todoItems, ({ assignee = '' }) => assignee);
     const assignee = todoItem.assignee ?? '';
     return itemsGroupedByAssignee[assignee]?.length ?? 0;
@@ -147,7 +147,7 @@ const Charts = ({}: ChartsProps) => {
           id="treemap"
           data={todoItems}
           config={{ partitionLayout: PartitionLayout.treemap }}
-          valueAccessor={getAssigneeValueAccessor}
+          valueAccessor={groupByAssignee}
           valueGetter="percent"
           topGroove={0}
           layers={[
@@ -242,7 +242,7 @@ const Charts = ({}: ChartsProps) => {
           id="pieByPriority"
           data={todoItems}
           config={{ partitionLayout: PartitionLayout.sunburst }}
-          valueAccessor={getPriorityValueAccessor}
+          valueAccessor={getPriorityWeight}
           layers={[
             {
               groupByRollup: (d: TodoItem) => d.priority,

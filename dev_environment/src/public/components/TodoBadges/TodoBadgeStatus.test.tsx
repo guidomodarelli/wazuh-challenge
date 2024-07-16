@@ -29,8 +29,8 @@ describe('TodoBadgeStatus', () => {
   });
 
   it('verify TodoBadgeStatus renders with DONE status variant', () => {
-    render(<TodoBadgeStatus variant={Status.DONE} />);
+    render(<TodoBadgeStatus variant={Status.COMPLETED} />);
 
-    expect(screen.getByText(Status.DONE)).toBeTruthy();
+    expect(screen.getByText(Status.COMPLETED)).toBeTruthy();
   });
 });

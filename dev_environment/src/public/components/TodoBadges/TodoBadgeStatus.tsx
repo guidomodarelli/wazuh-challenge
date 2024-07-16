@@ -4,7 +4,7 @@ import { Status } from '../../../common/types';
 
 const TodoStatuses = {
   Error: () => <EuiBadge color="danger">{Status.EXECUTED_WITH_ERROR}</EuiBadge>,
-  Success: () => <EuiBadge color="success">{Status.DONE}</EuiBadge>,
+  Success: () => <EuiBadge color="success">{Status.COMPLETED}</EuiBadge>,
   Working: () => <EuiBadge color="orange">{Status.IN_PROGRESS}</EuiBadge>,
   NotStarted: () => <EuiBadge color="lightgray">{Status.NOT_STARTED}</EuiBadge>,
 };
@@ -15,7 +15,7 @@ interface TodoStatusProps {
 
 const TodoBadgeStatus = ({ variant }: TodoStatusProps) => {
   switch (variant) {
-    case Status.DONE:
+    case Status.COMPLETED:
       return <TodoStatuses.Success />;
     case Status.IN_PROGRESS:
       return <TodoStatuses.Working />;

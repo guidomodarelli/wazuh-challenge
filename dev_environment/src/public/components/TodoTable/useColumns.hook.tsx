@@ -1,8 +1,8 @@
-import { EuiBadge, EuiBasicTableColumn, EuiIcon, EuiText } from '@elastic/eui';
-import { Status, TodoItem } from '../../../common/types';
+import { EuiBadge, EuiBasicTableColumn, EuiText } from '@elastic/eui';
 import React from 'react';
-import TodoBadgeStatus from '../TodoBadges/TodoBadgeStatus';
+import { Status, TodoItem } from '../../../common/types';
 import TodoBadgePriority from '../TodoBadges/TodoBadgePriority';
+import TodoBadgeStatus from '../TodoBadges/TodoBadgeStatus';
 
 interface UseColumnsProps {
   onActionEdit: (todoItem: TodoItem) => void;
@@ -46,7 +46,7 @@ function useColumns({ onActionEdit: onEdit, onActionDelete: onDelete }: UseColum
       'data-test-subj': 'statusCell',
       footer: ({ items }: { items: TodoItem[] }) => {
         const completedTodoItems = items.reduce(
-          (previous, { status }) => (status !== Status.DONE ? previous + 1 : previous),
+          (previous, { status }) => (status !== Status.COMPLETED ? previous + 1 : previous),
           0
         );
         return <>{completedTodoItems} not finished</>;
@@ -58,19 +58,6 @@ function useColumns({ onActionEdit: onEdit, onActionDelete: onDelete }: UseColum
       name: 'Priority',
       'data-test-subj': 'priorityCell',
       render: ({ priority }: TodoItem) => <TodoBadgePriority variant={priority} />,
-    },
-    {
-      id: 'isCompleted',
-      name: 'Is completed',
-      'data-test-subj': 'isCompletedCell',
-      footer: ({ items }: { items: TodoItem[] }) => {
-        const completedTodoItems = items.reduce(
-          (previous, { isCompleted }) => (isCompleted ? previous + 1 : previous),
-          0
-        );
-        return <>{completedTodoItems} completed</>;
-      },
-      render: ({ isCompleted }: TodoItem) => (isCompleted ? <EuiIcon type="check" /> : <></>),
     },
     {
       id: 'createdAt',

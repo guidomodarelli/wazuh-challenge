@@ -42,7 +42,6 @@ describe('useTodoForm', () => {
         title: '',
         status: [Status.NOT_STARTED],
         priority: [Priority.LOW],
-        isCompleted: false,
       });
     });
 
@@ -59,7 +58,6 @@ describe('useTodoForm', () => {
         title: '',
         status: [Status.NOT_STARTED],
         priority: [Priority.LOW],
-        isCompleted: false,
       });
     });
 

@@ -23,7 +23,6 @@ function useTodoForm({ onSuccess, itemIdToUpdate, defaultValues = {} }: UseTodoF
       title: defaultValues.title ?? '',
       status: defaultValues.status ?? [Status.NOT_STARTED],
       priority: defaultValues.priority ?? [Priority.LOW],
-      isCompleted: defaultValues.isCompleted ?? false,
     },
   });
   const { errors } = formState;

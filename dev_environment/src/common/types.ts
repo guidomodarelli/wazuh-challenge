@@ -20,7 +20,6 @@ export interface TodoItem {
   status: Status;
   priority: Priority;
   createdAt: string;
-  isCompleted: boolean;
   tags?: string[];
   assignee?: string;
 }

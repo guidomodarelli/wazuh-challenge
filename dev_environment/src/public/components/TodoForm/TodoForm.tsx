@@ -1,11 +1,9 @@
 import {
-  EuiCheckbox,
   EuiComboBox,
   EuiFieldText,
   EuiForm,
   EuiFormErrorText,
   EuiFormRow,
-  htmlIdGenerator,
 } from '@elastic/eui';
 import React from 'react';
 import { Controller } from 'react-hook-form';
@@ -31,8 +29,6 @@ const TodoForm = ({ id, itemIdToUpdate, onSuccess, defaultValues = {} }: TodoFor
     renderStatusOptions,
     renderPriorityOptions,
   } = useTodoForm({ onSuccess, itemIdToUpdate, defaultValues });
-
-  const checkboxId = htmlIdGenerator();
 
   return (
     <div className="todo-form-container">
@@ -103,25 +99,6 @@ const TodoForm = ({ id, itemIdToUpdate, onSuccess, defaultValues = {} }: TodoFor
                 selectedOptions={options?.map((option) => ({ label: option }))}
                 renderOption={renderPriorityOptions}
                 isClearable={false}
-              />
-            </EuiFormRow>
-          )}
-        />
-        <Controller
-          control={control}
-          name="isCompleted"
-          render={({ field: { ref: _ref /* Not used */, value, onChange, ...otherFields } }) => (
-            <EuiFormRow
-              label="Mark as completed"
-              isInvalid={isInvalid(otherFields.name)}
-              error={errors[otherFields.name]?.message}
-            >
-              <EuiCheckbox
-                {...otherFields}
-                id={checkboxId()}
-                label="Is completed"
-                checked={value}
-                onChange={onChange}
               />
             </EuiFormRow>
           )}

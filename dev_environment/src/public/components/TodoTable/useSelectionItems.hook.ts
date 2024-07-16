@@ -1,8 +1,10 @@
 import { EuiTableSelectionType } from '@elastic/eui';
 import { TodoItem } from '../../../common/types';
 import { useState } from 'react';
+import { useTodoContext } from '../../context/TodoContext';
 
 function useSelectionItems() {
+  const { deleteTodosByIds } = useTodoContext();
   const [selectedItems, setSelectedItems] = useState<TodoItem['id'][]>([]);
 
   /**
@@ -21,10 +23,16 @@ function useSelectionItems() {
     onSelectionChange,
   };
 
+  const deleteSelectedItems = () => {
+    deleteTodosByIds(...selectedItems);
+    setSelectedItems([]);
+  };
+
   return {
     selectedItems,
     setSelectedItems,
     selection,
+    deleteSelectedItems
   };
 }
 

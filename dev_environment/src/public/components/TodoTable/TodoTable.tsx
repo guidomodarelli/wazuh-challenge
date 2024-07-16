@@ -30,7 +30,7 @@ const Todos = () => {
     addSampleData,
     deleteTodosByIds,
   } = useTodoContext();
-  const { selectedItems, setSelectedItems, selection } = useSelectionItems();
+  const { selectedItems, setSelectedItems, selection, deleteSelectedItems } = useSelectionItems();
   const { columns } = useColumns({
     onActionEdit(todoItem) {
       setItemIdToUpdate(todoItem.id);
@@ -90,18 +90,13 @@ const Todos = () => {
     setSearch(event.target.value);
   };
 
-  const deleteSelectedItemsHandler = () => {
-    deleteTodosByIds(...selectedItems);
-    setSelectedItems([]);
-  };
-
   /* If there are rows selected, it will display a "Delete selected items" button with a danger color. The button's
 onClick event handler will call the `deleteTodosByIds` function with the IDs of all selected items. */
   let optionalActionButtons;
   if (selectedItems.length > 0) {
     optionalActionButtons = (
       <EuiFlexItem grow={false}>
-        <EuiButton color="danger" iconType="trash" onClick={deleteSelectedItemsHandler}>
+        <EuiButton color="danger" iconType="trash" onClick={deleteSelectedItems}>
           Delete {selectedItems.length} Users
         </EuiButton>
       </EuiFlexItem>

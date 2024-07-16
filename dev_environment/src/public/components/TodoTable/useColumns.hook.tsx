@@ -46,10 +46,10 @@ function useColumns({ onActionEdit: onEdit, onActionDelete: onDelete }: UseColum
       'data-test-subj': 'statusCell',
       footer: ({ items }: { items: TodoItem[] }) => {
         const completedTodoItems = items.reduce(
-          (previous, { status }) => (status !== Status.COMPLETED ? previous + 1 : previous),
+          (previous, { status }) => (status === Status.COMPLETED ? previous + 1 : previous),
           0
         );
-        return <>{completedTodoItems} not finished</>;
+        return <>{completedTodoItems}/{items.length} completed</>;
       },
       render: ({ status }: TodoItem) => <TodoBadgeStatus variant={status} />,
     },

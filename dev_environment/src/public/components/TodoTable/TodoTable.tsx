@@ -68,18 +68,18 @@ const Todos = () => {
   };
 
   let flyout;
-  const setFlyout = (itemToUpdate: TodoItem) => {
+  const setFlyout = (itemToUpdate?: TodoItem) => {
     flyout = (
       <FlyoutForm
         itemIdToUpdate={itemIdToUpdate}
-        defaultValues={mapToFieldValues(itemToUpdate)}
+        defaultValues={itemToUpdate ? mapToFieldValues(itemToUpdate) : undefined}
         onClose={closeFlyout}
       />
     );
   };
   if (isFlyoutVisible) {
     const itemToUpdate = filteredTodoItems.find((item) => item.id === itemIdToUpdate);
-    if (itemToUpdate) setFlyout(itemToUpdate);
+    setFlyout(itemToUpdate);
   }
 
   const clickChartsHandler = () => {

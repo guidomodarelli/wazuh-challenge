@@ -44,6 +44,9 @@ describe('TodoContext', () => {
     expect(services.fetchTodos).toHaveBeenCalledTimes(1);
   });
 
+  it.todo('filteredTodoItems');
+  it.todo('completedTodos');
+
   it('should fetch and populate todoItems correctly on initial render', async () => {
     const todoItem1: Partial<TodoItem> = {
       title: 'test-1',

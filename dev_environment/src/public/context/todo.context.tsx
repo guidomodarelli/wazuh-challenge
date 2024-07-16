@@ -39,7 +39,7 @@ interface ToDoProviderProps {
 function ToDoProvider({
   children,
   notifications,
-  services: { fetchTodos, createNewTodo, updateTodo, deleteTodosByIds },
+  services: { fetchTodos, createNewTodo, bulkCreateTodos, updateTodo, deleteTodosByIds },
 }: ToDoProviderProps) {
   const [todoItems, setTodoItems] = useState<TodoItem[]>([]);
   const [search, setSearch] = useState('');
@@ -124,7 +124,7 @@ function ToDoProvider({
       }
     },
 
-    addSampleData() {
+    async addSampleData() {
       const newTodos: TodoItem[] = [];
       faker.setDefaultRefDate(new Date());
       const persons = faker.helpers.multiple(faker.person.firstName, { count: 7 });
@@ -141,7 +141,17 @@ function ToDoProvider({
           assignee: faker.helpers.arrayElement(persons),
         });
       }
-      setTodoItems([...newTodos, ...todoItems]);
+      const response = await bulkCreateTodos(...newTodos);
+      if (isError(response)) {
+        // TODO: Handle Error
+      } else {
+        notifications.toasts.addSuccess(
+          i18n.translate('todoPlugin.todoItemsCreatedSuccessfully', {
+            defaultMessage: 'Todo items created successfully',
+          })
+        );
+        setTodoItems([...newTodos, ...todoItems]);
+      }
     },
   };
 

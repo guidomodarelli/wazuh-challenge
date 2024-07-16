@@ -126,4 +126,40 @@ describe('TodoContext', () => {
     expect(result.current.todoItems).toHaveLength(3);
     expect(result.current.todoItems[1]).toEqual(updatedtodoItem2);
   });
+
+  it('should delete specified todo items by their IDs and notify success', async () => {
+    const todoItem1: Partial<TodoItem> = {
+      id: '1',
+      title: 'test-1',
+    };
+    const todoItem2: Partial<TodoItem> = {
+      id: '2',
+      title: 'test-2',
+    };
+    const todoItem3: Partial<TodoItem> = {
+      id: '3',
+      title: 'test-3',
+    };
+    services = {
+      ...services,
+      fetchTodos: jest.fn().mockResolvedValue([todoItem1, todoItem2, todoItem3]),
+      deleteTodosByIds: jest.fn().mockResolvedValue([todoItem2]),
+    };
+
+    let { result, waitForNextUpdate } = renderHook(() => useTodoContext(), {
+      wrapper: wrapper(notifications, services),
+    });
+    await waitForNextUpdate();
+
+    expect(result.current.todoItems).toHaveLength(3);
+
+    // @ts-expect-error
+    await result.current.deleteTodosByIds(todoItem1.id, todoItem3.id)
+
+    expect(services.deleteTodosByIds).toHaveBeenCalledTimes(1);
+    expect(services.deleteTodosByIds).toHaveBeenCalledWith(todoItem1.id, todoItem3.id);
+    expect(notifications.toasts.addSuccess).toHaveBeenCalledTimes(1);
+    expect(result.current.todoItems).toHaveLength(1);
+    expect(result.current.todoItems[0]).toEqual(todoItem2);
+  });
 });

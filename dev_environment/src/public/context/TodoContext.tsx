@@ -131,12 +131,12 @@ function ToDoProvider({
       }
     },
 
-    async addSampleData() {
+    async addSampleData(fakes = 100) {
       const newTodos: TodoItem[] = [];
       faker.setDefaultRefDate(new Date());
       const persons = faker.helpers.multiple(faker.person.firstName, { count: 7 });
       const tags = faker.helpers.multiple(faker.lorem.word, { count: 27 });
-      for (let i = 0; i < 100; i++) {
+      for (let i = 0; i < fakes; i++) {
         newTodos.push({
           id: faker.string.uuid(),
           createdAt: faker.date.recent({ days: 27 }).toISOString(),

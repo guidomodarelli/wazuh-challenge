@@ -2,18 +2,13 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import * as ReactHookForm from 'react-hook-form';
 import { mockTodoContextFn } from '../../../__mocks__/todo-context.mock';
 import { Priority, Status } from '../../../common/types';
-import * as TodoContext from "../../context/TodoContext";
+import * as TodoContext from '../../context/TodoContext';
 import useTodoForm from './useTodoForm.hook';
+import { PartialRecordMock } from "../../../common/global-types";
 
 let mockTodoContext: ReturnType<typeof mockTodoContextFn>;
 
-let mockUseForm: {
-  handleSubmit: jest.Mock;
-  formState: {
-    errors: {};
-  };
-  reset: jest.Mock;
-};
+let mockUseForm: PartialRecordMock<ReturnType<typeof ReactHookForm.useForm>>;
 
 let onSuccess: jest.Mock;
 
@@ -29,6 +24,7 @@ describe('useTodoForm', () => {
       reset: jest.fn(),
     };
 
+    // @ts-expect-error
     jest.spyOn(TodoContext, 'useTodoContext').mockImplementation(() => mockTodoContext);
     // @ts-expect-error
     jest.spyOn(ReactHookForm, 'useForm').mockImplementation(() => mockUseForm);

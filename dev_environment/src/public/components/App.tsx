@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { CoreStart } from '../../../../src/core/public';
 import { NavigationPublicPluginStart } from '../../../../src/plugins/navigation/public';
-import Charts from '../pages/Charts';
+import ChartsPage from '../pages/ChartsPage';
 import MainPage from '../pages/MainPage';
 import Providers from '../providers';
 import { Services } from '../services';
@@ -30,7 +30,7 @@ export const ToDoPluginApp = ({
             <MainPage />
           </Route>
           <Route path="/charts">
-            <Charts />
+            <ChartsPage />
           </Route>
         </Switch>
       </Providers>

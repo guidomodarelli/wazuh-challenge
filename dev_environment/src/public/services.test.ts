@@ -123,4 +123,19 @@ describe('services', () => {
       body: JSON.stringify(todoItem),
     });
   });
+
+  it('deleteTodosByIds', async () => {
+    const todoIds: string[] = ['1', '2', '3', '4'];
+    // @ts-expect-error
+    const services = getServices({ http });
+
+    await services.deleteTodosByIds(...todoIds);
+
+    expect(http.delete).toHaveBeenCalledTimes(1);
+    expect(http.delete).toHaveBeenCalledWith('/api/todo_plugin/deleteIds', {
+      query: {
+        ids: JSON.stringify(todoIds),
+      }
+    });
+  });
 });

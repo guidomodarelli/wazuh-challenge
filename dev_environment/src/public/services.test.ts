@@ -51,4 +51,23 @@ describe('services', () => {
     });
     expect(todosReturned).toEqual(todosExpected);
   });
+
+  it('creates and returns a new todo item with an id', async () => {
+    const todoItem: Pick<TodoItem, 'title'> = {
+      title: 'Absorbeo vulgaris speculum crapula agnosco clarus utpote',
+    };
+    const todosExpected = { id: 1, ...todoItem };
+    http.post = jest.fn().mockResolvedValue(todosExpected);
+    // @ts-expect-error
+    const services = getServices({ http });
+
+    // @ts-expect-error
+    const todoReturned = await services.createNewTodo(todoItem);
+
+    expect(http.post).toHaveBeenCalledTimes(1);
+    expect(http.post).toHaveBeenCalledWith('/api/todo_plugin/create', {
+      body: JSON.stringify(todoItem),
+    });
+    expect(todoReturned).toEqual(todosExpected);
+  });
 });

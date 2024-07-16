@@ -156,12 +156,50 @@ describe('TodoContext', () => {
     expect(result.current.todoItems).toHaveLength(3);
 
     // @ts-expect-error
-    await result.current.deleteTodosByIds(todoItem1.id, todoItem3.id)
+    await result.current.deleteTodosByIds(todoItem1.id, todoItem3.id);
 
     expect(services.deleteTodosByIds).toHaveBeenCalledTimes(1);
     expect(services.deleteTodosByIds).toHaveBeenCalledWith(todoItem1.id, todoItem3.id);
     expect(notifications.toasts.addSuccess).toHaveBeenCalledTimes(1);
     expect(result.current.todoItems).toHaveLength(1);
     expect(result.current.todoItems[0]).toEqual(todoItem2);
+  });
+
+  it('should add sample data with expected properties and notify success', async () => {
+    services.bulkCreateTodos = jest.fn().mockResolvedValue([]);
+
+    const todoItemExpected = {
+      id: expect.any(String),
+      createdAt: expect.any(String),
+      priority: expect.any(String),
+      status: expect.any(String),
+      title: expect.any(String),
+      tags: expect.arrayContaining([expect.any(String)]),
+      assignee: expect.any(String),
+    };
+
+    let { result, waitForNextUpdate } = renderHook(() => useTodoContext(), {
+      wrapper: wrapper(notifications, services),
+    });
+    await waitForNextUpdate();
+
+    expect(result.current.todoItems).toHaveLength(0);
+
+    const fakes = 3;
+    await result.current.addSampleData(fakes);
+
+    expect(services.bulkCreateTodos).toHaveBeenCalledTimes(1);
+    expect(services.bulkCreateTodos).toHaveBeenCalledWith(
+      expect.objectContaining(todoItemExpected),
+      expect.objectContaining(todoItemExpected),
+      expect.objectContaining(todoItemExpected)
+    );
+    expect(notifications.toasts.addSuccess).toHaveBeenCalledTimes(1);
+    expect(result.current.todoItems).toHaveLength(fakes);
+    expect(result.current.todoItems).toEqual(expect.arrayContaining([
+      expect.objectContaining(todoItemExpected),
+      expect.objectContaining(todoItemExpected),
+      expect.objectContaining(todoItemExpected)
+    ]))
   });
 });

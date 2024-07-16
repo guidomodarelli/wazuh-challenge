@@ -44,7 +44,49 @@ describe('TodoContext', () => {
     expect(services.fetchTodos).toHaveBeenCalledTimes(1);
   });
 
-  it.todo('filteredTodoItems');
+  it('filteredTodoItems', async () => {
+    const todoItems: Partial<TodoItem>[] = [
+      {
+        title: 'Absorbeo vulgaris speculum crapula agnosco clarus utpote',
+        tags: ['uter', 'vehemens', 'consequuntur', 'tonsor', 'corporis'],
+        assignee: 'Tyler',
+      },
+      {
+        title: 'Artificiose vereor asd demum',
+        tags: ['modi', 'clementia', 'tonsor', 'curtus', 'qui'],
+        assignee: 'Jadyn',
+      },
+      {
+        title: 'Calculus talio damno quia censura absque argumentum',
+        tags: ['tum', 'magnam', 'corporis', 'asperiores', 'accusator'],
+        assignee: 'Nicholas',
+      },
+    ];
+
+    services = {
+      ...services,
+      fetchTodos: jest.fn().mockResolvedValue(todoItems),
+    };
+    let { result, waitForNextUpdate } = renderHook(() => useTodoContext(), {
+      wrapper: wrapper(notifications, services),
+    });
+    await waitForNextUpdate();
+
+    result.current.setSearch('qui');
+
+    expect(result.current.filteredTodoItems).toHaveLength(2);
+    expect(result.current.filteredTodoItems).toEqual([todoItems[1], todoItems[2]]);
+
+    result.current.setSearch('consequuntur');
+
+    expect(result.current.filteredTodoItems).toHaveLength(1);
+    expect(result.current.filteredTodoItems).toEqual([todoItems[0]]);
+
+    result.current.setSearch('Jadyn');
+
+    expect(result.current.filteredTodoItems).toHaveLength(1);
+    expect(result.current.filteredTodoItems).toEqual([todoItems[1]]);
+  });
 
   it('verify completedTodos count updates correctly after todo items are completed and reverted', async () => {
     const todoItem1: Partial<TodoItem> = {

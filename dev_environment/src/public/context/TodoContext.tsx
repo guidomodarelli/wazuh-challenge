@@ -15,7 +15,7 @@ interface ToDoContextType {
   createTodo: (item: TodoItemRequest) => void;
   updateTodo: (itemIdToUpdate: string, itemToUpdate: TodoItemRequest) => void;
   deleteTodosByIds: (...ids: string[]) => void;
-  addSampleData: () => void;
+  addSampleData: (fakes: number) => void;
 }
 
 export const TodoContext = createContext<ToDoContextType>({

@@ -55,21 +55,27 @@ const Todos = () => {
     setIsFlyoutVisible(false);
   };
 
-  let flyout;
-  if (isFlyoutVisible) {
-    const itemToUpdate = todoItems.find((item) => item.id === itemIdToUpdate);
-    const fieldItemToUpdate: Partial<FieldValues> = {
+  const mapToFieldValues = (itemToUpdate: TodoItem): Partial<FieldValues> => {
+    return {
       ...itemToUpdate,
-      status: itemToUpdate?.status ? [itemToUpdate.status] : undefined,
-      priority: itemToUpdate?.priority ? [itemToUpdate.priority] : undefined,
+      status: [itemToUpdate.status],
+      priority: [itemToUpdate.priority],
     };
+  };
+
+  let flyout;
+  const setFlyout = (itemToUpdate: TodoItem) => {
     flyout = (
       <FlyoutForm
         itemIdToUpdate={itemIdToUpdate}
-        defaultValues={fieldItemToUpdate}
+        defaultValues={mapToFieldValues(itemToUpdate)}
         onClose={closeFlyout}
       />
     );
+  };
+  if (isFlyoutVisible) {
+    const itemToUpdate = todoItems.find((item) => item.id === itemIdToUpdate);
+    if (itemToUpdate) setFlyout(itemToUpdate);
   }
 
   const clickChartsHandler = () => {

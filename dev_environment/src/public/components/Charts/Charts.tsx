@@ -7,7 +7,14 @@ import {
   PartitionLayout,
   Settings,
 } from '@elastic/charts';
-import { EuiButton, EuiFlexGroup, EuiFlexItem, EuiSpacer, EuiTitle } from '@elastic/eui';
+import {
+  EuiButton,
+  EuiFlexGroup,
+  EuiFlexItem,
+  euiPaletteColorBlind,
+  EuiSpacer,
+  EuiTitle,
+} from '@elastic/eui';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Priority, TodoItem } from '../../../common/types';
@@ -51,7 +58,7 @@ const Charts = ({}: ChartsProps) => {
    * @returns the number of todo items assigned to the same assignee as the input `todoItem`.
    */
   const getAssigneeValueAccessor = (todoItem: TodoItem) => {
-    const itemsGroupedByAssignee = Object.groupBy(todoItems, (item) => item.assignee ?? '');
+    const itemsGroupedByAssignee = Object.groupBy(todoItems, ({ assignee = '' }) => assignee);
     const assignee = todoItem.assignee ?? '';
     return itemsGroupedByAssignee[assignee]?.length ?? 0;
   };
@@ -77,6 +84,36 @@ const Charts = ({}: ChartsProps) => {
       .sort((a, b) => {
         return b.count - a.count;
       });
+  };
+
+  const groupByAssigneeAndPriority = () => {
+    const itemsGroupedByAssignee = Object.groupBy(
+      todoItems,
+      ({ assignee = '', priority }) => `${assignee}#${priority}`
+    );
+    return Object.entries(itemsGroupedByAssignee).map((item) => {
+      const assigneeAndPriority = item[0].split('#');
+      return {
+        assignee: assigneeAndPriority[0],
+        count: item[1]?.length,
+        priority: assigneeAndPriority[1],
+      };
+    });
+  };
+
+  const groupByAssigneeAndStatus = () => {
+    const itemsGroupedByAssignee = Object.groupBy(
+      todoItems,
+      ({ assignee = '', status }) => `${assignee}#${status}`
+    );
+    return Object.entries(itemsGroupedByAssignee).map((item) => {
+      const assigneeAndPriority = item[0].split('#');
+      return {
+        assignee: assigneeAndPriority[0],
+        count: item[1]?.length,
+        status: assigneeAndPriority[1],
+      };
+    });
   };
 
   return (
@@ -105,6 +142,45 @@ const Charts = ({}: ChartsProps) => {
             },
           ]}
         />
+      </Chart>
+      <EuiSpacer />
+      <EuiTitle className="eui-textCenter" size="xs">
+        <h3>Todo priority distribution by person in charge</h3>
+      </EuiTitle>
+      <Chart size={{ height: 300 }}>
+        <Settings baseTheme={LIGHT_THEME} rotation={90} showLegend={true} legendPosition="right" />
+        <BarSeries
+          id="issues"
+          name="Issues"
+          data={groupByAssigneeAndPriority()}
+          xAccessor="assignee"
+          yAccessors={['count']}
+          splitSeriesAccessors={['priority']}
+          stackAccessors={['priority']}
+          color={euiPaletteColorBlind({ rotations: 2, order: 'group' }).slice(18, 20)}
+        />
+        <Axis id="bottom-axis" position={'left'} />
+        <Axis id="left-axis" gridLine={{ visible: true }} position={'bottom'} />
+      </Chart>
+      <EuiSpacer />
+      <EuiTitle className="eui-textCenter" size="xs">
+        <h3>Todo status distribution by person in charge</h3>
+      </EuiTitle>
+      <Chart size={{ height: 300 }}>
+        <Settings baseTheme={LIGHT_THEME} rotation={90} showLegend={true} legendPosition="right" />
+        <BarSeries
+          id="issues"
+          name="Issues"
+          data={groupByAssigneeAndStatus()}
+          xAccessor="assignee"
+          yAccessors={['count']}
+          splitSeriesAccessors={['status']}
+          stackAccessors={['status']}
+          stackMode="silhouette"
+          color={euiPaletteColorBlind({ rotations: 2, order: 'group' }).slice(18, 20)}
+        />
+        <Axis id="bottom-axis" position={'left'} />
+        <Axis id="left-axis" gridLine={{ visible: true }} position={'bottom'} />
       </Chart>
       <EuiSpacer />
       <EuiTitle className="eui-textCenter" size="xs">

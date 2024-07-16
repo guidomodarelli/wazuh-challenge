@@ -196,10 +196,12 @@ describe('TodoContext', () => {
     );
     expect(notifications.toasts.addSuccess).toHaveBeenCalledTimes(1);
     expect(result.current.todoItems).toHaveLength(fakes);
-    expect(result.current.todoItems).toEqual(expect.arrayContaining([
-      expect.objectContaining(todoItemExpected),
-      expect.objectContaining(todoItemExpected),
-      expect.objectContaining(todoItemExpected)
-    ]))
+    expect(result.current.todoItems).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining(todoItemExpected),
+        expect.objectContaining(todoItemExpected),
+        expect.objectContaining(todoItemExpected),
+      ])
+    );
   });
 });

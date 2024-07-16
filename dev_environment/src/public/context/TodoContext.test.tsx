@@ -77,6 +77,8 @@ describe('TodoContext', () => {
     });
     await waitForNextUpdate();
 
+    expect(result.current.todoItems).toHaveLength(0);
+
     // @ts-expect-error
     await result.current.createTodo(todoItem1);
 

@@ -44,8 +44,8 @@ describe('TodoContext', () => {
     expect(services.fetchTodos).toHaveBeenCalledTimes(1);
   });
 
-  it('filteredTodoItems', async () => {
-    const todoItems: Partial<TodoItem>[] = [
+  it('filters todo items based on search criteria', async () => {
+    const todoItems: Pick<TodoItem, 'title' | 'tags' | 'assignee'>[] = [
       {
         title: 'Absorbeo vulgaris speculum crapula agnosco clarus utpote',
         tags: ['uter', 'vehemens', 'consequuntur', 'tonsor', 'corporis'],

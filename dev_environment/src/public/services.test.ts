@@ -100,7 +100,7 @@ describe('services', () => {
     const todoReturned = await services.bulkCreateTodos(...todoItems);
 
     expect(http.post).toHaveBeenCalledTimes(1);
-    expect(http.post).toHaveBeenCalledWith("/api/todo_plugin/bulkCreate", {
+    expect(http.post).toHaveBeenCalledWith('/api/todo_plugin/bulkCreate', {
       body: JSON.stringify(todoItems),
     });
     expect(todoReturned).toEqual(todosExpected);

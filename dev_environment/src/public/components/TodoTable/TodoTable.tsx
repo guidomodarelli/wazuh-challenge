@@ -118,7 +118,7 @@ onClick event handler will call the `deleteTodosByIds` function with the IDs of 
           </EuiButton>
         </EuiFlexItem>
         <EuiFlexItem grow={false}>
-          <EuiButton onClick={addSampleData}>Add sample data</EuiButton>
+          <EuiButton onClick={() => addSampleData()}>Add sample data</EuiButton>
         </EuiFlexItem>
         <EuiFlexItem grow={false}>
           <EuiButton onClick={clickChartsHandler}>Charts</EuiButton>

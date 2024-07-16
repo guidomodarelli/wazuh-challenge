@@ -2,6 +2,7 @@ export function mockTodoContextFn(_jest: typeof jest) {
   return {
     todoItems: [],
     filteredTodoItems: [],
+    completedTodos: 0,
     search: '',
     setSearch: _jest.fn(),
     createTodo: _jest.fn(),

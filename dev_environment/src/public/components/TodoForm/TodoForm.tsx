@@ -8,13 +8,13 @@ import './TodoForm.styles.scss';
 import useTodoForm from './useTodoForm.hook';
 
 interface TodoFormProps {
-  id: string;
+  formId: string;
   itemIdToUpdate?: string;
   onSuccess?: () => void;
   defaultValues?: Partial<FieldValues>;
 }
 
-const TodoForm = ({ id, itemIdToUpdate, onSuccess, defaultValues = {} }: TodoFormProps) => {
+const TodoForm = ({ formId, itemIdToUpdate, onSuccess, defaultValues = {} }: TodoFormProps) => {
   const {
     onSubmit,
     control,
@@ -26,7 +26,7 @@ const TodoForm = ({ id, itemIdToUpdate, onSuccess, defaultValues = {} }: TodoFor
 
   return (
     <div className="todo-form-container">
-      <EuiForm id={id} component="form" onSubmit={onSubmit}>
+      <EuiForm id={formId} component="form" onSubmit={onSubmit}>
         <Controller
           control={control}
           name="title"

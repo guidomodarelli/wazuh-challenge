@@ -35,7 +35,7 @@ const FlyoutForm = ({ onClose, itemIdToUpdate, defaultValues = {} }: FlyoutFormP
         </EuiTitle>
       </EuiFlyoutHeader>
       <EuiFlyoutBody>
-        <TodoForm id={formId} onSuccess={onClose} itemIdToUpdate={itemIdToUpdate} defaultValues={defaultValues} />
+        <TodoForm formId={formId} onSuccess={onClose} itemIdToUpdate={itemIdToUpdate} defaultValues={defaultValues} />
       </EuiFlyoutBody>
       <EuiFlyoutFooter className="footer">
         <EuiButtonEmpty onClick={onClose}>

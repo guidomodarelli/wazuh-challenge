@@ -27,6 +27,22 @@ Additionally, the plugin includes charts that display statistics about the TODOs
 4. Types of TODOs by priority.
 5. Combination of TODOs by priority and status.
 
+## How to run the tests
+
+To run the tests for the `todo_plugin`, follow these steps:
+
+1. Enter the Docker container (`dev_environment-osd-1`):
+
+    Navigate to the `todo_plugin` directory:
+    ```bash
+    cd /home/node/kbn/plugins/todo_plugin
+    ```
+
+2. Run the tests using Yarn:
+    ```bash
+    yarn test
+    ```
+
 ## Development
 
 See the [OpenSearch Dashboards contributing

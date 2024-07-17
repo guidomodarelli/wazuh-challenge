@@ -28,8 +28,8 @@ function useChartData() {
    * same assignee as the input `todoItem`.
    * @returns the number of todo items assigned to the same assignee as the input `todoItem`.
    */
-  const groupByAssignee = (todoItem: TodoItem) => {
-    const itemsGroupedByAssignee = Object.groupBy(todoItems, ({ assignee = '' }) => assignee);
+  const groupByAssignee = (todoItem: TodoItem, items = todoItems) => {
+    const itemsGroupedByAssignee = Object.groupBy(items, ({ assignee = '' }) => assignee);
     const assignee = todoItem.assignee ?? '';
     return itemsGroupedByAssignee[assignee]?.length ?? 0;
   };
@@ -42,9 +42,9 @@ function useChartData() {
    * `count` property representing the number of todo items in that group. The array is sorted in descending order based
    * on the count of todo items
    */
-  const groupByPriorityAndStatus = () => {
+  const groupByPriorityAndStatus = (items = todoItems) => {
     const itemsGroupedByPriorityAndStatus = Object.groupBy(
-      todoItems,
+      items,
       ({ priority, status }) => `${status} (${priority})`
     );
     return Object.entries(itemsGroupedByPriorityAndStatus)
@@ -65,9 +65,9 @@ function useChartData() {
    * - `count`: The number of todo items in the group.
    * - `priority`: The priority of the todo
    */
-  const groupByAssigneeAndPriority = () => {
+  const groupByAssigneeAndPriority = (items = todoItems) => {
     const itemsGroupedByAssignee = Object.groupBy(
-      todoItems,
+      items,
       ({ assignee = '', priority }) => `${assignee}#${priority}`
     );
     return Object.entries(itemsGroupedByAssignee).map((item) => {
@@ -86,9 +86,9 @@ function useChartData() {
    * Each object in the array contains the assignee name, the count of todo items for that assignee and status
    * combination, and the status of the todo items.
    */
-  const groupByAssigneeAndStatus = () => {
+  const groupByAssigneeAndStatus = (items = todoItems) => {
     const itemsGroupedByAssignee = Object.groupBy(
-      todoItems,
+      items,
       ({ assignee = '', status }) => `${assignee}#${status}`
     );
     return Object.entries(itemsGroupedByAssignee).map((item) => {

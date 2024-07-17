@@ -22,6 +22,9 @@ function useSelectionItems() {
     onSelectionChange,
   };
 
+  /**
+   * The function `deleteSelectedItems` deletes todos by their IDs and clears the selected items array.
+   */
   const deleteSelectedItems = () => {
     deleteTodosByIds(...selectedItems);
     setSelectedItems([]);
@@ -31,7 +34,7 @@ function useSelectionItems() {
     selectedItems,
     setSelectedItems,
     selection,
-    deleteSelectedItems
+    deleteSelectedItems,
   };
 }
 

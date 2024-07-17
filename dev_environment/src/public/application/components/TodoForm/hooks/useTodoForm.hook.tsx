@@ -2,12 +2,12 @@ import { EuiComboBoxOptionOption } from '@elastic/eui';
 import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Priority, Status } from '../../../../common/types';
-import { useTodoContext } from '../../context/TodoContext';
-import { Option } from '../../types';
-import TodoBadgePriority from '../TodoBadges/TodoBadgePriority';
-import TodoBadgeStatus from '../TodoBadges/TodoBadgeStatus';
-import { FieldValues, schema } from './schema';
+import { Priority, Status } from '../../../../../common/types';
+import { useTodoContext } from '../../../context/TodoContext';
+import { Option } from '../../../types';
+import TodoBadgePriority from '../../TodoBadges/TodoBadgePriority';
+import TodoBadgeStatus from '../../TodoBadges/TodoBadgeStatus';
+import { FieldValues, schema } from '../schema';
 
 interface UseTodoFormProps {
   onSuccess?: () => void;

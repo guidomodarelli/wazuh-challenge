@@ -10,7 +10,7 @@ import { Controller } from 'react-hook-form';
 import { Priority, Status } from '../../../../common/types';
 import { mapOptions } from '../../utils/map_options';
 import './TodoForm.styles.scss';
-import useTodoForm from './useTodoForm.hook';
+import useTodoForm from './hooks/useTodoForm.hook';
 
 interface TodoFormProps {
   formId: string;

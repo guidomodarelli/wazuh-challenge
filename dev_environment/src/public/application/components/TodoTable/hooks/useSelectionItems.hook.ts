@@ -1,25 +1,20 @@
 import { EuiTableSelectionType } from '@elastic/eui';
-import { TodoItem } from '../../../../../common/types';
 import { useState } from 'react';
-import { useTodoContext } from '../../../context/TodoContext';
+import { TodoItem } from '../../../../../common/types';
 
-function useSelectionItems() {
-  const { deleteTodosByIds } = useTodoContext();
+interface UseSelectionItemsProps {
+  deleteTodosByIds: (...ids: string[]) => void;
+}
+
+function useSelectionItems({ deleteTodosByIds }: UseSelectionItemsProps) {
   const [selectedItems, setSelectedItems] = useState<TodoItem['id'][]>([]);
-
-  /**
-   * The function `onSelectionChange` takes an array of `TodoItem` objects, extracts their `id` properties, and sets
-   * them as the selected items.
-   * @param {TodoItem[]} selectedItems - an array of `TodoItem['id']` strings.
-   */
-  const onSelectionChange = (selectedItems: TodoItem[]) => {
-    setSelectedItems(selectedItems.map((todoItem) => todoItem.id));
-  };
 
   const selection: EuiTableSelectionType<TodoItem> = {
     selectableMessage: (selectable: boolean, todoItem: TodoItem) =>
       !selectable ? `${todoItem.title} is completed` : `Select ${todoItem.title}`,
-    onSelectionChange,
+    onSelectionChange: (selectedItems: TodoItem[]) => {
+      setSelectedItems(selectedItems.map((todoItem) => todoItem.id));
+    },
   };
 
   /**

@@ -15,7 +15,7 @@ import './TodoTable.styles.scss';
 import useColumns from './hooks/useColumns.hook';
 import useSelectionItems from './hooks/useSelectionItems.hook';
 import useSortingAndPagination from '../../hooks/useSortingAndPagination.hook';
-import FlyoutForm from "../TodoForm/FlyoutForm";
+import FlyoutForm from '../TodoForm/FlyoutForm';
 
 const TodoTable = () => {
   const [isFlyoutVisible, setIsFlyoutVisible] = React.useState(false);
@@ -29,7 +29,9 @@ const TodoTable = () => {
     addSampleData,
     deleteTodosByIds,
   } = useTodoContext();
-  const { selectedItems, setSelectedItems, selection, deleteSelectedItems } = useSelectionItems();
+  const { selectedItems, setSelectedItems, selection, deleteSelectedItems } = useSelectionItems({
+    deleteTodosByIds,
+  });
   const { columns } = useColumns({
     onActionEdit(todoItem) {
       setItemIdToUpdate(todoItem.id);
@@ -68,12 +70,7 @@ const TodoTable = () => {
 
   let flyout;
   if (isFlyoutVisible) {
-    flyout = (
-      <FlyoutForm
-        itemIdToUpdate={itemIdToUpdate}
-        onClose={closeFlyout}
-      />
-    );
+    flyout = <FlyoutForm itemIdToUpdate={itemIdToUpdate} onClose={closeFlyout} />;
   }
 
   /* If there are rows selected, it will display a "Delete selected items" button with a danger color. The button's

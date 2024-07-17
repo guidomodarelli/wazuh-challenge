@@ -1,4 +1,4 @@
-import { Option } from "../../types";
+import { Option } from "../types";
 
 /**
  * The function `mapOptions` takes an object or array of values and returns an array of options with string labels.

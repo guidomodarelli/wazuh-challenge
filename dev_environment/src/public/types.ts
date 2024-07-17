@@ -7,7 +7,3 @@ export interface ToDoPluginStart {}
 export interface AppPluginStartDependencies {
   navigation: NavigationPublicPluginStart;
 }
-
-export interface Option<T> {
-  label: T;
-}

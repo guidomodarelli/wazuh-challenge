@@ -1,4 +1,10 @@
-import { EuiComboBox, EuiFieldText, EuiForm, EuiFormErrorText, EuiFormRow } from '@elastic/eui';
+import {
+  EuiComboBox,
+  EuiFieldText,
+  EuiForm,
+  EuiFormErrorText,
+  EuiFormRow
+} from '@elastic/eui';
 import React from 'react';
 import { Controller } from 'react-hook-form';
 import { Priority, Status } from '../../../common/types';
@@ -21,6 +27,12 @@ const TodoForm = ({ formId, itemIdToUpdate, onSuccess }: TodoFormProps) => {
     renderStatusOptions,
     renderPriorityOptions,
   } = useTodoForm({ onSuccess, itemIdToUpdate });
+
+  const mapToComboBoxOption = (options: string[] = []) => {
+    return options?.map((option) => ({
+      label: option,
+    }));
+  };
 
   return (
     <div className="todo-form-container">
@@ -61,6 +73,29 @@ const TodoForm = ({ formId, itemIdToUpdate, onSuccess }: TodoFormProps) => {
                 isInvalid={isInvalid(otherFields.name)}
                 fullWidth
                 placeholder="Assignee"
+              />
+            </EuiFormRow>
+          )}
+        />
+        <Controller
+          control={control}
+          name="tags"
+          render={({ field: { ref, value: options = [], onChange, ...otherFields } }) => (
+            <EuiFormRow
+              label="Tags"
+              fullWidth
+              isInvalid={isInvalid(otherFields.name)}
+              error={errors[otherFields.name]?.message}
+            >
+              <EuiComboBox
+                {...otherFields}
+                inputRef={ref}
+                isInvalid={isInvalid(otherFields.name)}
+                fullWidth
+                onChange={(options) => onChange(options.map((option) => option.label))}
+                selectedOptions={mapToComboBoxOption(options)}
+                renderOption={renderStatusOptions}
+                onCreateOption={(searchValue) => onChange([...options, searchValue])}
               />
             </EuiFormRow>
           )}

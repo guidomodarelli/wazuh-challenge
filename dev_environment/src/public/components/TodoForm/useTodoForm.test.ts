@@ -33,8 +33,8 @@ describe('useTodoForm', () => {
     act(() => {
       result.current.submitHandler({
         title: '',
-        status: [Status.NOT_STARTED],
-        priority: [Priority.LOW],
+        status: Status.NOT_STARTED,
+        priority: Priority.LOW,
       });
     });
 
@@ -49,8 +49,8 @@ describe('useTodoForm', () => {
     act(() => {
       result.current.submitHandler({
         title: '',
-        status: [Status.NOT_STARTED],
-        priority: [Priority.LOW],
+        status: Status.NOT_STARTED,
+        priority: Priority.LOW,
       });
     });
 

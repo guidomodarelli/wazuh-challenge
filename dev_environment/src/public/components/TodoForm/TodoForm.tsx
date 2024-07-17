@@ -1,10 +1,4 @@
-import {
-  EuiComboBox,
-  EuiFieldText,
-  EuiForm,
-  EuiFormErrorText,
-  EuiFormRow,
-} from '@elastic/eui';
+import { EuiComboBox, EuiFieldText, EuiForm, EuiFormErrorText, EuiFormRow } from '@elastic/eui';
 import React from 'react';
 import { Controller } from 'react-hook-form';
 import { Priority, Status } from '../../../common/types';
@@ -56,7 +50,7 @@ const TodoForm = ({ id, itemIdToUpdate, onSuccess, defaultValues = {} }: TodoFor
         <Controller
           control={control}
           name="status"
-          render={({ field: { ref, value: options, onChange, ...otherFields } }) => (
+          render={({ field: { ref, value, onChange, ...otherFields } }) => (
             <EuiFormRow
               label="Status"
               fullWidth
@@ -69,9 +63,9 @@ const TodoForm = ({ id, itemIdToUpdate, onSuccess, defaultValues = {} }: TodoFor
                 isInvalid={isInvalid(otherFields.name)}
                 fullWidth
                 options={mapOptions(Status)}
-                onChange={(options) => onChange(options.map((option) => option.label))}
+                onChange={(options) => onChange(options.map((option) => option.label)[0])}
                 singleSelection={true}
-                selectedOptions={options?.map((option) => ({ label: option }))}
+                selectedOptions={[{ label: value }]}
                 renderOption={renderStatusOptions}
                 isClearable={false}
               />
@@ -81,7 +75,7 @@ const TodoForm = ({ id, itemIdToUpdate, onSuccess, defaultValues = {} }: TodoFor
         <Controller
           control={control}
           name="priority"
-          render={({ field: { ref, value: options, onChange, ...otherFields } }) => (
+          render={({ field: { ref, value, onChange, ...otherFields } }) => (
             <EuiFormRow
               label="Priority"
               fullWidth
@@ -94,9 +88,9 @@ const TodoForm = ({ id, itemIdToUpdate, onSuccess, defaultValues = {} }: TodoFor
                 isInvalid={isInvalid(otherFields.name)}
                 fullWidth
                 options={mapOptions(Priority)}
-                onChange={(options) => onChange(options.map((option) => option.label))}
+                onChange={(options) => onChange(options.map((option) => option.label)[0])}
                 singleSelection={true}
-                selectedOptions={options?.map((option) => ({ label: option }))}
+                selectedOptions={[{ label: value }]}
                 renderOption={renderPriorityOptions}
                 isClearable={false}
               />

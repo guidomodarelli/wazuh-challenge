@@ -21,8 +21,8 @@ function useTodoForm({ onSuccess, itemIdToUpdate, defaultValues = {} }: UseTodoF
     resolver: zodResolver(schema),
     defaultValues: {
       title: defaultValues.title ?? '',
-      status: defaultValues.status ?? [Status.NOT_STARTED],
-      priority: defaultValues.priority ?? [Priority.LOW],
+      status: defaultValues.status ?? Status.NOT_STARTED,
+      priority: defaultValues.priority ?? Priority.LOW,
     },
   });
   const { errors } = formState;
@@ -61,15 +61,10 @@ function useTodoForm({ onSuccess, itemIdToUpdate, defaultValues = {} }: UseTodoF
    * @param data - It is being used to create a new todo item (`newTodo`).
    */
   const submitHandler: SubmitHandler<FieldValues> = (data: FieldValues) => {
-    const newTodo: TodoItemRequest = {
-      ...data,
-      priority: data.priority[0],
-      status: data.status[0],
-    };
     if (!!itemIdToUpdate) {
-      updateTodo(itemIdToUpdate, newTodo)
+      updateTodo(itemIdToUpdate, data)
     } else {
-      createTodo(newTodo);
+      createTodo(data);
     }
     reset();
     onSuccess?.();

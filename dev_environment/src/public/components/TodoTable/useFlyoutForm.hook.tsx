@@ -22,20 +22,12 @@ const useFlyoutForm = ({ onClose, itemIdToUpdate }: UseFlyoutFormProps) => {
     onClose?.();
   };
 
-  const mapToFieldValues = (itemToUpdate: TodoItem): Partial<FieldValues> => {
-    return {
-      ...itemToUpdate,
-      status: [itemToUpdate.status],
-      priority: [itemToUpdate.priority],
-    };
-  };
-
   let flyout;
   const setFlyout = (itemToUpdate?: TodoItem) => {
     flyout = (
       <FlyoutForm
         itemIdToUpdate={itemIdToUpdate}
-        defaultValues={itemToUpdate ? mapToFieldValues(itemToUpdate) : undefined}
+        defaultValues={itemToUpdate}
         onClose={closeFlyout}
       />
     );

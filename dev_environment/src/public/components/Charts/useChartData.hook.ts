@@ -65,11 +65,11 @@ function useChartData() {
    * - `priority`: The priority of the todo
    */
   const groupByAssigneeAndPriority = (items = todoItems) => {
-    const itemsGroupedByAssignee = Object.groupBy(
+    const itemsGroupedByAssigneeAndPriority = Object.groupBy(
       items,
       ({ assignee = '', priority }) => `${assignee}#${priority}`
     );
-    return Object.entries(itemsGroupedByAssignee).map((item) => {
+    return Object.entries(itemsGroupedByAssigneeAndPriority).map((item) => {
       const assigneeAndPriority = item[0].split('#');
       return {
         assignee: assigneeAndPriority[0],
@@ -86,16 +86,16 @@ function useChartData() {
    * combination, and the status of the todo items.
    */
   const groupByAssigneeAndStatus = (items = todoItems) => {
-    const itemsGroupedByAssignee = Object.groupBy(
+    const itemsGroupedByAssigneeAndStatus = Object.groupBy(
       items,
       ({ assignee = '', status }) => `${assignee}#${status}`
     );
-    return Object.entries(itemsGroupedByAssignee).map((item) => {
-      const assigneeAndPriority = item[0].split('#');
+    return Object.entries(itemsGroupedByAssigneeAndStatus).map((item) => {
+      const assigneeAndStatus = item[0].split('#');
       return {
-        assignee: assigneeAndPriority[0],
+        assignee: assigneeAndStatus[0],
         count: item[1]?.length,
-        status: assigneeAndPriority[1],
+        status: assigneeAndStatus[1],
       };
     });
   };

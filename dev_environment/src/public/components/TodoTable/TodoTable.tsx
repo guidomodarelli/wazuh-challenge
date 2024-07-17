@@ -17,7 +17,7 @@ import useSelectionItems from './useSelectionItems.hook';
 import useSortingAndPagination from './useSortingAndPagination.hook';
 import FlyoutForm from "../TodoForm/FlyoutForm";
 
-const Todos = () => {
+const TodoTable = () => {
   const [isFlyoutVisible, setIsFlyoutVisible] = React.useState(false);
   const [itemIdToUpdate, setItemIdToUpdate] = useState<string | undefined>(undefined);
   const {
@@ -132,4 +132,4 @@ onClick event handler will call the `deleteTodosByIds` function with the IDs of 
   );
 };
 
-export default Todos;
+export default TodoTable;

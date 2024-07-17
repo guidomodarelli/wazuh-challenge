@@ -1,5 +1,5 @@
 import React from 'react';
-import Todos from '../components/TodoTable/TodoTable';
+import TodoTable from '../components/TodoTable/TodoTable';
 import Layout from '../layouts/Layout';
 
 interface MainPageProps {}
@@ -7,7 +7,7 @@ interface MainPageProps {}
 const MainPage = ({}: MainPageProps) => {
   return (
     <Layout>
-      <Todos />
+      <TodoTable />
     </Layout>
   );
 };

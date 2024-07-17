@@ -1,16 +1,17 @@
 import { EuiBadge, EuiBasicTableColumn, EuiText } from '@elastic/eui';
+import { Status } from '../../../../core/domain/entities/Status';
 import React from 'react';
-import { Status, TodoItem } from '../../../../../common/types';
 import TodoBadgePriority from '../../TodoBadges/TodoBadgePriority';
 import TodoBadgeStatus from '../../TodoBadges/TodoBadgeStatus';
+import { TodoEntity } from "../../../../core/domain/entities/TodoEntity";
 
 interface UseColumnsProps {
-  onActionEdit: (todoItem: TodoItem) => void;
-  onActionDelete: (todoItem: TodoItem) => void;
+  onActionEdit: (todoItem: TodoEntity) => void;
+  onActionDelete: (todoItem: TodoEntity) => void;
 }
 
 function useColumns({ onActionEdit: onEdit, onActionDelete: onDelete }: UseColumnsProps) {
-  const columns: Array<EuiBasicTableColumn<TodoItem>> = [
+  const columns: Array<EuiBasicTableColumn<TodoEntity>> = [
     {
       field: 'title',
       name: 'Title',
@@ -21,7 +22,7 @@ function useColumns({ onActionEdit: onEdit, onActionDelete: onDelete }: UseColum
       id: 'tags',
       name: 'Tags',
       'data-test-subj': 'tagsCell',
-      render: ({ tags }: TodoItem) => (
+      render: ({ tags }: TodoEntity) => (
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
           {tags?.map((tag, index) => (
             <EuiBadge key={`${tag}-${index}`} color="default">
@@ -34,36 +35,40 @@ function useColumns({ onActionEdit: onEdit, onActionDelete: onDelete }: UseColum
     {
       id: 'assignee',
       name: 'Assignee',
-      footer: ({ items }: { items: TodoItem[] }) => {
+      footer: ({ items }: { items: TodoEntity[] }) => {
         const uniqueUsers = new Set(items.map((todoItem) => todoItem.assignee));
         return <>{uniqueUsers.size} users</>;
       },
-      render: ({ assignee }: TodoItem) => <EuiText>{assignee}</EuiText>,
+      render: ({ assignee }: TodoEntity) => <EuiText>{assignee}</EuiText>,
     },
     {
       id: 'status',
       name: 'Status',
       'data-test-subj': 'statusCell',
-      footer: ({ items }: { items: TodoItem[] }) => {
+      footer: ({ items }: { items: TodoEntity[] }) => {
         const completedTodoItems = items.reduce(
           (previous, { status }) => (status === Status.COMPLETED ? previous + 1 : previous),
           0
         );
-        return <>{completedTodoItems}/{items.length} completed</>;
+        return (
+          <>
+            {completedTodoItems}/{items.length} completed
+          </>
+        );
       },
-      render: ({ status }: TodoItem) => <TodoBadgeStatus variant={status} />,
+      render: ({ status }: TodoEntity) => <TodoBadgeStatus variant={status} />,
     },
     {
       id: 'priority',
       name: 'Priority',
       'data-test-subj': 'priorityCell',
-      render: ({ priority }: TodoItem) => <TodoBadgePriority variant={priority} />,
+      render: ({ priority }: TodoEntity) => <TodoBadgePriority variant={priority} />,
     },
     {
       id: 'createdAt',
       name: 'Created at',
       'data-test-subj': 'createdAtCell',
-      render: ({ createdAt }: TodoItem) =>
+      render: ({ createdAt }: TodoEntity) =>
         createdAt ? <EuiText>{new Date(createdAt).toLocaleDateString()}</EuiText> : <></>,
     },
     {

@@ -1,6 +1,6 @@
 import { EuiBadge } from '@elastic/eui';
 import React from 'react';
-import { Status } from '../../../../common/types';
+import { Status } from '../../../core/domain/entities/Status';
 
 const TodoStatuses = {
   Error: () => <EuiBadge color="danger">{Status.EXECUTED_WITH_ERROR}</EuiBadge>,

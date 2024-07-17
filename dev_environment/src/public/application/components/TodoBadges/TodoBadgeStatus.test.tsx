@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import TodoBadgeStatus from './TodoBadgeStatus';
-import { Status } from '../../../../common/types';
+import { Status } from '../../../core/domain/entities/Status';
 
 describe('TodoBadgeStatus', () => {
   it('verify TodoBadgeStatus renders NOT_STARTED status label', () => {

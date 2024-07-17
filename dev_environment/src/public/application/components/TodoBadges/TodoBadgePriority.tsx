@@ -1,6 +1,6 @@
 import { EuiBadge } from '@elastic/eui';
 import React from 'react';
-import { Priority } from '../../../../common/types';
+import { Priority } from '../../../core/domain/entities/Priority';
 
 const TodoPriorities = {
   Low: () => <EuiBadge color="lightblue">{Priority.LOW}</EuiBadge>,

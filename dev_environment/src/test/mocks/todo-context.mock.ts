@@ -1,5 +1,5 @@
+import { useTodoContext } from "../../public/application/context/TodoContext";
 import type { RecordMock } from './types';
-import { useTodoContext } from '../public/context/TodoContext';
 
 export function mockTodoContextFn(
   _jest: typeof jest

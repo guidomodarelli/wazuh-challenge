@@ -1,13 +1,8 @@
-import {
-  EuiComboBox,
-  EuiFieldText,
-  EuiForm,
-  EuiFormErrorText,
-  EuiFormRow
-} from '@elastic/eui';
+import { EuiComboBox, EuiFieldText, EuiForm, EuiFormErrorText, EuiFormRow } from '@elastic/eui';
 import React from 'react';
 import { Controller } from 'react-hook-form';
-import { Priority, Status } from '../../../../common/types';
+import { Priority } from '../../../core/domain/entities/Priority';
+import { Status } from '../../../core/domain/entities/Status';
 import { mapOptions } from '../../utils/map_options';
 import './TodoForm.styles.scss';
 import useTodoForm from './hooks/useTodoForm.hook';

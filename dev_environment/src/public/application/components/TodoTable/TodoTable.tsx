@@ -9,13 +9,13 @@ import {
 } from '@elastic/eui';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { TodoItem } from '../../../../common/types';
+import { TodoEntity } from '../../../core/domain/entities/TodoEntity';
 import { useTodoContext } from '../../context/TodoContext';
+import useSortingAndPagination from '../../hooks/useSortingAndPagination.hook';
+import FlyoutForm from '../TodoForm/FlyoutForm';
 import './TodoTable.styles.scss';
 import useColumns from './hooks/useColumns.hook';
 import useSelectionItems from './hooks/useSelectionItems.hook';
-import useSortingAndPagination from '../../hooks/useSortingAndPagination.hook';
-import FlyoutForm from '../TodoForm/FlyoutForm';
 
 const TodoTable = () => {
   const [isFlyoutVisible, setIsFlyoutVisible] = React.useState(false);
@@ -44,7 +44,7 @@ const TodoTable = () => {
     },
   });
   const { onTableChange, pageOfItems, pagination, sorting, resultsCount } = useSortingAndPagination<
-    TodoItem
+    TodoEntity
   >({
     items: filteredTodoItems,
     defaultSortField: 'title',

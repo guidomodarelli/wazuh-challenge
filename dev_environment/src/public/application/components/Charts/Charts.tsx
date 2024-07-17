@@ -17,7 +17,7 @@ import {
 } from '@elastic/eui';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { TodoItem } from '../../../../common/types';
+import { TodoEntity } from "../../../core/domain/entities/TodoEntity";
 import { useTodoContext } from '../../context/TodoContext';
 import useChartData from './hooks/useChartData.hook';
 
@@ -61,7 +61,7 @@ const Charts = () => {
           topGroove={0}
           layers={[
             {
-              groupByRollup: (d: TodoItem) => d.assignee,
+              groupByRollup: (d: TodoEntity) => d.assignee,
             },
           ]}
         />
@@ -136,7 +136,7 @@ const Charts = () => {
           topGroove={0}
           layers={[
             {
-              groupByRollup: (d: TodoItem) => d.status,
+              groupByRollup: (d: TodoEntity) => d.status,
             },
           ]}
         />
@@ -154,7 +154,7 @@ const Charts = () => {
           valueAccessor={getPriorityWeight}
           layers={[
             {
-              groupByRollup: (d: TodoItem) => d.priority,
+              groupByRollup: (d: TodoEntity) => d.priority,
             },
           ]}
         />

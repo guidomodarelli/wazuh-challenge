@@ -1,6 +1,8 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { mockTodoContextFn } from '../../../../../test/mocks/todo-context.mock';
-import { Priority, Status, TodoItem } from '../../../../../common/types';
+import { Priority } from '../../../../core/domain/entities/Priority';
+import { Status } from '../../../../core/domain/entities/Status';
+import { TodoEntity } from '../../../../core/domain/entities/TodoEntity';
 import * as TodoContext from '../../../context/TodoContext';
 import useChartData from './useChartData.hook';
 
@@ -13,7 +15,7 @@ describe('useChartData', () => {
   });
 
   it('verify function correctly groups todo items by assignee', () => {
-    const todoItems: Pick<TodoItem, 'assignee'>[] = [
+    const todoItems: Pick<TodoEntity, 'assignee'>[] = [
       {
         assignee: 'Tyler',
       },
@@ -41,7 +43,7 @@ describe('useChartData', () => {
   });
 
   it('verify function groups todo items by priority and status', () => {
-    const todoItems: Pick<TodoItem, 'status' | 'priority'>[] = [
+    const todoItems: Pick<TodoEntity, 'status' | 'priority'>[] = [
       {
         status: Status.EXECUTED_WITH_ERROR,
         priority: Priority.LOW,
@@ -83,7 +85,7 @@ describe('useChartData', () => {
   });
 
   it('should ', () => {
-    const todoItems: Pick<TodoItem, 'assignee' | 'priority'>[] = [
+    const todoItems: Pick<TodoEntity, 'assignee' | 'priority'>[] = [
       {
         assignee: 'Louie',
         priority: Priority.LOW,
@@ -126,7 +128,7 @@ describe('useChartData', () => {
   });
 
   it('should ', () => {
-    const todoItems: Pick<TodoItem, 'assignee' | 'status'>[] = [
+    const todoItems: Pick<TodoEntity, 'assignee' | 'status'>[] = [
       {
         assignee: 'Louie',
         status: Status.NOT_STARTED,

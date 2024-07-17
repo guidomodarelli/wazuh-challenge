@@ -2,18 +2,20 @@ import { faker } from '@faker-js/faker';
 import { i18n } from '@osd/i18n';
 import { CoreStart } from 'opensearch-dashboards/public';
 import React, { createContext, useState } from 'react';
-import { Priority, Status, TodoItem, TodoItemRequest } from '../../../common/types';
+import { Priority } from '../../core/domain/entities/Priority';
+import { Status } from '../../core/domain/entities/Status';
+import { TodoEntity, TodoEntityRequest } from '../../core/domain/entities/TodoEntity';
 import { Services } from '../../services';
 import { isError } from '../utils/is_error';
 
 interface ToDoContextType {
-  todoItems: TodoItem[];
-  filteredTodoItems: TodoItem[];
+  todoItems: TodoEntity[];
+  filteredTodoItems: TodoEntity[];
   completedTodos: number;
   search: string;
   setSearch: (search: string) => void;
-  createTodo: (item: TodoItemRequest) => void;
-  updateTodo: (itemIdToUpdate: string, itemToUpdate: TodoItemRequest) => void;
+  createTodo: (item: TodoEntityRequest) => void;
+  updateTodo: (itemIdToUpdate: string, itemToUpdate: TodoEntityRequest) => void;
   deleteTodosByIds: (...ids: string[]) => void;
   addSampleData: (fakes?: number) => void;
 }
@@ -43,7 +45,7 @@ function ToDoProvider({
   notifications,
   services: { fetchTodos, createNewTodo, bulkCreateTodos, updateTodo, deleteTodosByIds },
 }: ToDoProviderProps) {
-  const [todoItems, setTodoItems] = useState<TodoItem[]>([]);
+  const [todoItems, setTodoItems] = useState<TodoEntity[]>([]);
   const [search, setSearch] = useState('');
 
   const filteredTodoItems = todoItems.filter(({ title, tags, assignee }) => {
@@ -80,7 +82,7 @@ function ToDoProvider({
     search,
     setSearch,
     /* The `createTodo` function is responsible for creating a new todo item. */
-    async createTodo(newTodoItem: TodoItemRequest) {
+    async createTodo(newTodoItem: TodoEntityRequest) {
       const response = await createNewTodo(newTodoItem);
       if (isError(response)) {
         // TODO: Handle error
@@ -95,7 +97,7 @@ function ToDoProvider({
     },
 
     /* The `updateTodo` function is responsible for updating an existing todo item. */
-    async updateTodo(itemIdToUpdate: string, updatedItem: TodoItemRequest) {
+    async updateTodo(itemIdToUpdate: string, updatedItem: TodoEntityRequest) {
       const response = await updateTodo(itemIdToUpdate, updatedItem);
       if (isError(response)) {
         // TODO: Handle Error
@@ -132,7 +134,7 @@ function ToDoProvider({
     },
 
     async addSampleData(fakes = 100) {
-      const newTodos: TodoItem[] = [];
+      const newTodos: TodoEntity[] = [];
       faker.setDefaultRefDate(new Date());
       const persons = faker.helpers.multiple(faker.person.firstName, { count: 7 });
       const tags = faker.helpers.multiple(faker.lorem.word, { count: 27 });

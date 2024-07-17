@@ -1,7 +1,7 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
+import React from 'react';
+import { Priority } from '../../../core/domain/entities/Priority';
 import TodoBadgePriority from './TodoBadgePriority';
-import { Priority } from '../../../../common/types';
 
 describe('TodoBadgePriority', () => {
   it('verify TodoBadgePriority renders LOW priority label', () => {

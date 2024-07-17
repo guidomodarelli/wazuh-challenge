@@ -1,6 +1,7 @@
-import { Priority, TodoItem } from '../../../../../common/types';
-import { useTodoContext } from '../../../context/TodoContext';
 import 'core-js/proposals/array-grouping-v2';
+import { Priority } from '../../../../core/domain/entities/Priority';
+import { TodoEntity } from '../../../../core/domain/entities/TodoEntity';
+import { useTodoContext } from '../../../context/TodoContext';
 
 function useChartData() {
   const { todoItems } = useTodoContext();
@@ -8,7 +9,7 @@ function useChartData() {
   /**
    * The function `getPriorityWeight` returns a numerical value based on the priority of a todo item.
    */
-  const getPriorityWeight = (todoItem: TodoItem) => {
+  const getPriorityWeight = (todoItem: TodoEntity) => {
     switch (todoItem.priority) {
       case Priority.LOW:
         return 1;
@@ -24,10 +25,10 @@ function useChartData() {
   /**
    * The function `groupByAssignee` returns the number of todo items assigned to the same assignee as the input
    * todo item.
-   * @param {TodoItem} todoItem - represents an individual todo item with properties such as `assignee`.
+   * @param {TodoEntity} todoItem - represents an individual todo item with properties such as `assignee`.
    * @returns the number of todo items assigned to the same assignee as the input `todoItem`.
    */
-  const groupByAssignee = (todoItem: TodoItem, items = todoItems) => {
+  const groupByAssignee = (todoItem: TodoEntity, items = todoItems) => {
     const itemsGroupedByAssignee = Object.groupBy(items, ({ assignee = '' }) => assignee);
     const assignee = todoItem.assignee ?? '';
     return itemsGroupedByAssignee[assignee]?.length ?? 0;

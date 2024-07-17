@@ -1,7 +1,7 @@
 import { CoreStart } from 'opensearch-dashboards/public';
-import type { RecordMock } from '../../test/mocks/types';
 import { getServices } from '.';
-import { TodoItem } from '../../common/types';
+import type { RecordMock } from '../../test/mocks/types';
+import { TodoEntity } from '../core/domain/entities/TodoEntity';
 
 let http: RecordMock<CoreStart['http']>;
 
@@ -17,7 +17,7 @@ describe('services', () => {
   });
 
   it('fetches and returns todo items with ids', async () => {
-    const todoItems: Pick<TodoItem, 'title'>[] = [
+    const todoItems: Pick<TodoEntity, 'title'>[] = [
       {
         title: 'Absorbeo vulgaris speculum crapula agnosco clarus utpote',
       },
@@ -53,7 +53,7 @@ describe('services', () => {
   });
 
   it('creates and returns a new todo item with an id', async () => {
-    const todoItem: Pick<TodoItem, 'title'> = {
+    const todoItem: Pick<TodoEntity, 'title'> = {
       title: 'Absorbeo vulgaris speculum crapula agnosco clarus utpote',
     };
     const todosExpected = { id: 1, ...todoItem };
@@ -72,7 +72,7 @@ describe('services', () => {
   });
 
   it('bulk creates and returns multiple todo items with ids', async () => {
-    const todoItems: Pick<TodoItem, 'title'>[] = [
+    const todoItems: Pick<TodoEntity, 'title'>[] = [
       {
         title: 'Absorbeo vulgaris speculum crapula agnosco clarus utpote',
       },
@@ -107,7 +107,7 @@ describe('services', () => {
   });
 
   it('updates an existing todo item by id', async () => {
-    const todoItem: Pick<TodoItem, 'id' | 'title'> = {
+    const todoItem: Pick<TodoEntity, 'id' | 'title'> = {
       id: '1',
       title: 'Absorbeo vulgaris speculum crapula agnosco clarus utpote',
     };
@@ -135,7 +135,7 @@ describe('services', () => {
     expect(http.delete).toHaveBeenCalledWith('/api/todo_plugin/deleteIds', {
       query: {
         ids: JSON.stringify(todoIds),
-      }
+      },
     });
   });
 });

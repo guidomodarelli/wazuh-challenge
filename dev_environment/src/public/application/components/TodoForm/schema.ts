@@ -1,5 +1,6 @@
+import { Priority } from '../../../core/domain/entities/Priority';
+import { Status } from '../../../core/domain/entities/Status';
 import { z } from 'zod';
-import { Priority, Status } from '../../../../common/types';
 
 export const schema = z.object({
   title: z.string().min(3),

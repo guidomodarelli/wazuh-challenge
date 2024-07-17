@@ -1,7 +1,7 @@
 import { IRouter } from 'opensearch-dashboards/server';
 import { v4 as UUID } from 'uuid';
 import { SERVER_TODO_ROUTE_PATH_BULK_CREATE, SERVER_TODO_ROUTE_PATH_CREATE } from '../../common';
-import { Status } from '../../common/types';
+import { Status } from '../../public/core/domain/entities/Status';
 import { TODO_INDEX } from '../constants';
 import { schemaTodo } from '../schema';
 import { createIndexIfNotExists } from '../utils/create_index';

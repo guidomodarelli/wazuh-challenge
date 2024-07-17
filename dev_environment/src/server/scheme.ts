@@ -6,8 +6,8 @@ export const schemeTodo = schema.object({
   title: schema.string({ minLength: 3 }),
   status: schema.maybe(schema.string()),
   priority: schema.string(),
-  assignee: schema.maybe(schema.string()),
-  tags: schema.maybe(schema.arrayOf(schema.string())),
+  assignee: schema.maybe(schema.string({ minLength: 3 })),
+  tags: schema.maybe(schema.arrayOf(schema.string({ minLength: 3 }))),
 });
 
 export const schemeParamId = schema.object({

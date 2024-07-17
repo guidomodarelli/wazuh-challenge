@@ -2,7 +2,7 @@ import { EuiBadge } from '@elastic/eui';
 import React from 'react';
 import { Priority } from '../../../common/types';
 
-const TodoPrioritys = {
+const TodoPriorities = {
   Low: () => <EuiBadge color="lightblue">{Priority.LOW}</EuiBadge>,
   Medium: () => <EuiBadge color="blue">{Priority.MEDIUM}</EuiBadge>,
   High: () => <EuiBadge color="purple">{Priority.HIGH}</EuiBadge>,
@@ -16,13 +16,13 @@ interface TodoPriorityProps {
 const TodoBadgePriority = ({variant}: TodoPriorityProps) => {
   switch (variant) {
     case Priority.MEDIUM:
-      return <TodoPrioritys.Medium />;
+      return <TodoPriorities.Medium />;
     case Priority.HIGH:
-      return <TodoPrioritys.High />;
+      return <TodoPriorities.High />;
     case Priority.CRITICAL:
-      return <TodoPrioritys.Critical />;
+      return <TodoPriorities.Critical />;
     default:
-      return <TodoPrioritys.Low />;
+      return <TodoPriorities.Low />;
   }
 };
 

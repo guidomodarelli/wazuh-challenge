@@ -11,7 +11,7 @@ describe('defineRouteUpdateTodo', () => {
     };
   });
 
-  it('verify the correct API endpoint', () => {
+  it('should call the correct endpoint to update a todo', () => {
     // @ts-expect-error
     defineRouteUpdateTodo(router);
 

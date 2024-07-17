@@ -1,4 +1,4 @@
-import { OmitStrict } from './global-types';
+export type OmitStrict<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
 export enum Status {
   NOT_STARTED = 'Not started',

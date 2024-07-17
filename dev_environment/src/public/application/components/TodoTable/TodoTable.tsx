@@ -14,7 +14,7 @@ import { useTodoContext } from '../../context/TodoContext';
 import './TodoTable.styles.scss';
 import useColumns from './useColumns.hook';
 import useSelectionItems from './useSelectionItems.hook';
-import useSortingAndPagination from './useSortingAndPagination.hook';
+import useSortingAndPagination from '../../hooks/useSortingAndPagination.hook';
 import FlyoutForm from "../TodoForm/FlyoutForm";
 
 const TodoTable = () => {

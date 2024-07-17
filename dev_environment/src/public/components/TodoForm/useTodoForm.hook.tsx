@@ -20,6 +20,7 @@ function useTodoForm({ onSuccess, itemIdToUpdate }: UseTodoFormProps) {
   const { handleSubmit, control, formState, reset } = useForm<FieldValues>({
     resolver: zodResolver(schema),
     defaultValues: {
+      ...itemToUpdate,
       title: itemToUpdate?.title ?? '',
       status: itemToUpdate?.status ?? Status.NOT_STARTED,
       priority: itemToUpdate?.priority ?? Priority.LOW,

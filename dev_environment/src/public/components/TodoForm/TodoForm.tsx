@@ -47,6 +47,26 @@ const TodoForm = ({ formId, itemIdToUpdate, onSuccess }: TodoFormProps) => {
         />
         <Controller
           control={control}
+          name="assignee"
+          render={({ field: { ref, ...otherFields } }) => (
+            <EuiFormRow
+              label="Assignee"
+              fullWidth
+              isInvalid={isInvalid(otherFields.name)}
+              error={errors[otherFields.name]?.message}
+            >
+              <EuiFieldText
+                {...otherFields}
+                inputRef={ref}
+                isInvalid={isInvalid(otherFields.name)}
+                fullWidth
+                placeholder="Assignee"
+              />
+            </EuiFormRow>
+          )}
+        />
+        <Controller
+          control={control}
           name="status"
           render={({ field: { ref, value, onChange, ...otherFields } }) => (
             <EuiFormRow

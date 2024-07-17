@@ -15,16 +15,11 @@ import './TodoTable.styles.scss';
 import useColumns from './useColumns.hook';
 import useSelectionItems from './useSelectionItems.hook';
 import useSortingAndPagination from './useSortingAndPagination.hook';
-import useFlyoutForm from './useFlyoutForm.hook';
+import FlyoutForm from "../TodoForm/FlyoutForm";
 
 const Todos = () => {
+  const [isFlyoutVisible, setIsFlyoutVisible] = React.useState(false);
   const [itemIdToUpdate, setItemIdToUpdate] = useState<string | undefined>(undefined);
-  const { flyout, openFlyout } = useFlyoutForm({
-    itemIdToUpdate,
-    onClose() {
-      setItemIdToUpdate(undefined);
-    },
-  });
   const {
     todoItems,
     filteredTodoItems,
@@ -61,6 +56,25 @@ const Todos = () => {
   const changeSearchTodoHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
   };
+
+  const openFlyout = () => {
+    setIsFlyoutVisible(true);
+  };
+
+  const closeFlyout = () => {
+    setIsFlyoutVisible(false);
+    setItemIdToUpdate(undefined);
+  };
+
+  let flyout;
+  if (isFlyoutVisible) {
+    flyout = (
+      <FlyoutForm
+        itemIdToUpdate={itemIdToUpdate}
+        onClose={closeFlyout}
+      />
+    );
+  }
 
   /* If there are rows selected, it will display a "Delete selected items" button with a danger color. The button's
 onClick event handler will call the `deleteTodosByIds` function with the IDs of all selected items. */

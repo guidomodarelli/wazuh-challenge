@@ -84,5 +84,49 @@ describe('useChartData', () => {
     }
   });
 
+  it('should ', () => {
+    const todoItems: Pick<TodoItem, 'assignee' | 'priority'>[] = [
+      {
+        assignee: 'Louie',
+        priority: Priority.LOW,
+      },
+      {
+        assignee: 'Germaine',
+        priority: Priority.LOW,
+      },
+      {
+        assignee: 'Germaine',
+        priority: Priority.LOW,
+      },
+      {
+        assignee: 'Louie',
+        priority: Priority.HIGH,
+      },
+    ];
+    const { result } = renderHook(() => useChartData());
 
+    // @ts-expect-error
+    const response = result.current.groupByAssigneeAndPriority(todoItems);
+
+
+    const expectedType = expect.objectContaining({
+      assignee: expect.any(String),
+      count: expect.any(Number),
+      priority: expect.any(String),
+    });
+
+    expect(response).toEqual(expect.arrayContaining([expectedType, expectedType, expectedType]));
+
+    for (const element of response) {
+      if (element.assignee === 'Louie' && element.priority === Priority.LOW) {
+        expect(element.count).toBe(1);
+      }
+      if (element.assignee === 'Germaine' && element.priority === Priority.LOW) {
+        expect(element.count).toBe(2);
+      }
+      if (element.assignee === 'Louie' && element.priority === Priority.HIGH) {
+        expect(element.count).toBe(1);
+      }
+    }
+  });
 });

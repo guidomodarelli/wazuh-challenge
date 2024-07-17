@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import { renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react-hooks';
 import { CoreStart } from 'opensearch-dashboards/public';
 import React from 'react';
 import { RecordMock } from '../../common/global-types';
@@ -77,22 +77,30 @@ describe('TodoContext', () => {
     });
     await waitForNextUpdate();
 
-    result.current.setSearch('qui');
+    act(() => {
+      result.current.setSearch('qui');
+    });
 
     expect(result.current.filteredTodoItems).toHaveLength(3);
     expect(result.current.filteredTodoItems).toEqual([todoItems[1], todoItems[2], todoItems[3]]);
 
-    result.current.setSearch('consequuntur');
+    act(() => {
+      result.current.setSearch('consequuntur');
+    });
 
     expect(result.current.filteredTodoItems).toHaveLength(1);
     expect(result.current.filteredTodoItems).toEqual([todoItems[0]]);
 
-    result.current.setSearch('Jadyn');
+    act(() => {
+      result.current.setSearch('Jadyn');
+    });
 
     expect(result.current.filteredTodoItems).toHaveLength(1);
     expect(result.current.filteredTodoItems).toEqual([todoItems[1]]);
 
-    result.current.setSearch('Nicholas');
+    act(() => {
+      result.current.setSearch('Nicholas');
+    });
 
     expect(result.current.filteredTodoItems).toHaveLength(2);
     expect(result.current.filteredTodoItems).toEqual([todoItems[2], todoItems[3]]);

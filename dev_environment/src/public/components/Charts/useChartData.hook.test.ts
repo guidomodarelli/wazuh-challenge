@@ -30,12 +30,12 @@ describe('useChartData', () => {
     const { result } = renderHook(() => useChartData());
 
     // @ts-expect-error
-    const response = result.current.groupByAssignee(todoItems[3], todoItems);
+    let response = result.current.groupByAssignee(todoItems[3], todoItems);
 
     expect(response).toBe(2);
 
     // @ts-expect-error
-    const response = result.current.groupByAssignee(todoItems[1], todoItems);
+    response = result.current.groupByAssignee(todoItems[1], todoItems);
 
     expect(response).toBe(1);
   });

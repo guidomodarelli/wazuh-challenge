@@ -279,7 +279,9 @@ describe('TodoContext', () => {
 
     expect(result.current.todoItems).toHaveLength(3);
 
-    await result.current.deleteTodosByIds(todoItem1.id, todoItem3.id);
+    await act(async () => {
+      await result.current.deleteTodosByIds(todoItem1.id, todoItem3.id);
+    });
 
     expect(services.deleteTodosByIds).toHaveBeenCalledTimes(1);
     expect(services.deleteTodosByIds).toHaveBeenCalledWith(todoItem1.id, todoItem3.id);

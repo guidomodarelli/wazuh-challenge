@@ -23,9 +23,7 @@ function useChartData() {
   /**
    * The function `groupByAssignee` returns the number of todo items assigned to the same assignee as the input
    * todo item.
-   * @param {TodoItem} todoItem - represents an individual todo item with properties such as `assignee`. The
-   * `groupByAssignee` function takes a `todoItem` as input and returns the count of todo items assigned to the
-   * same assignee as the input `todoItem`.
+   * @param {TodoItem} todoItem - represents an individual todo item with properties such as `assignee`.
    * @returns the number of todo items assigned to the same assignee as the input `todoItem`.
    */
   const groupByAssignee = (todoItem: TodoItem, items = todoItems) => {

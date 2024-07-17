@@ -3,7 +3,6 @@ import React from 'react';
 const injectI18n = Component => props => <Component {...props} />;
 
 const FormattedMessage = ({ id, defaultMessage, values }) => {
-  // Renderiza el mensaje predeterminado con los valores interpolados
   let message = defaultMessage;
   if (values) {
     Object.keys(values).forEach((key) => {
@@ -22,5 +21,4 @@ module.exports = {
   i18n: {
     translate: jest.fn((key, options) => options.defaultMessage || key),
   },
-  // Mock otros componentes o funciones si es necesario
 };

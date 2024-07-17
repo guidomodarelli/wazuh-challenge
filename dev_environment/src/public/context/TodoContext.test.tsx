@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, act as actReact } from '@testing-library/react';
 import { act, renderHook } from '@testing-library/react-hooks';
 import { CoreStart } from 'opensearch-dashboards/public';
 import React from 'react';
@@ -38,8 +38,10 @@ describe('TodoContext', () => {
     };
   });
 
-  it('should call fetchTodos service once on render', () => {
-    render(<ToDoProvider notifications={notifications} services={services}></ToDoProvider>);
+  it('should call fetchTodos service once on render', async () => {
+    await actReact(async () => {
+      await render(<ToDoProvider notifications={notifications} services={services}></ToDoProvider>);
+    });
 
     expect(services.fetchTodos).toHaveBeenCalledTimes(1);
   });

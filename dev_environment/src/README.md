@@ -2,7 +2,30 @@
 
 An OpenSearch Dashboards plugin
 
----
+## Description
+
+The TODO plugin provides comprehensive task management features, including:
+
+- Pagination and sorting by properties.
+- Search functionality for TODOs by title, tags, and assignee.
+- Create, update, and delete TODOs.
+- Mark TODOs as completed.
+
+Each TODO has the following attributes:
+- Title
+- Status (Completed, Not Started, Working on it, Error)
+- Priority (low, medium, high, critical)
+- CreatedAt
+- Tags
+- Assignee
+
+Additionally, the plugin includes charts that display statistics about the TODOs, such as:
+
+1. Types of TODOs by priority (low, medium, high, critical) assigned to a person.
+2. Types of TODOs by status (Completed, Not Started, Working on it, Error) assigned to a person.
+3. Types of TODOs by status.
+4. Types of TODOs by priority.
+5. Combination of TODOs by priority and status.
 
 ## Development
 

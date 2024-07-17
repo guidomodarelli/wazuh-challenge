@@ -11,16 +11,20 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { TodoItem } from '../../../common/types';
 import { useTodoContext } from '../../context/TodoContext';
-import FlyoutForm from '../TodoForm/FlyoutForm';
-import { FieldValues } from '../TodoForm/schema';
 import './TodoTable.styles.scss';
 import useColumns from './useColumns.hook';
 import useSelectionItems from './useSelectionItems.hook';
 import useSortingAndPagination from './useSortingAndPagination.hook';
+import useFlyoutForm from './useFlyoutForm.hook';
 
 const Todos = () => {
-  const [isFlyoutVisible, setIsFlyoutVisible] = useState(false);
   const [itemIdToUpdate, setItemIdToUpdate] = useState<string | undefined>(undefined);
+  const { flyout, openFlyout } = useFlyoutForm({
+    itemIdToUpdate,
+    onClose() {
+      setItemIdToUpdate(undefined);
+    },
+  });
   const {
     todoItems,
     filteredTodoItems,
@@ -49,38 +53,6 @@ const Todos = () => {
     defaultSortField: 'title',
   });
   const history = useHistory();
-
-  const openFlyout = () => {
-    setIsFlyoutVisible(true);
-  };
-
-  const closeFlyout = () => {
-    setItemIdToUpdate(undefined);
-    setIsFlyoutVisible(false);
-  };
-
-  const mapToFieldValues = (itemToUpdate: TodoItem): Partial<FieldValues> => {
-    return {
-      ...itemToUpdate,
-      status: [itemToUpdate.status],
-      priority: [itemToUpdate.priority],
-    };
-  };
-
-  let flyout;
-  const setFlyout = (itemToUpdate?: TodoItem) => {
-    flyout = (
-      <FlyoutForm
-        itemIdToUpdate={itemIdToUpdate}
-        defaultValues={itemToUpdate ? mapToFieldValues(itemToUpdate) : undefined}
-        onClose={closeFlyout}
-      />
-    );
-  };
-  if (isFlyoutVisible) {
-    const itemToUpdate = filteredTodoItems.find((item) => item.id === itemIdToUpdate);
-    setFlyout(itemToUpdate);
-  }
 
   const clickChartsHandler = () => {
     history.push('/charts');

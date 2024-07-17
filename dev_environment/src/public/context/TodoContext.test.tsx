@@ -241,8 +241,10 @@ describe('TodoContext', () => {
 
     expect(result.current.todoItems).toHaveLength(3);
 
-    // @ts-expect-error
-    await result.current.updateTodo(todoItem2.id, updatedtodoItem2);
+    await act(async () => {
+      // @ts-expect-error
+      await result.current.updateTodo(todoItem2.id, updatedtodoItem2);
+    });
 
     expect(services.updateTodo).toHaveBeenCalledTimes(1);
     expect(services.updateTodo).toHaveBeenCalledWith(todoItem2.id, updatedtodoItem2);

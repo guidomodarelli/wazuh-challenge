@@ -142,16 +142,25 @@ describe('TodoContext', () => {
     await waitForNextUpdate();
 
     expect(result.current.completedTodos).toBe(0);
-    // @ts-expect-error
-    await result.current.updateTodo(todoItem2.id, updatedTodoItem2);
+
+    await act(async () => {
+      // @ts-expect-error
+      await result.current.updateTodo(todoItem2.id, updatedTodoItem2);
+    });
     expect(result.current.completedTodos).toBe(1);
-    // @ts-expect-error
-    await result.current.updateTodo(todoItem3.id, updatedTodoItem3);
+
+    await act(async () => {
+      // @ts-expect-error
+      await result.current.updateTodo(todoItem3.id, updatedTodoItem3);
+    });
     expect(result.current.completedTodos).toBe(2);
-    // @ts-expect-error
-    await result.current.updateTodo(todoItem2.id, todoItem2);
-    // @ts-expect-error
-    await result.current.updateTodo(todoItem3.id, todoItem3);
+
+    await act(async () => {
+      // @ts-expect-error
+      await result.current.updateTodo(todoItem2.id, todoItem2);
+      // @ts-expect-error
+      await result.current.updateTodo(todoItem3.id, todoItem3);
+    });
     expect(result.current.completedTodos).toBe(0);
   });
 

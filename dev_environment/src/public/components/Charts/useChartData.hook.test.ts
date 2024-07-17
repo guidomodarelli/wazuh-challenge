@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { mockTodoContextFn } from '../../../__mocks__/todo-context.mock';
-import { TodoItem } from '../../../common/types';
+import { Priority, Status, TodoItem } from '../../../common/types';
 import * as TodoContext from '../../context/TodoContext';
 import useChartData from './useChartData.hook';
 
@@ -38,5 +38,49 @@ describe('useChartData', () => {
     response = result.current.groupByAssignee(todoItems[1], todoItems);
 
     expect(response).toBe(1);
+  });
+
+  it('should ', () => {
+    const todoItems: Pick<TodoItem, 'status' | 'priority'>[] = [
+      {
+        status: Status.EXECUTED_WITH_ERROR,
+        priority: Priority.LOW,
+      },
+      {
+        status: Status.IN_PROGRESS,
+        priority: Priority.LOW,
+      },
+      {
+        status: Status.IN_PROGRESS,
+        priority: Priority.LOW,
+      },
+      {
+        status: Status.COMPLETED,
+        priority: Priority.HIGH,
+      },
+    ];
+    const { result } = renderHook(() => useChartData());
+
+    // @ts-expect-error
+    const response = result.current.groupByPriorityAndStatus(todoItems);
+
+    const expectedType = expect.objectContaining({
+      key: expect.any(String),
+      count: expect.any(Number),
+    });
+
+    expect(response).toEqual(expect.arrayContaining([expectedType, expectedType, expectedType]));
+
+    for (const element of response) {
+      if (element.key === `${Status.IN_PROGRESS} (${Priority.LOW})`) {
+        expect(element.count).toBe(2);
+      }
+      if (element.key === `${Status.EXECUTED_WITH_ERROR} (${Priority.LOW})`) {
+        expect(element.count).toBe(1);
+      }
+      if (element.key === `${Status.COMPLETED} (${Priority.HIGH})`) {
+        expect(element.count).toBe(1);
+      }
+    }
   });
 });

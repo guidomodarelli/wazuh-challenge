@@ -1,5 +1,5 @@
-import { Priority, TodoItem } from '../../../../common/types';
-import { useTodoContext } from '../../context/TodoContext';
+import { Priority, TodoItem } from '../../../../../common/types';
+import { useTodoContext } from '../../../context/TodoContext';
 import 'core-js/proposals/array-grouping-v2';
 
 function useChartData() {

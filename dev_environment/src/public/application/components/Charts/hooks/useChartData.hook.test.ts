@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react-hooks';
-import { mockTodoContextFn } from '../../../../test/mocks/todo-context.mock';
-import { Priority, Status, TodoItem } from '../../../../common/types';
-import * as TodoContext from '../../context/TodoContext';
+import { mockTodoContextFn } from '../../../../../test/mocks/todo-context.mock';
+import { Priority, Status, TodoItem } from '../../../../../common/types';
+import * as TodoContext from '../../../context/TodoContext';
 import useChartData from './useChartData.hook';
 
 let mockTodoContext: ReturnType<typeof mockTodoContextFn>;

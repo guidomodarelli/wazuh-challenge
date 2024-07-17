@@ -124,6 +124,45 @@ describe('useChartData', () => {
       }
     }
   });
+
+  it('should ', () => {
+    const todoItems: Pick<TodoItem, 'assignee' | 'status'>[] = [
+      {
+        assignee: 'Louie',
+        status: Status.NOT_STARTED,
+      },
+      {
+        assignee: 'Germaine',
+        status: Status.NOT_STARTED,
+      },
+      {
+        assignee: 'Germaine',
+        status: Status.NOT_STARTED,
+      },
+      {
+        assignee: 'Louie',
+        status: Status.COMPLETED,
+      },
+    ];
+    const { result } = renderHook(() => useChartData());
+
+    // @ts-expect-error
+    const response = result.current.groupByAssigneeAndStatus(todoItems);
+
+    const expectedType = expect.objectContaining({
+      assignee: expect.any(String),
+      count: expect.any(Number),
+      status: expect.any(String),
+    });
+
+    expect(response).toEqual(expect.arrayContaining([expectedType, expectedType, expectedType]));
+
+    for (const element of response) {
+      if (element.assignee === 'Louie' && element.status === Status.NOT_STARTED) {
+        expect(element.count).toBe(1);
+      } else if (element.assignee === 'Germaine' && element.status === Status.NOT_STARTED) {
+        expect(element.count).toBe(2);
+      } else {
         expect(element.count).toBe(1);
       }
     }

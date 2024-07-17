@@ -3,7 +3,7 @@ import { v4 as UUID } from 'uuid';
 import { SERVER_TODO_ROUTE_PATH_BULK_CREATE, SERVER_TODO_ROUTE_PATH_CREATE } from '../../common';
 import { Status } from '../../common/types';
 import { TODO_INDEX } from '../constants';
-import { schemeTodo } from '../scheme';
+import { schemaTodo } from '../schema';
 import { createIndexIfNotExists } from '../utils/create_index';
 import { schema } from '@osd/config-schema';
 
@@ -14,7 +14,7 @@ export function defineRouteCreateNewTodo(router: IRouter) {
   router.post(
     {
       path: SERVER_TODO_ROUTE_PATH_CREATE,
-      validate: { body: schemeTodo },
+      validate: { body: schemaTodo },
     },
     async (context, request, response) => {
       const openSearchClient = context.core.opensearch.client.asCurrentUser;
@@ -46,7 +46,7 @@ export function defineRouteBulkCreateNewTodos(router: IRouter) {
   router.post(
     {
       path: SERVER_TODO_ROUTE_PATH_BULK_CREATE,
-      validate: { body: schema.arrayOf(schemeTodo) },
+      validate: { body: schema.arrayOf(schemaTodo) },
     },
     async (context, request, response) => {
       const openSearchClient = context.core.opensearch.client.asCurrentUser;

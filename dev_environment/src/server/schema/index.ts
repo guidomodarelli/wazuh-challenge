@@ -1,6 +1,6 @@
 import { schema } from '@osd/config-schema';
 
-export const schemeTodo = schema.object({
+export const schemaTodo = schema.object({
   id: schema.maybe(schema.string()),
   createdAt: schema.maybe(schema.string()),
   title: schema.string({ minLength: 3 }),
@@ -10,10 +10,10 @@ export const schemeTodo = schema.object({
   tags: schema.maybe(schema.arrayOf(schema.string({ minLength: 3 }))),
 });
 
-export const schemeParamId = schema.object({
+export const schemaParamId = schema.object({
   id: schema.string(),
 });
 
-export const schemeIds = schema.object({
+export const schemaIds = schema.object({
   ids: schema.arrayOf(schema.string()),
 });

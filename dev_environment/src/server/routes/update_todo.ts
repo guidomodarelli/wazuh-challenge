@@ -1,7 +1,7 @@
 import { IRouter } from 'opensearch-dashboards/server';
 import { SERVER_TODO_BASE_ROUTE_PATH } from '../../common';
 import { TODO_INDEX } from '../constants';
-import { schemeParamId, schemeTodo } from '../scheme';
+import { schemaParamId, schemaTodo } from '../schema';
 import { createIndexIfNotExists } from '../utils/create_index';
 
 /**
@@ -13,8 +13,8 @@ export function defineRouteUpdateTodo(router: IRouter) {
     {
       path: `${SERVER_TODO_BASE_ROUTE_PATH}/{id}`,
       validate: {
-        params: schemeParamId,
-        body: schemeTodo,
+        params: schemaParamId,
+        body: schemaTodo,
       },
     },
     async (context, request, response) => {

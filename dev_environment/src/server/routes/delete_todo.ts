@@ -1,7 +1,7 @@
 import { IRouter } from 'opensearch-dashboards/server';
 import { SERVER_TODO_ROUTE_PATH_DELETE_IDS } from '../../common';
 import { TODO_INDEX } from '../constants';
-import { schemeIds } from '../scheme';
+import { schemaIds } from '../schema';
 import { createIndexIfNotExists } from '../utils/create_index';
 
 /**
@@ -13,7 +13,7 @@ export function defineRouteDeleteTodos(router: IRouter) {
     {
       path: SERVER_TODO_ROUTE_PATH_DELETE_IDS,
       validate: {
-        query: schemeIds,
+        query: schemaIds,
       },
     },
     async (context, request, response) => {

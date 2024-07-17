@@ -1,7 +1,7 @@
 import { EuiTableSelectionType } from '@elastic/eui';
-import { TodoItem } from '../../../../common/types';
+import { TodoItem } from '../../../../../common/types';
 import { useState } from 'react';
-import { useTodoContext } from '../../context/TodoContext';
+import { useTodoContext } from '../../../context/TodoContext';
 
 function useSelectionItems() {
   const { deleteTodosByIds } = useTodoContext();

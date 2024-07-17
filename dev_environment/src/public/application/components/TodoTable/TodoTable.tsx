@@ -12,8 +12,8 @@ import { useHistory } from 'react-router-dom';
 import { TodoItem } from '../../../../common/types';
 import { useTodoContext } from '../../context/TodoContext';
 import './TodoTable.styles.scss';
-import useColumns from './useColumns.hook';
-import useSelectionItems from './useSelectionItems.hook';
+import useColumns from './hooks/useColumns.hook';
+import useSelectionItems from './hooks/useSelectionItems.hook';
 import useSortingAndPagination from '../../hooks/useSortingAndPagination.hook';
 import FlyoutForm from "../TodoForm/FlyoutForm";
 

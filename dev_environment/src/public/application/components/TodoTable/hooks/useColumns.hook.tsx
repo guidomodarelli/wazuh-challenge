@@ -1,8 +1,8 @@
 import { EuiBadge, EuiBasicTableColumn, EuiText } from '@elastic/eui';
 import React from 'react';
-import { Status, TodoItem } from '../../../../common/types';
-import TodoBadgePriority from '../TodoBadges/TodoBadgePriority';
-import TodoBadgeStatus from '../TodoBadges/TodoBadgeStatus';
+import { Status, TodoItem } from '../../../../../common/types';
+import TodoBadgePriority from '../../TodoBadges/TodoBadgePriority';
+import TodoBadgeStatus from '../../TodoBadges/TodoBadgeStatus';
 
 interface UseColumnsProps {
   onActionEdit: (todoItem: TodoItem) => void;

@@ -3,7 +3,6 @@ import React from 'react';
 import { Controller } from 'react-hook-form';
 import { Priority, Status } from '../../../common/types';
 import { mapOptions } from '../../utils/map_options';
-import { FieldValues } from './schema';
 import './TodoForm.styles.scss';
 import useTodoForm from './useTodoForm.hook';
 
@@ -11,10 +10,9 @@ interface TodoFormProps {
   formId: string;
   itemIdToUpdate?: string;
   onSuccess?: () => void;
-  defaultValues?: Partial<FieldValues>;
 }
 
-const TodoForm = ({ formId, itemIdToUpdate, onSuccess, defaultValues = {} }: TodoFormProps) => {
+const TodoForm = ({ formId, itemIdToUpdate, onSuccess }: TodoFormProps) => {
   const {
     onSubmit,
     control,
@@ -22,7 +20,7 @@ const TodoForm = ({ formId, itemIdToUpdate, onSuccess, defaultValues = {} }: Tod
     formState: { errors },
     renderStatusOptions,
     renderPriorityOptions,
-  } = useTodoForm({ onSuccess, itemIdToUpdate, defaultValues });
+  } = useTodoForm({ onSuccess, itemIdToUpdate });
 
   return (
     <div className="todo-form-container">

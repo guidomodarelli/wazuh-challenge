@@ -12,17 +12,17 @@ import { FieldValues, schema } from './schema';
 interface UseTodoFormProps {
   onSuccess?: () => void;
   itemIdToUpdate?: string;
-  defaultValues?: Partial<FieldValues>;
 }
 
-function useTodoForm({ onSuccess, itemIdToUpdate, defaultValues = {} }: UseTodoFormProps) {
-  const { createTodo, updateTodo } = useTodoContext();
+function useTodoForm({ onSuccess, itemIdToUpdate }: UseTodoFormProps) {
+  const { createTodo, updateTodo, filteredTodoItems } = useTodoContext();
+  const itemToUpdate = filteredTodoItems.find((item) => item.id === itemIdToUpdate);
   const { handleSubmit, control, formState, reset } = useForm<FieldValues>({
     resolver: zodResolver(schema),
     defaultValues: {
-      title: defaultValues.title ?? '',
-      status: defaultValues.status ?? Status.NOT_STARTED,
-      priority: defaultValues.priority ?? Priority.LOW,
+      title: itemToUpdate?.title ?? '',
+      status: itemToUpdate?.status ?? Status.NOT_STARTED,
+      priority: itemToUpdate?.priority ?? Priority.LOW,
     },
   });
   const { errors } = formState;

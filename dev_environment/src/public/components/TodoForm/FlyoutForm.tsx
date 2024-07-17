@@ -7,18 +7,16 @@ import {
   EuiFlyoutHeader,
   EuiTitle,
 } from '@elastic/eui';
+import { FormattedMessage } from '@osd/i18n/react';
 import React from 'react';
 import TodoForm from './TodoForm';
-import { FormattedMessage } from '@osd/i18n/react';
-import { type FieldValues } from './schema';
 
 interface FlyoutFormProps {
   onClose: () => void;
   itemIdToUpdate?: string;
-  defaultValues?: Partial<FieldValues>;
 }
 
-const FlyoutForm = ({ onClose, itemIdToUpdate, defaultValues = {} }: FlyoutFormProps) => {
+const FlyoutForm = ({ onClose, itemIdToUpdate }: FlyoutFormProps) => {
   const formId = 'todo-form';
 
   return (
@@ -35,7 +33,7 @@ const FlyoutForm = ({ onClose, itemIdToUpdate, defaultValues = {} }: FlyoutFormP
         </EuiTitle>
       </EuiFlyoutHeader>
       <EuiFlyoutBody>
-        <TodoForm formId={formId} onSuccess={onClose} itemIdToUpdate={itemIdToUpdate} defaultValues={defaultValues} />
+        <TodoForm formId={formId} onSuccess={onClose} itemIdToUpdate={itemIdToUpdate} />
       </EuiFlyoutBody>
       <EuiFlyoutFooter className="footer">
         <EuiButtonEmpty onClick={onClose}>

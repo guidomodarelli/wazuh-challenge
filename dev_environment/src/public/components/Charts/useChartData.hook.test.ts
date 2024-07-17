@@ -12,7 +12,7 @@ describe('useChartData', () => {
     jest.spyOn(TodoContext, 'useTodoContext').mockImplementation(() => mockTodoContext);
   });
 
-  it('should ', () => {
+  it('verify function correctly groups todo items by assignee', () => {
     const todoItems: Pick<TodoItem, 'assignee'>[] = [
       {
         assignee: 'Tyler',
@@ -40,7 +40,7 @@ describe('useChartData', () => {
     expect(response).toBe(1);
   });
 
-  it('should ', () => {
+  it('verify function groups todo items by priority and status', () => {
     const todoItems: Pick<TodoItem, 'status' | 'priority'>[] = [
       {
         status: Status.EXECUTED_WITH_ERROR,
@@ -83,4 +83,6 @@ describe('useChartData', () => {
       }
     }
   });
+
+
 });

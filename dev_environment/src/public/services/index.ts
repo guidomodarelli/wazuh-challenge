@@ -1,6 +1,6 @@
 import { CoreStart, HttpFetchError } from 'opensearch-dashboards/public';
 import { TodoItem, TodoItemRequest } from '../../common/types';
-import { OpenSearchSearchHit } from 'src/plugins/discover/public/application/doc_views/doc_views_types';
+import { type OpenSearchSearchHit } from 'src/plugins/discover/public/application/doc_views/doc_views_types';
 import {
   SERVER_TODO_BASE_ROUTE_PATH,
   SERVER_TODO_ROUTE_PATH_BULK_CREATE,

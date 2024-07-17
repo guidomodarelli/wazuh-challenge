@@ -7,4 +7,4 @@ import { ToDoPlugin } from './plugin';
 export function plugin() {
   return new ToDoPlugin();
 }
-export { ToDoPluginSetup, ToDoPluginStart } from './types/plugin';
+export { ToDoPluginSetup, ToDoPluginStart } from './types';

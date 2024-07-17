@@ -1,5 +1,5 @@
 import { AppMountParameters, CoreSetup, CoreStart, Plugin } from '../../../src/core/public';
-import { ToDoPluginSetup, ToDoPluginStart, AppPluginStartDependencies } from './types/plugin';
+import { ToDoPluginSetup, ToDoPluginStart, AppPluginStartDependencies } from './types';
 import { PLUGIN_NAME } from '../common';
 import { getServices } from './services';
 

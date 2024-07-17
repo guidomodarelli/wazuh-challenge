@@ -11,7 +11,7 @@ describe('defineRouteDeleteTodos', () => {
     };
   });
 
-  it('verify the correct API endpoint', () => {
+  it('should call the correct endpoint to delete todos by IDs', () => {
     // @ts-expect-error
     defineRouteDeleteTodos(router);
 

@@ -11,7 +11,7 @@ describe('defineRouteGetTodos', () => {
     };
   });
 
-  it('verify the correct API endpoint', () => {
+  it('should call the correct endpoint to get all todos', () => {
     // @ts-expect-error
     defineRouteGetTodos(router);
 

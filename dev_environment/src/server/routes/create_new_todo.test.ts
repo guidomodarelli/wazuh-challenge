@@ -11,7 +11,7 @@ describe('defineRouteCreateNewTodo', () => {
     };
   });
 
-  it('verify the correct API endpoint', () => {
+  it('should call the correct endpoint to create a new todo', () => {
     // @ts-expect-error
     defineRouteCreateNewTodo(router);
 

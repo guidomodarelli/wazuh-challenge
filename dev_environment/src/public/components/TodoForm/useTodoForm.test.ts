@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 import * as ReactHookForm from 'react-hook-form';
-import { mockTodoContextFn } from '../../../__mocks__/todo-context.mock';
-import type { RecordMock } from '../../../__mocks__/types';
+import { mockTodoContextFn } from '../../../test/mocks/todo-context.mock';
+import type { RecordMock } from '../../../test/mocks/types';
 import { Priority, Status } from '../../../common/types';
 import * as TodoContext from '../../context/TodoContext';
 import useTodoForm from './useTodoForm.hook';

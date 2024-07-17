@@ -1,5 +1,5 @@
 import { IRouter } from 'opensearch-dashboards/server';
-import type { PartialRecordMock } from '../../__mocks__/types';
+import type { PartialRecordMock } from '../../test/mocks/types';
 import { defineRouteDeleteTodos } from './delete_todo';
 
 let router: PartialRecordMock<IRouter>;

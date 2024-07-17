@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
-import { mockTodoContextFn } from '../../../__mocks__/todo-context.mock';
+import { mockTodoContextFn } from '../../../test/mocks/todo-context.mock';
 import * as TodoContext from '../../context/TodoContext';
 import TodoTable from './TodoTable';
 

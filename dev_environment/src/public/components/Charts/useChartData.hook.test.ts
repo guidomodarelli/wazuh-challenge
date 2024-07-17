@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks';
-import { mockTodoContextFn } from '../../../__mocks__/todo-context.mock';
+import { mockTodoContextFn } from '../../../test/mocks/todo-context.mock';
 import { Priority, Status, TodoItem } from '../../../common/types';
 import * as TodoContext from '../../context/TodoContext';
 import useChartData from './useChartData.hook';

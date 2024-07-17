@@ -22,8 +22,8 @@ export default {
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': `${kbnDir}/src/dev/jest/mocks/file_mock.js`,
     '\\.(css|less|scss)$': `${kbnDir}/src/dev/jest/mocks/style_mock.js`,
     'axios': 'axios/dist/node/axios.cjs',
-    '^@osd/i18n/react$': '<rootDir>/__mocks__/i18n.js',
-    '^react-router-dom$': '<rootDir>/__mocks__/react-router-dom.js',
+    '^@osd/i18n/react$': '<rootDir>/test/mocks/i18n.js',
+    '^react-router-dom$': '<rootDir>/test/mocks/react-router-dom.js',
   },
   setupFiles: [
     `${kbnDir}/src/dev/jest/setup/babel_polyfill.js`,

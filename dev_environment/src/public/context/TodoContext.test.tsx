@@ -2,7 +2,7 @@ import { render, act as actReact } from '@testing-library/react';
 import { act, renderHook } from '@testing-library/react-hooks';
 import { CoreStart } from 'opensearch-dashboards/public';
 import React from 'react';
-import { RecordMock } from '../../__mocks__/types';
+import { RecordMock } from '../../test/mocks/types';
 import { Status, TodoItem } from '../../common/types';
 import { Services } from '../services';
 import ToDoProvider, { useTodoContext } from './TodoContext';

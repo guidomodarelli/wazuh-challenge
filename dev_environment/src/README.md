@@ -1,6 +1,6 @@
-# todo_plugin
+# TODO Plugin
 
-A OpenSearch Dashboards plugin
+An OpenSearch Dashboards plugin
 
 ---
 

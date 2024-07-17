@@ -74,11 +74,9 @@ describe('useChartData', () => {
     for (const element of response) {
       if (element.key === `${Status.IN_PROGRESS} (${Priority.LOW})`) {
         expect(element.count).toBe(2);
-      }
-      if (element.key === `${Status.EXECUTED_WITH_ERROR} (${Priority.LOW})`) {
+      } else if (element.key === `${Status.EXECUTED_WITH_ERROR} (${Priority.LOW})`) {
         expect(element.count).toBe(1);
-      }
-      if (element.key === `${Status.COMPLETED} (${Priority.HIGH})`) {
+      } else {
         expect(element.count).toBe(1);
       }
     }
@@ -108,7 +106,6 @@ describe('useChartData', () => {
     // @ts-expect-error
     const response = result.current.groupByAssigneeAndPriority(todoItems);
 
-
     const expectedType = expect.objectContaining({
       assignee: expect.any(String),
       count: expect.any(Number),
@@ -120,11 +117,13 @@ describe('useChartData', () => {
     for (const element of response) {
       if (element.assignee === 'Louie' && element.priority === Priority.LOW) {
         expect(element.count).toBe(1);
-      }
-      if (element.assignee === 'Germaine' && element.priority === Priority.LOW) {
+      } else if (element.assignee === 'Germaine' && element.priority === Priority.LOW) {
         expect(element.count).toBe(2);
+      } else {
+        expect(element.count).toBe(1);
       }
-      if (element.assignee === 'Louie' && element.priority === Priority.HIGH) {
+    }
+  });
         expect(element.count).toBe(1);
       }
     }

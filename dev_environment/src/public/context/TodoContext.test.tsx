@@ -199,8 +199,10 @@ describe('TodoContext', () => {
 
     expect(result.current.todoItems).toHaveLength(0);
 
-    // @ts-expect-error
-    await result.current.createTodo(todoItem1);
+    await act(async () => {
+      // @ts-expect-error
+      await result.current.createTodo(todoItem1);
+    });
 
     expect(services.createNewTodo).toHaveBeenCalledTimes(1);
     expect(services.createNewTodo).toHaveBeenCalledWith(todoItem1);

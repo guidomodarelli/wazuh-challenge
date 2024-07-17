@@ -311,7 +311,9 @@ describe('TodoContext', () => {
     expect(result.current.todoItems).toHaveLength(0);
 
     const fakes = 3;
-    await result.current.addSampleData(fakes);
+    await act(async () => {
+      await result.current.addSampleData(fakes);
+    });
 
     expect(services.bulkCreateTodos).toHaveBeenCalledTimes(1);
     expect(services.bulkCreateTodos).toHaveBeenCalledWith(

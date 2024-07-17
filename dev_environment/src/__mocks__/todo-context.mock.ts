@@ -1,4 +1,4 @@
-import { RecordMock } from '../common/global-types';
+import type { RecordMock } from './types';
 import { useTodoContext } from '../public/context/TodoContext';
 
 export function mockTodoContextFn(

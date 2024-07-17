@@ -1,5 +1,5 @@
 import { IRouter } from 'opensearch-dashboards/server';
-import { PartialRecordMock } from '../../common/global-types';
+import type { PartialRecordMock } from '../../__mocks__/types';
 import { defineRouteCreateNewTodo } from './create_new_todo';
 
 let router: PartialRecordMock<IRouter>;

@@ -1,5 +1,5 @@
 import { CoreStart } from 'opensearch-dashboards/public';
-import { RecordMock } from '../common/global-types';
+import type { RecordMock } from '../__mocks__/types';
 import { getServices } from './services';
 import { TodoItem } from '../common/types';
 

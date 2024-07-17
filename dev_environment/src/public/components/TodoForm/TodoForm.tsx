@@ -82,7 +82,7 @@ const TodoForm = ({ formId, itemIdToUpdate, onSuccess }: TodoFormProps) => {
                 fullWidth
                 options={mapOptions(Status)}
                 onChange={(options) => onChange(options.map((option) => option.label)[0])}
-                singleSelection={true}
+                singleSelection={{ asPlainText: true }}
                 selectedOptions={[{ label: value }]}
                 renderOption={renderStatusOptions}
                 isClearable={false}
@@ -107,7 +107,7 @@ const TodoForm = ({ formId, itemIdToUpdate, onSuccess }: TodoFormProps) => {
                 fullWidth
                 options={mapOptions(Priority)}
                 onChange={(options) => onChange(options.map((option) => option.label)[0])}
-                singleSelection={true}
+                singleSelection={{ asPlainText: true }}
                 selectedOptions={[{ label: value }]}
                 renderOption={renderPriorityOptions}
                 isClearable={false}

@@ -1,12 +1,13 @@
 import { faker } from '@faker-js/faker';
 import { i18n } from '@osd/i18n';
-import { CoreStart } from 'opensearch-dashboards/public';
 import React, { createContext, useState } from 'react';
+import { useOpenSearchDashboards } from '../../../../../src/plugins/opensearch_dashboards_react/public';
 import { Priority } from '../../core/domain/entities/Priority';
 import { Status } from '../../core/domain/entities/Status';
 import { TodoEntity, TodoEntityRequest } from '../../core/domain/entities/TodoEntity';
 import { Services } from '../../services';
 import { isError } from '../utils/is_error';
+import { ToDoPluginServices } from '../../types';
 
 interface ToDoContextType {
   todoItems: TodoEntity[];
@@ -36,17 +37,19 @@ export const useTodoContext = () => React.useContext(TodoContext);
 
 interface ToDoProviderProps {
   children?: React.ReactNode;
-  notifications: CoreStart['notifications'];
   services: Services;
 }
 
 function ToDoProvider({
   children,
-  notifications,
-  services: { fetchTodos, createNewTodo, bulkCreateTodos, updateTodo, deleteTodosByIds },
+  services: { fetchTodos, bulkCreateTodos, updateTodo, deleteTodosByIds },
 }: ToDoProviderProps) {
   const [todoItems, setTodoItems] = useState<TodoEntity[]>([]);
   const [search, setSearch] = useState('');
+
+  const {
+    services: { notifications, createTodo },
+  } = useOpenSearchDashboards<ToDoPluginServices>();
 
   const filteredTodoItems = todoItems.filter(({ title, tags, assignee }) => {
     const lcTitle = title.toLowerCase();
@@ -83,16 +86,16 @@ function ToDoProvider({
     setSearch,
     /* The `createTodo` function is responsible for creating a new todo item. */
     async createTodo(newTodoItem: TodoEntityRequest) {
-      const response = await createNewTodo(newTodoItem);
-      if (isError(response)) {
-        // TODO: Handle error
-      } else {
+      try {
+        const response = await createTodo(newTodoItem);
         notifications.toasts.addSuccess(
           i18n.translate('todoPlugin.todoItemCreatedSuccessfully', {
             defaultMessage: 'Todo item successfully created',
           })
         );
         setTodoItems([response, ...todoItems]);
+      } catch (error) {
+        // TODO: Handle error
       }
     },
 

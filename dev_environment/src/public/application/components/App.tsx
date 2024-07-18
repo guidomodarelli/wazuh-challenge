@@ -16,12 +16,11 @@ interface ToDoPluginAppDeps {
 export const ToDoPluginApp = ({
   basename,
   notifications,
-  http,
   services,
 }: ToDoPluginAppDeps) => {
   return (
     <BrowserRouter basename={basename}>
-      <Providers notifications={notifications} http={http} services={services}>
+      <Providers services={services}>
         <Switch>
           <Route exact path="/">
             <MainPage />

@@ -1,5 +1,5 @@
 import { AppMountParameters, CoreSetup, CoreStart, Plugin } from '../../../src/core/public';
-import { ToDoPluginSetup, ToDoPluginStart, AppPluginStartDependencies } from './types';
+import { ToDoPluginSetup, ToDoPluginStart } from './types';
 import { PLUGIN_NAME } from '../common';
 import { getServices } from './services';
 import { TodoAdapterOpenSearchHTTP } from './core/adapters/TodoAdapterOpenSearchHTTP';
@@ -20,10 +20,10 @@ export class ToDoPlugin implements Plugin<ToDoPluginSetup, ToDoPluginStart> {
         // Load application bundle
         const { renderApp } = await import('./application');
         // Get start services as specified in opensearch_dashboards.json
-        const [coreStart, depsStart] = await core.getStartServices();
+        const [coreStart] = await core.getStartServices();
         const startServices = getServices(coreStart);
         // Render the application
-        return renderApp(coreStart, startServices, depsStart as AppPluginStartDependencies, params);
+        return renderApp(coreStart, startServices, params);
       },
     });
 

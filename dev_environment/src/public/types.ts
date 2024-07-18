@@ -1,4 +1,5 @@
-import { AddSampleTodosUseCase } from "./core/domain/usecases/AddSampleTodos";
+import { NotificationsStart } from 'opensearch-dashboards/public';
+import { AddSampleTodosUseCase } from './core/domain/usecases/AddSampleTodos';
 import { CreateTodoUseCase } from './core/domain/usecases/CreateTodo';
 import { DeleteTodoByIdsUseCase } from './core/domain/usecases/DeleteTodoByIds';
 import { GetAllTodosUseCase } from './core/domain/usecases/GetAllTodos';
@@ -10,7 +11,7 @@ export interface ToDoPluginSetup {}
 export interface ToDoPluginStart {}
 
 export interface ToDoPluginUseCases {
-  createTodo: CreateTodoUseCase
+  createTodo: CreateTodoUseCase;
   getAllTodos: GetAllTodosUseCase;
   updateTodo: UpdateTodoUseCase;
   deleteTodosByIds: DeleteTodoByIdsUseCase;
@@ -18,6 +19,8 @@ export interface ToDoPluginUseCases {
   addSampleTodos: AddSampleTodosUseCase;
 }
 
-export interface ToDoPluginServices extends ToDoPluginUseCases {}
+export interface ToDoPluginServices extends ToDoPluginUseCases {
+  notifications: NotificationsStart;
+}
 
 export interface AppPluginStartDependencies {}

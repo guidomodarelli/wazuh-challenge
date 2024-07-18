@@ -17,6 +17,4 @@ export interface ToDoPluginStart {
   addSampleTodos: AddSampleTodosUseCase;
 }
 
-export interface AppPluginStartDependencies {
-  navigation: NavigationPublicPluginStart;
-}
+export interface AppPluginStartDependencies {}

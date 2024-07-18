@@ -8,7 +8,6 @@ import { Services } from '../services';
 export const renderApp = (
   { notifications, http }: CoreStart,
   services: Services,
-  { navigation }: AppPluginStartDependencies,
   { appBasePath, element }: AppMountParameters
 ) => {
   ReactDOM.render(
@@ -16,7 +15,6 @@ export const renderApp = (
       basename={appBasePath}
       notifications={notifications}
       http={http}
-      navigation={navigation}
       services={services}
     />,
     element

@@ -1,6 +1,5 @@
 import React, { createContext, useState } from 'react';
 import { useOpenSearchDashboards } from '../../../../../src/plugins/opensearch_dashboards_react/public';
-import { Status } from '../../core/domain/entities/Status';
 import { TodoEntity, TodoEntityRequest } from '../../core/domain/entities/TodoEntity';
 import { ToDoPluginServices } from '../../types';
 import useTodoStore from '../hooks/useTodoStore.hook';
@@ -51,10 +50,9 @@ function ToDoProvider({ children }: ToDoProviderProps) {
   } = useOpenSearchDashboards<ToDoPluginServices>();
   const {
     todoItems,
-    saveTodoInStore,
     updateTodoInStore,
     removeTodosInStore,
-    addSampleDataInStore,
+    saveTodosInStore,
     setTodoItemsInStore,
   } = useTodoStore(notifications);
 
@@ -74,7 +72,7 @@ function ToDoProvider({ children }: ToDoProviderProps) {
     async createTodo(newTodoItem: TodoEntityRequest) {
       try {
         const newTodo = await createTodo(newTodoItem);
-        saveTodoInStore(newTodo);
+        saveTodosInStore([newTodo]);
       } catch (error) {}
     },
 
@@ -98,7 +96,7 @@ function ToDoProvider({ children }: ToDoProviderProps) {
     async addSampleData(fakes = 100) {
       try {
         const newTodos = await addSampleTodos(fakes);
-        addSampleDataInStore(newTodos);
+        saveTodosInStore(newTodos);
       } catch (error) {}
     },
   };

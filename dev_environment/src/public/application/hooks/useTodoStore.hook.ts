@@ -6,15 +6,6 @@ import { TodoEntity, TodoEntityRequest } from '../../core/domain/entities/TodoEn
 function useTodoStore(notifications: NotificationsStart) {
   const [todoItems, setTodoItems] = useState<TodoEntity[]>([]);
 
-  const saveTodoInStore = (newTodo: TodoEntity) => {
-    notifications.toasts.addSuccess(
-      i18n.translate('todoPlugin.todoItemCreatedSuccessfully', {
-        defaultMessage: 'Todo item successfully created',
-      })
-    );
-    setTodoItems([newTodo, ...todoItems]);
-  };
-
   const updateTodoInStore = (itemIdToUpdate: string, updatedItem: TodoEntityRequest) => {
     notifications.toasts.addSuccess(
       i18n.translate('todoPlugin.todoItemUpdatedSuccessfully', {
@@ -39,21 +30,28 @@ function useTodoStore(notifications: NotificationsStart) {
     setTodoItems(todoItems.filter((todo) => !ids.includes(todo.id)));
   };
 
-  const addSampleDataInStore = (newTodos: TodoEntity[]) => {
-    notifications.toasts.addSuccess(
-      i18n.translate('todoPlugin.todoItemsCreatedSuccessfully', {
-        defaultMessage: 'Todo items created successfully',
-      })
-    );
+  const saveTodosInStore = (newTodos: TodoEntity[]) => {
+    if (newTodos.length === 1) {
+      notifications.toasts.addSuccess(
+        i18n.translate('todoPlugin.todoItemCreatedSuccessfully', {
+          defaultMessage: 'Todo item successfully created',
+        })
+      );
+    } else {
+      notifications.toasts.addSuccess(
+        i18n.translate('todoPlugin.todoItemsCreatedSuccessfully', {
+          defaultMessage: 'Todo items saved successfully',
+        })
+      );
+    }
     setTodoItems([...newTodos, ...todoItems]);
   };
 
   return {
     todoItems,
-    saveTodoInStore,
     updateTodoInStore,
     removeTodosInStore,
-    addSampleDataInStore,
+    saveTodosInStore,
     setTodoItemsInStore: setTodoItems,
   };
 }

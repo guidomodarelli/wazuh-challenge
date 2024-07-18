@@ -14,12 +14,10 @@ function withErrorBoundary<P>(WrappedComponent: ComponentType<P>) {
     }
 
     static getDerivedStateFromError(error: Error): Partial<State> {
-      // Actualiza el estado para que el siguiente renderizado muestre la UI alternativa.
       return { hasError: true };
     }
 
     componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-      // También puedes registrar el error en un servicio de reporte de errores
       console.log('ErrorBoundary caught an error', error, errorInfo);
       this.setState({
         error: error,
@@ -29,7 +27,6 @@ function withErrorBoundary<P>(WrappedComponent: ComponentType<P>) {
 
     render() {
       if (this.state.hasError) {
-        // Puedes renderizar cualquier UI de respaldo
         return <h1>Something went wrong.</h1>;
       }
 

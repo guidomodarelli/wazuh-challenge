@@ -8,7 +8,7 @@ import { GetAllTodosUseCase } from './core/domain/usecases/GetAllTodos';
 import { UpdateTodoUseCase } from './core/domain/usecases/UpdateTodo';
 import { DeleteTodoByIdsUseCase } from './core/domain/usecases/DeleteTodoByIds';
 import { MarkTodoAsCompletedUseCase } from './core/domain/usecases/MarkTodoAsCompleted';
-import { AddSampleTodosUseCase } from './core/domain/usecases/AddSampleTodos';
+import { addSampleTodosUseCase } from './core/domain/usecases/AddSampleTodos';
 
 export class ToDoPlugin implements Plugin<ToDoPluginSetup, ToDoPluginStart> {
   public setup(core: CoreSetup): ToDoPluginSetup {
@@ -30,7 +30,7 @@ export class ToDoPlugin implements Plugin<ToDoPluginSetup, ToDoPluginStart> {
           updateTodo: new UpdateTodoUseCase(todoPort),
           deleteTodosByIds: new DeleteTodoByIdsUseCase(todoPort),
           markTodoAsCompleted: new MarkTodoAsCompletedUseCase(todoPort),
-          addSampleTodos: new AddSampleTodosUseCase(todoPort),
+          addSampleTodos: addSampleTodosUseCase(todoPort),
         };
 
         // Render the application

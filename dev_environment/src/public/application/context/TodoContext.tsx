@@ -40,15 +40,12 @@ interface ToDoProviderProps {
   services: Services;
 }
 
-function ToDoProvider({
-  children,
-  services: { bulkCreateTodos, updateTodo, deleteTodosByIds },
-}: ToDoProviderProps) {
+function ToDoProvider({ children, services: { updateTodo, deleteTodosByIds } }: ToDoProviderProps) {
   const [todoItems, setTodoItems] = useState<TodoEntity[]>([]);
   const [search, setSearch] = useState('');
 
   const {
-    services: { notifications, createTodo, getAllTodos },
+    services: { notifications, createTodo, getAllTodos, addSampleTodos },
   } = useOpenSearchDashboards<ToDoPluginServices>();
 
   const filteredTodoItems = todoItems.filter(({ title, tags, assignee }) => {
@@ -133,32 +130,15 @@ function ToDoProvider({
     },
 
     async addSampleData(fakes = 100) {
-      const newTodos: TodoEntity[] = [];
-      faker.setDefaultRefDate(new Date());
-      const persons = faker.helpers.multiple(faker.person.firstName, { count: 7 });
-      const tags = faker.helpers.multiple(faker.lorem.word, { count: 27 });
-      for (let i = 0; i < fakes; i++) {
-        newTodos.push({
-          id: faker.string.uuid(),
-          createdAt: faker.date.recent({ days: 27 }).toISOString(),
-          priority: faker.helpers.enumValue(Priority),
-          status: faker.helpers.enumValue(Status),
-          title: faker.lorem.sentence(),
-          tags: faker.helpers.multiple(() => faker.helpers.arrayElement(tags), { count: 5 }),
-          assignee: faker.helpers.arrayElement(persons),
-        });
-      }
-      const response = await bulkCreateTodos(...newTodos);
-      if (isError(response)) {
-        // TODO: Handle Error
-      } else {
+      try {
+        const newTodos = await addSampleTodos(fakes);
         notifications.toasts.addSuccess(
           i18n.translate('todoPlugin.todoItemsCreatedSuccessfully', {
             defaultMessage: 'Todo items created successfully',
           })
         );
         setTodoItems([...newTodos, ...todoItems]);
-      }
+      } catch (error) {}
     },
   };
 

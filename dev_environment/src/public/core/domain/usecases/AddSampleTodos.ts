@@ -4,7 +4,7 @@ import { Priority } from '../entities/Priority';
 import { Status } from '../entities/Status';
 import { TodoEntity } from '../entities/TodoEntity';
 
-export const addSampleTodosUseCase = (todoPort: TodoPort) => (fakes = 100) => {
+export const addSampleTodosUseCase = (todoPort: TodoPort) => async (fakes = 100) => {
   const todoSamples: TodoEntity[] = [];
   faker.setDefaultRefDate(new Date());
   const persons = faker.helpers.multiple(faker.person.firstName, { count: 7 });
@@ -22,7 +22,8 @@ export const addSampleTodosUseCase = (todoPort: TodoPort) => (fakes = 100) => {
     todoSamples.push(new TodoEntity(newTodo));
   }
 
-  return todoPort.saveAll(todoSamples);
+  await todoPort.saveAll(todoSamples);
+  return todoSamples;
 };
 
 export type AddSampleTodosUseCase = ReturnType<typeof addSampleTodosUseCase>;

@@ -6,7 +6,6 @@ import {
   EuiFlyoutFooter,
   EuiFlyoutHeader,
   EuiTitle,
-  htmlIdGenerator
 } from '@elastic/eui';
 import { FormattedMessage } from '@osd/i18n/react';
 import React from 'react';
@@ -18,7 +17,7 @@ interface FlyoutFormProps {
 }
 
 const FlyoutForm = ({ onClose, itemIdToUpdate }: FlyoutFormProps) => {
-  const formId = htmlIdGenerator('todo-form');
+  const formId = 'todo-form';
 
   return (
     <EuiFlyout onClose={onClose}>
@@ -34,13 +33,13 @@ const FlyoutForm = ({ onClose, itemIdToUpdate }: FlyoutFormProps) => {
         </EuiTitle>
       </EuiFlyoutHeader>
       <EuiFlyoutBody>
-        <TodoForm formId={formId()} onSuccess={onClose} itemIdToUpdate={itemIdToUpdate} />
+        <TodoForm formId={formId} onSuccess={onClose} itemIdToUpdate={itemIdToUpdate} />
       </EuiFlyoutBody>
       <EuiFlyoutFooter className="footer">
         <EuiButtonEmpty onClick={onClose}>
           <FormattedMessage id="todoPlugin.button.cancel" defaultMessage="Cancel" />
         </EuiButtonEmpty>
-        <EuiButton type="submit" form={formId()} fill color="primary">
+        <EuiButton type="submit" form={formId} fill color="primary">
           {!!itemIdToUpdate ? (
             <FormattedMessage id="todoPlugin.button.update" defaultMessage="Update" />
           ) : (

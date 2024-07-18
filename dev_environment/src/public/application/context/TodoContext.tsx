@@ -1,9 +1,9 @@
-import { i18n } from '@osd/i18n';
 import React, { createContext, useState } from 'react';
 import { useOpenSearchDashboards } from '../../../../../src/plugins/opensearch_dashboards_react/public';
 import { Status } from '../../core/domain/entities/Status';
 import { TodoEntity, TodoEntityRequest } from '../../core/domain/entities/TodoEntity';
 import { ToDoPluginServices } from '../../types';
+import useTodoStore from '../hooks/useTodoStore.hook';
 
 interface ToDoContextType {
   todoItems: TodoEntity[];
@@ -36,9 +36,7 @@ interface ToDoProviderProps {
 }
 
 function ToDoProvider({ children }: ToDoProviderProps) {
-  const [todoItems, setTodoItems] = useState<TodoEntity[]>([]);
   const [search, setSearch] = useState('');
-
   const {
     services: {
       notifications,
@@ -50,6 +48,14 @@ function ToDoProvider({ children }: ToDoProviderProps) {
       searchTodos,
     },
   } = useOpenSearchDashboards<ToDoPluginServices>();
+  const {
+    todoItems,
+    saveTodoInStore,
+    updateTodoInStore,
+    removeTodosInStore,
+    addSampleDataInStore,
+    setTodoItemsInStore,
+  } = useTodoStore(notifications);
 
   const completedTodos = todoItems.reduce((previous, { status }) => {
     return status === Status.COMPLETED ? previous + 1 : previous;
@@ -57,7 +63,7 @@ function ToDoProvider({ children }: ToDoProviderProps) {
 
   React.useEffect(() => {
     getAllTodos()
-      .then(setTodoItems)
+      .then(setTodoItemsInStore)
       .catch(() => {});
   }, []);
 
@@ -70,13 +76,8 @@ function ToDoProvider({ children }: ToDoProviderProps) {
     /* The `createTodo` function is responsible for creating a new todo item. */
     async createTodo(newTodoItem: TodoEntityRequest) {
       try {
-        const response = await createTodo(newTodoItem);
-        notifications.toasts.addSuccess(
-          i18n.translate('todoPlugin.todoItemCreatedSuccessfully', {
-            defaultMessage: 'Todo item successfully created',
-          })
-        );
-        setTodoItems([response, ...todoItems]);
+        const newTodo = await createTodo(newTodoItem);
+        saveTodoInStore(newTodo);
       } catch (error) {}
     },
 
@@ -84,18 +85,7 @@ function ToDoProvider({ children }: ToDoProviderProps) {
     async updateTodo(itemIdToUpdate: string, updatedItem: TodoEntityRequest) {
       try {
         await updateTodo(itemIdToUpdate, updatedItem);
-        notifications.toasts.addSuccess(
-          i18n.translate('todoPlugin.todoItemUpdatedSuccessfully', {
-            defaultMessage: 'Todo item updated successfully',
-          })
-        );
-        const newTodos = todoItems.map((previousTodo) => {
-          if (previousTodo.id === itemIdToUpdate) {
-            return { ...previousTodo, ...updatedItem };
-          }
-          return previousTodo;
-        });
-        setTodoItems(newTodos);
+        updateTodoInStore(itemIdToUpdate, updatedItem);
       } catch (error) {}
     },
 
@@ -104,24 +94,14 @@ function ToDoProvider({ children }: ToDoProviderProps) {
     async deleteTodosByIds(...ids) {
       try {
         await deleteTodosByIds(...ids);
-        notifications.toasts.addSuccess(
-          i18n.translate('todoPlugin.todoItemsDeletedSuccessfully', {
-            defaultMessage: 'Todo items deleted successfully',
-          })
-        );
-        setTodoItems(todoItems.filter((todo) => !ids.includes(todo.id)));
+        removeTodosInStore(...ids);
       } catch (error) {}
     },
 
     async addSampleData(fakes = 100) {
       try {
         const newTodos = await addSampleTodos(fakes);
-        notifications.toasts.addSuccess(
-          i18n.translate('todoPlugin.todoItemsCreatedSuccessfully', {
-            defaultMessage: 'Todo items created successfully',
-          })
-        );
-        setTodoItems([...newTodos, ...todoItems]);
+        addSampleDataInStore(newTodos);
       } catch (error) {}
     },
   };

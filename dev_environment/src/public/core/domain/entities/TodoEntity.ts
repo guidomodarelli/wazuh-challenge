@@ -1,10 +1,9 @@
 import { v4 as UUID } from 'uuid';
-import { OmitStrict } from '../../../../common/types';
 import { Priority } from './Priority';
 import { Status } from './Status';
 
 export type TodoEntityId = string;
-export type TodoEntityRequest = OmitStrict<TodoEntity, 'id' | 'createdAt'>;
+export type TodoEntityRequest = Omit<TodoEntity, 'id' | 'createdAt'>;
 
 export class TodoEntity {
   id: TodoEntityId;

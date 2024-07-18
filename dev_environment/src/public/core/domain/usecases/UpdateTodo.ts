@@ -1,8 +1,7 @@
-import { UseCase } from '../../interfaces/UseCase';
 import { TodoPort } from '../../ports/TodoPort';
 import { TodoEntity, TodoEntityId } from '../entities/TodoEntity';
 
-export class UpdateTodoUseCase implements UseCase {
+export class UpdateTodoUseCase {
   constructor(private todoPort: TodoPort) {}
 
   async execute(todoId: TodoEntityId, updatedTodo: TodoEntity) {

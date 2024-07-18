@@ -1,7 +1,6 @@
-import { UseCase } from '../../interfaces/UseCase';
 import { TodoPort } from '../../ports/TodoPort';
 
-export class GetAllTodosUseCase implements UseCase {
+export class GetAllTodosUseCase {
   constructor(private todoPort: TodoPort) {}
 
   async execute() {

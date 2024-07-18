@@ -1,9 +1,7 @@
 import { TodoPort } from '../../ports/TodoPort';
 
-export class GetAllTodosUseCase {
-  constructor(private todoPort: TodoPort) {}
+export const getAllTodosUseCase = (todoPort: TodoPort) => () => {
+  todoPort.findAll();
+};
 
-  async execute() {
-    return this.todoPort.findAll();
-  }
-}
+export type GetAllTodosUseCase = ReturnType<typeof getAllTodosUseCase>;

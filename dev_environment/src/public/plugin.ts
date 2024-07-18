@@ -1,14 +1,14 @@
 import { AppMountParameters, CoreSetup, CoreStart, Plugin } from '../../../src/core/public';
-import { ToDoPluginSetup, ToDoPluginStart } from './types';
 import { PLUGIN_NAME } from '../common';
-import { getServices } from './services';
 import { TodoAdapterOpenSearchHTTP } from './core/adapters/TodoAdapterOpenSearchHTTP';
-import { createTodoUseCase, CreateTodoUseCase } from './core/domain/usecases/CreateTodo';
-import { GetAllTodosUseCase } from './core/domain/usecases/GetAllTodos';
-import { UpdateTodoUseCase } from './core/domain/usecases/UpdateTodo';
-import { DeleteTodoByIdsUseCase } from './core/domain/usecases/DeleteTodoByIds';
-import { MarkTodoAsCompletedUseCase } from './core/domain/usecases/MarkTodoAsCompleted';
 import { addSampleTodosUseCase } from './core/domain/usecases/AddSampleTodos';
+import { createTodoUseCase } from './core/domain/usecases/CreateTodo';
+import { DeleteTodoByIdsUseCase } from './core/domain/usecases/DeleteTodoByIds';
+import { getAllTodosUseCase } from './core/domain/usecases/GetAllTodos';
+import { MarkTodoAsCompletedUseCase } from './core/domain/usecases/MarkTodoAsCompleted';
+import { UpdateTodoUseCase } from './core/domain/usecases/UpdateTodo';
+import { getServices } from './services';
+import { ToDoPluginSetup, ToDoPluginStart } from './types';
 
 export class ToDoPlugin implements Plugin<ToDoPluginSetup, ToDoPluginStart> {
   public setup(core: CoreSetup): ToDoPluginSetup {
@@ -26,7 +26,7 @@ export class ToDoPlugin implements Plugin<ToDoPluginSetup, ToDoPluginStart> {
 
         const useCases = {
           createTodo: createTodoUseCase(todoPort),
-          getAllTodos: new GetAllTodosUseCase(todoPort),
+          getAllTodos: getAllTodosUseCase(todoPort),
           updateTodo: new UpdateTodoUseCase(todoPort),
           deleteTodosByIds: new DeleteTodoByIdsUseCase(todoPort),
           markTodoAsCompleted: new MarkTodoAsCompletedUseCase(todoPort),

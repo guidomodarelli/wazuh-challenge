@@ -26,7 +26,7 @@ function useTodoForm({ onSuccess, itemIdToUpdate }: UseTodoFormProps) {
       status: itemToUpdate?.status ?? Status.NOT_STARTED,
       priority: itemToUpdate?.priority ?? Priority.LOW,
       assignee: itemToUpdate?.title ?? "",
-      tags: [],
+      tags: itemToUpdate?.tags ?? [],
     },
   });
   const { errors } = formState;

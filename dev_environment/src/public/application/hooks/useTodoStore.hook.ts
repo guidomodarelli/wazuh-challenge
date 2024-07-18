@@ -31,19 +31,11 @@ function useTodoStore(notifications: NotificationsStart) {
   };
 
   const saveTodosInStore = (newTodos: TodoEntity[]) => {
-    if (newTodos.length === 1) {
-      notifications.toasts.addSuccess(
-        i18n.translate('todoPlugin.todoItemCreatedSuccessfully', {
-          defaultMessage: 'Todo item successfully created',
-        })
-      );
-    } else {
-      notifications.toasts.addSuccess(
-        i18n.translate('todoPlugin.todoItemsCreatedSuccessfully', {
-          defaultMessage: 'Todo items saved successfully',
-        })
-      );
-    }
+    notifications.toasts.addSuccess(
+      i18n.translate('todoPlugin.todoItemsSavedSuccessfully', {
+        defaultMessage: 'Todo items saved successfully',
+      })
+    );
     setTodoItems([...newTodos, ...todoItems]);
   };
 

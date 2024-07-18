@@ -25,7 +25,7 @@ function useTodoForm({ onSuccess, itemIdToUpdate }: UseTodoFormProps) {
       title: itemToUpdate?.title ?? '',
       status: itemToUpdate?.status ?? Status.NOT_STARTED,
       priority: itemToUpdate?.priority ?? Priority.LOW,
-      assignee: itemToUpdate?.title ?? "",
+      assignee: itemToUpdate?.title ?? '',
       tags: itemToUpdate?.tags ?? [],
     },
   });
@@ -66,7 +66,7 @@ function useTodoForm({ onSuccess, itemIdToUpdate }: UseTodoFormProps) {
    */
   const submitHandler: SubmitHandler<FieldValues> = (data: FieldValues) => {
     if (!!itemIdToUpdate) {
-      updateTodo(itemIdToUpdate, data)
+      updateTodo(itemIdToUpdate, data);
     } else {
       createTodo(data);
     }

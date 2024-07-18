@@ -38,12 +38,12 @@ interface ToDoProviderProps {
   services: Services;
 }
 
-function ToDoProvider({ children, services: { updateTodo, deleteTodosByIds } }: ToDoProviderProps) {
+function ToDoProvider({ children, services: { updateTodo } }: ToDoProviderProps) {
   const [todoItems, setTodoItems] = useState<TodoEntity[]>([]);
   const [search, setSearch] = useState('');
 
   const {
-    services: { notifications, createTodo, getAllTodos, addSampleTodos },
+    services: { notifications, createTodo, getAllTodos, addSampleTodos, deleteTodosByIds },
   } = useOpenSearchDashboards<ToDoPluginServices>();
 
   const filteredTodoItems = todoItems.filter(({ title, tags, assignee }) => {
@@ -114,17 +114,15 @@ function ToDoProvider({ children, services: { updateTodo, deleteTodosByIds } }: 
     /* The `deleteTodosByIds` function in the code snippet is responsible for deleting multiple todo items by their IDs.
      */
     async deleteTodosByIds(...ids) {
-      const response = await deleteTodosByIds(...ids);
-      if (isError(response)) {
-        // TODO: Handle Error
-      } else {
+      try {
+        await deleteTodosByIds(...ids);
         notifications.toasts.addSuccess(
           i18n.translate('todoPlugin.todoItemsDeletedSuccessfully', {
             defaultMessage: 'Todo items deleted successfully',
           })
         );
         setTodoItems(todoItems.filter((todo) => !ids.includes(todo.id)));
-      }
+      } catch (error) {}
     },
 
     async addSampleData(fakes = 100) {

@@ -5,10 +5,10 @@ import { getServices } from './services';
 import { TodoAdapterOpenSearchHTTP } from './core/adapters/TodoAdapterOpenSearchHTTP';
 import { CreateTodoUseCase } from './core/domain/usecases/CreateTodo';
 import { GetAllTodosUseCase } from './core/domain/usecases/GetAllTodos';
-import { UpdateTodoUseCase } from "./core/domain/usecases/UpdateTodo";
-import { DeleteTodoByIdsUseCase } from "./core/domain/usecases/DeleteTodoByIds";
-import { MarkTodoAsCompletedUseCase } from "./core/domain/usecases/MarkTodoAsCompleted";
-import { AddSampleTodosUseCase } from "./core/domain/usecases/AddSampleTodos";
+import { UpdateTodoUseCase } from './core/domain/usecases/UpdateTodo';
+import { DeleteTodoByIdsUseCase } from './core/domain/usecases/DeleteTodoByIds';
+import { MarkTodoAsCompletedUseCase } from './core/domain/usecases/MarkTodoAsCompleted';
+import { AddSampleTodosUseCase } from './core/domain/usecases/AddSampleTodos';
 
 export class ToDoPlugin implements Plugin<ToDoPluginSetup, ToDoPluginStart> {
   public setup(core: CoreSetup): ToDoPluginSetup {
@@ -22,8 +22,24 @@ export class ToDoPlugin implements Plugin<ToDoPluginSetup, ToDoPluginStart> {
         // Get start services as specified in opensearch_dashboards.json
         const [coreStart] = await core.getStartServices();
         const startServices = getServices(coreStart);
+        const todoPort = new TodoAdapterOpenSearchHTTP(coreStart);
+
+        const useCases = {
+          createTodo: new CreateTodoUseCase(todoPort),
+          getAllTodos: new GetAllTodosUseCase(todoPort),
+          updateTodo: new UpdateTodoUseCase(todoPort),
+          deleteTodosByIds: new DeleteTodoByIdsUseCase(todoPort),
+          markTodoAsCompleted: new MarkTodoAsCompletedUseCase(todoPort),
+          addSampleTodos: new AddSampleTodosUseCase(todoPort),
+        };
+
         // Render the application
-        return renderApp(coreStart, startServices, params);
+        return renderApp(
+          coreStart,
+          startServices,
+          useCases,
+          params
+        );
       },
     });
 
@@ -32,15 +48,7 @@ export class ToDoPlugin implements Plugin<ToDoPluginSetup, ToDoPluginStart> {
   }
 
   public start(core: CoreStart): ToDoPluginStart {
-    const todoPort = new TodoAdapterOpenSearchHTTP(core);
-    return {
-      createTodo: new CreateTodoUseCase(todoPort),
-      getAllTodos: new GetAllTodosUseCase(todoPort),
-      updateTodo: new UpdateTodoUseCase(todoPort),
-      deleteTodosByIds: new DeleteTodoByIdsUseCase(todoPort),
-      markTodoAsCompleted: new MarkTodoAsCompletedUseCase(todoPort),
-      addSampleTodos: new AddSampleTodosUseCase(todoPort),
-    };
+    return {};
   }
 
   public stop() {}

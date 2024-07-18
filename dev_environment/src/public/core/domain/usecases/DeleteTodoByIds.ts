@@ -1,10 +1,8 @@
 import { TodoPort } from '../../ports/TodoPort';
 import { TodoEntityId } from '../entities/TodoEntity';
 
-export class DeleteTodoByIdsUseCase {
-  constructor(private todoPort: TodoPort) {}
+export const deleteTodoByIdsUseCase = (todoPort: TodoPort) => (...todoIds: TodoEntityId[]) => {
+  todoPort.deleteByIds(...todoIds);
+};
 
-  async execute(...todoIds: TodoEntityId[]) {
-    return this.todoPort.deleteByIds(...todoIds);
-  }
-}
+export type DeleteTodoByIdsUseCase = ReturnType<typeof deleteTodoByIdsUseCase>;

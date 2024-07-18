@@ -1,13 +1,11 @@
-import { faker } from '@faker-js/faker';
 import { i18n } from '@osd/i18n';
 import React, { createContext, useState } from 'react';
 import { useOpenSearchDashboards } from '../../../../../src/plugins/opensearch_dashboards_react/public';
-import { Priority } from '../../core/domain/entities/Priority';
 import { Status } from '../../core/domain/entities/Status';
 import { TodoEntity, TodoEntityRequest } from '../../core/domain/entities/TodoEntity';
 import { Services } from '../../services';
-import { isError } from '../utils/is_error';
 import { ToDoPluginServices } from '../../types';
+import { isError } from '../utils/is_error';
 
 interface ToDoContextType {
   todoItems: TodoEntity[];

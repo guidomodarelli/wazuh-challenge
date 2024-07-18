@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { CoreStart } from '../../../../../src/core/public';
 import { Services } from '../../services';
 import ChartsPage from '../pages/ChartsPage';
 import MainPage from '../pages/MainPage';
@@ -8,16 +7,10 @@ import Providers from '../providers';
 
 interface ToDoPluginAppDeps {
   basename: string;
-  notifications: CoreStart['notifications'];
-  http: CoreStart['http'];
   services: Services;
 }
 
-export const ToDoPluginApp = ({
-  basename,
-  notifications,
-  services,
-}: ToDoPluginAppDeps) => {
+export const ToDoPluginApp = ({ basename, services }: ToDoPluginAppDeps) => {
   return (
     <BrowserRouter basename={basename}>
       <Providers services={services}>

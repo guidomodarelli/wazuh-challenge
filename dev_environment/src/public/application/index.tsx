@@ -16,8 +16,6 @@ export const renderApp = (
     <OpenSearchDashboardsContextProvider services={{ ...useCases, http, notifications }}>
       <ToDoPluginApp
         basename={appBasePath}
-        notifications={notifications}
-        http={http}
         services={services}
       />
     </OpenSearchDashboardsContextProvider>,

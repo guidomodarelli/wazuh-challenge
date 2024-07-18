@@ -19,10 +19,13 @@ Each TODO has the following attributes:
 - Tags
 - Assignee
 
-Additionally, the plugin includes charts that display statistics about the TODOs, such as:
+Additionally, the plugin includes charts that display statistics about the
+TODOs, such as:
 
-1. Types of TODOs by priority (low, medium, high, critical) assigned to a person.
-2. Types of TODOs by status (Completed, Not Started, Working on it, Error) assigned to a person.
+1. Types of TODOs by priority (low, medium, high, critical) assigned to a
+   person.
+2. Types of TODOs by status (Completed, Not Started, Working on it, Error)
+   assigned to a person.
 3. Types of TODOs by status.
 4. Types of TODOs by priority.
 5. Combination of TODOs by priority and status.
@@ -45,7 +48,9 @@ To run the tests for the `todo_plugin`, follow these steps:
 
 ## Development
 
-See the [OpenSearch Dashboards contributing guide](https://github.com/opensearch-project/OpenSearch-Dashboards/blob/main/CONTRIBUTING.md) for instructions setting up your development environment.
+See the [OpenSearch Dashboards contributing
+guide](https://github.com/opensearch-project/OpenSearch-Dashboards/blob/main/CONTRIBUTING.md)
+for instructions setting up your development environment.
 
     ## Scripts
     <dl>

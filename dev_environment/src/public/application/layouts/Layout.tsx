@@ -6,25 +6,19 @@ import {
   EuiPageHeader,
   EuiTitle,
 } from '@elastic/eui';
-import { FormattedMessage } from '@osd/i18n/react';
 import React from 'react';
-import { PLUGIN_NAME } from '../../../common';
 
-interface MainPageProps {}
+interface MainPageProps {
+  title: React.ReactNode;
+}
 
-const Layout = ({ children }: React.PropsWithChildren<MainPageProps>) => {
+const Layout = ({ children, title }: React.PropsWithChildren<MainPageProps>) => {
   return (
     <EuiPage restrictWidth="1280px">
       <EuiPageBody component="main">
         <EuiPageHeader>
           <EuiTitle size="l">
-            <h1>
-              <FormattedMessage
-                id="todoPlugin.ToDoTitle"
-                defaultMessage="{name}"
-                values={{ name: PLUGIN_NAME }}
-              />
-            </h1>
+            <h1>{title}</h1>
           </EuiTitle>
         </EuiPageHeader>
         <EuiPageContent>

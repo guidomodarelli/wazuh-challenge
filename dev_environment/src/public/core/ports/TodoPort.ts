@@ -4,6 +4,6 @@ export interface TodoPort {
   findAll(): Promise<TodoEntity[]>;
   save(todo: TodoEntityRequest): Promise<TodoEntity>;
   saveAll(todos: TodoEntityRequest[]): Promise<TodoEntity[]>;
-  update(todoId: TodoEntityId, updatedTodo: TodoEntity): Promise<void>;
+  update(todoId: TodoEntityId, updatedTodo: TodoEntityRequest): Promise<void>;
   deleteByIds(...todoIds: TodoEntityId[]): Promise<void>;
 }

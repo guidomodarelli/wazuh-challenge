@@ -7,8 +7,8 @@ import {
   SERVER_TODO_ROUTE_PATH_DELETE_IDS,
   SERVER_TODO_ROUTE_PATH_GET_ALL,
 } from '../../../common';
+import { TodoEntity, TodoEntityId, TodoEntityRequest } from '../domain/entities/TodoEntity';
 import { TodoPort } from '../ports/TodoPort';
-import { TodoEntity, TodoEntityId, TodoEntityRequest } from "../domain/entities/TodoEntity";
 
 export class TodoAdapterOpenSearchHTTP implements TodoPort {
   private readonly http: CoreStart['http'];
@@ -40,7 +40,7 @@ export class TodoAdapterOpenSearchHTTP implements TodoPort {
     return response as TodoEntity[];
   }
 
-  async update(todoId: TodoEntityId, updatedTodo: TodoEntity): Promise<void> {
+  async update(todoId: TodoEntityId, updatedTodo: TodoEntityRequest): Promise<void> {
     await this.http.put(`${SERVER_TODO_BASE_ROUTE_PATH}/${todoId}`, {
       body: JSON.stringify(updatedTodo),
     });

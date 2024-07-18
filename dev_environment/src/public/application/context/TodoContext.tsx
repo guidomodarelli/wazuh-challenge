@@ -13,7 +13,7 @@ interface ToDoContextType {
   search: string;
   setSearch: (search: string) => void;
   createTodo: (item: TodoEntityRequest) => void;
-  updateTodo: (itemIdToUpdate: string, itemToUpdate: TodoEntity) => void;
+  updateTodo: (itemIdToUpdate: string, itemToUpdate: TodoEntityRequest) => void;
   deleteTodosByIds: (...ids: string[]) => void;
   addSampleData: (fakes?: number) => void;
 }
@@ -95,7 +95,7 @@ function ToDoProvider({ children }: ToDoProviderProps) {
     },
 
     /* The `updateTodo` function is responsible for updating an existing todo item. */
-    async updateTodo(itemIdToUpdate: string, updatedItem: TodoEntity) {
+    async updateTodo(itemIdToUpdate: string, updatedItem: TodoEntityRequest) {
       try {
         await updateTodo(itemIdToUpdate, updatedItem);
         notifications.toasts.addSuccess(

@@ -3,7 +3,7 @@ import { ToDoPluginSetup, ToDoPluginStart } from './types';
 import { PLUGIN_NAME } from '../common';
 import { getServices } from './services';
 import { TodoAdapterOpenSearchHTTP } from './core/adapters/TodoAdapterOpenSearchHTTP';
-import { CreateTodoUseCase } from './core/domain/usecases/CreateTodo';
+import { createTodoUseCase, CreateTodoUseCase } from './core/domain/usecases/CreateTodo';
 import { GetAllTodosUseCase } from './core/domain/usecases/GetAllTodos';
 import { UpdateTodoUseCase } from './core/domain/usecases/UpdateTodo';
 import { DeleteTodoByIdsUseCase } from './core/domain/usecases/DeleteTodoByIds';
@@ -25,7 +25,7 @@ export class ToDoPlugin implements Plugin<ToDoPluginSetup, ToDoPluginStart> {
         const todoPort = new TodoAdapterOpenSearchHTTP(coreStart);
 
         const useCases = {
-          createTodo: new CreateTodoUseCase(todoPort),
+          createTodo: createTodoUseCase(todoPort),
           getAllTodos: new GetAllTodosUseCase(todoPort),
           updateTodo: new UpdateTodoUseCase(todoPort),
           deleteTodosByIds: new DeleteTodoByIdsUseCase(todoPort),

@@ -1,7 +1,7 @@
 import { CoreStart } from 'opensearch-dashboards/public';
-import { getServices } from '.';
-import type { RecordMock } from '../../test/mocks/types';
-import { TodoEntity } from '../core/domain/entities/TodoEntity';
+import { TodoAdapterOpenSearchHTTP } from './TodoAdapterOpenSearchHTTP';
+import type { RecordMock } from '../../../test/mocks/types';
+import { TodoEntity } from '../domain/entities/TodoEntity';
 
 let http: RecordMock<CoreStart['http']>;
 
@@ -37,9 +37,9 @@ describe('services', () => {
     }));
     http.get = jest.fn().mockResolvedValue(openSearchSearchHit);
     // @ts-expect-error
-    const services = getServices({ http });
+    const services = new TodoAdapterOpenSearchHTTP({ http });
 
-    const todosReturned = await services.fetchTodos();
+    const todosReturned = await services.findAll();
 
     expect(http.get).toHaveBeenCalledTimes(1);
     expect(http.get).toHaveBeenCalledWith('/api/todo_plugin/getAll');
@@ -59,10 +59,10 @@ describe('services', () => {
     const todosExpected = { id: 1, ...todoItem };
     http.post = jest.fn().mockResolvedValue(todosExpected);
     // @ts-expect-error
-    const services = getServices({ http });
+    const services = new TodoAdapterOpenSearchHTTP({ http });
 
     // @ts-expect-error
-    const todoReturned = await services.createNewTodo(todoItem);
+    const todoReturned = await services.save(todoItem);
 
     expect(http.post).toHaveBeenCalledTimes(1);
     expect(http.post).toHaveBeenCalledWith('/api/todo_plugin/create', {
@@ -94,10 +94,10 @@ describe('services', () => {
     });
     http.post = jest.fn().mockResolvedValue(todosExpected);
     // @ts-expect-error
-    const services = getServices({ http });
+    const services = new TodoAdapterOpenSearchHTTP({ http });
 
     // @ts-expect-error
-    const todoReturned = await services.bulkCreateTodos(...todoItems);
+    const todoReturned = await services.saveAll(todoItems);
 
     expect(http.post).toHaveBeenCalledTimes(1);
     expect(http.post).toHaveBeenCalledWith('/api/todo_plugin/bulkCreate', {
@@ -113,10 +113,10 @@ describe('services', () => {
     };
 
     // @ts-expect-error
-    const services = getServices({ http });
+    const services = new TodoAdapterOpenSearchHTTP({ http });
 
     // @ts-expect-error
-    await services.updateTodo(todoItem.id, todoItem);
+    await services.update(todoItem.id, todoItem);
 
     expect(http.put).toHaveBeenCalledTimes(1);
     expect(http.put).toHaveBeenCalledWith(`/api/todo_plugin/${todoItem.id}`, {
@@ -127,9 +127,9 @@ describe('services', () => {
   it('deletes multiple todo items by ids', async () => {
     const todoIds: string[] = ['1', '2', '3', '4'];
     // @ts-expect-error
-    const services = getServices({ http });
+    const services = new TodoAdapterOpenSearchHTTP({ http });
 
-    await services.deleteTodosByIds(...todoIds);
+    await services.deleteByIds(...todoIds);
 
     expect(http.delete).toHaveBeenCalledTimes(1);
     expect(http.delete).toHaveBeenCalledWith('/api/todo_plugin/deleteIds', {

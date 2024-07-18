@@ -24,3 +24,5 @@ export const addSampleTodosUseCase = (todoPort: TodoPort) => (fakes = 100) => {
 
   return todoPort.saveAll(todoSamples);
 };
+
+export type AddSampleTodosUseCase = ReturnType<typeof addSampleTodosUseCase>;

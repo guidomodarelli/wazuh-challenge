@@ -16,9 +16,7 @@ const wrapper = (
   services: RecordMock<Services>
 ) => {
   return ({ children }: { children?: React.ReactNode }) => (
-    <ToDoProvider notifications={notifications} services={services}>
-      {children}
-    </ToDoProvider>
+    <ToDoProvider services={services}>{children}</ToDoProvider>
   );
 };
 
@@ -41,7 +39,7 @@ describe('TodoContext', () => {
 
   it('should call fetchTodos service once on render', async () => {
     await actReact(async () => {
-      await render(<ToDoProvider notifications={notifications} services={services}></ToDoProvider>);
+      await render(<ToDoProvider services={services}></ToDoProvider>);
     });
 
     expect(services.fetchTodos).toHaveBeenCalledTimes(1);

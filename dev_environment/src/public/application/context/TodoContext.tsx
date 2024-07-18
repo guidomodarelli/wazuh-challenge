@@ -42,13 +42,13 @@ interface ToDoProviderProps {
 
 function ToDoProvider({
   children,
-  services: { fetchTodos, bulkCreateTodos, updateTodo, deleteTodosByIds },
+  services: { bulkCreateTodos, updateTodo, deleteTodosByIds },
 }: ToDoProviderProps) {
   const [todoItems, setTodoItems] = useState<TodoEntity[]>([]);
   const [search, setSearch] = useState('');
 
   const {
-    services: { notifications, createTodo },
+    services: { notifications, createTodo, getAllTodos },
   } = useOpenSearchDashboards<ToDoPluginServices>();
 
   const filteredTodoItems = todoItems.filter(({ title, tags, assignee }) => {
@@ -69,13 +69,9 @@ function ToDoProvider({
   }, 0);
 
   React.useEffect(() => {
-    fetchTodos().then((response) => {
-      if (isError(response)) {
-        // TODO: Handle error
-      } else {
-        setTodoItems(response);
-      }
-    });
+    getAllTodos()
+      .then(setTodoItems)
+      .catch(() => {});
   }, []);
 
   const value: ToDoContextType = {

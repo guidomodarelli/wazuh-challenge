@@ -14,8 +14,8 @@ import { useTodoContext } from '../../context/TodoContext';
 import useSortingAndPagination from '../../hooks/useSortingAndPagination.hook';
 import FlyoutForm from '../TodoForm/FlyoutForm';
 import './TodoTable.styles.scss';
-import useColumns from './hooks/useColumns.hook';
-import useSelectionItems from './hooks/useSelectionItems.hook';
+import useColumns from '../../hooks/useColumns.hook';
+import useSelectionItems from '../../hooks/useSelectionItems.hook';
 
 const TodoTable = () => {
   const [isFlyoutVisible, setIsFlyoutVisible] = React.useState(false);

@@ -1,9 +1,9 @@
 import { renderHook } from '@testing-library/react-hooks';
-import { mockTodoContextFn } from '../../../../../test/mocks/todo-context.mock';
-import { Priority } from '../../../../core/domain/entities/Priority';
-import { Status } from '../../../../core/domain/entities/Status';
-import { TodoEntity } from '../../../../core/domain/entities/TodoEntity';
-import * as TodoContext from '../../../context/TodoContext';
+import { mockTodoContextFn } from '../../../test/mocks/todo-context.mock';
+import { Priority } from '../../core/domain/entities/Priority';
+import { Status } from '../../core/domain/entities/Status';
+import { TodoEntity } from '../../core/domain/entities/TodoEntity';
+import * as TodoContext from '../context/TodoContext';
 import useChartData from './useChartData.hook';
 
 let mockTodoContext: ReturnType<typeof mockTodoContextFn>;

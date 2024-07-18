@@ -1,11 +1,11 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 import * as ReactHookForm from 'react-hook-form';
-import { mockTodoContextFn } from '../../../../../test/mocks/todo-context.mock';
-import type { RecordMock } from '../../../../../test/mocks/types';
-import * as TodoContext from '../../../context/TodoContext';
+import { mockTodoContextFn } from '../../../test/mocks/todo-context.mock';
+import type { RecordMock } from '../../../test/mocks/types';
+import * as TodoContext from '../context/TodoContext';
 import useTodoForm from '../hooks/useTodoForm.hook';
-import { Status } from "../../../../core/domain/entities/Status";
-import { Priority } from "../../../../core/domain/entities/Priority";
+import { Status } from "../../core/domain/entities/Status";
+import { Priority } from "../../core/domain/entities/Priority";
 
 let mockTodoContext: ReturnType<typeof mockTodoContextFn>;
 let mockUseForm: RecordMock<ReturnType<typeof ReactHookForm.useForm>>;

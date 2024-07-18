@@ -19,7 +19,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { TodoEntity } from "../../../core/domain/entities/TodoEntity";
 import { useTodoContext } from '../../context/TodoContext';
-import useChartData from './hooks/useChartData.hook';
+import useChartData from '../../hooks/useChartData.hook';
 
 const Charts = () => {
   const { todoItems } = useTodoContext();

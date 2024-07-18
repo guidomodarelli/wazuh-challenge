@@ -1,7 +1,7 @@
 import 'core-js/proposals/array-grouping-v2';
-import { Priority } from '../../../../core/domain/entities/Priority';
-import { TodoEntity } from '../../../../core/domain/entities/TodoEntity';
-import { useTodoContext } from '../../../context/TodoContext';
+import { Priority } from '../../core/domain/entities/Priority';
+import { TodoEntity } from '../../core/domain/entities/TodoEntity';
+import { useTodoContext } from '../context/TodoContext';
 
 function useChartData() {
   const { todoItems } = useTodoContext();

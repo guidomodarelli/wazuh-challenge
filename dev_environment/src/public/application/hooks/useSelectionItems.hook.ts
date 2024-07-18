@@ -1,5 +1,5 @@
 import { EuiTableSelectionType } from '@elastic/eui';
-import { TodoEntity, TodoEntityId } from '../../../../core/domain/entities/TodoEntity';
+import { TodoEntity, TodoEntityId } from '../../core/domain/entities/TodoEntity';
 import { useState } from 'react';
 
 interface UseSelectionItemsProps {

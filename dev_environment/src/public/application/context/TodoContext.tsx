@@ -3,7 +3,6 @@ import React, { createContext, useState } from 'react';
 import { useOpenSearchDashboards } from '../../../../../src/plugins/opensearch_dashboards_react/public';
 import { Status } from '../../core/domain/entities/Status';
 import { TodoEntity, TodoEntityRequest } from '../../core/domain/entities/TodoEntity';
-import { Services } from '../../services';
 import { ToDoPluginServices } from '../../types';
 
 interface ToDoContextType {

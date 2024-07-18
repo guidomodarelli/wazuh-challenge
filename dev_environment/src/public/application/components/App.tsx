@@ -3,12 +3,13 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import ChartsPage from '../pages/ChartsPage';
 import MainPage from '../pages/MainPage';
 import Providers from '../providers';
+import withErrorBoundary from './ErrorBoundary';
 
 interface ToDoPluginAppDeps {
   basename: string;
 }
 
-export const ToDoPluginApp = ({ basename }: ToDoPluginAppDeps) => {
+const ToDoPluginApp = ({ basename }: ToDoPluginAppDeps) => {
   return (
     <BrowserRouter basename={basename}>
       <Providers>
@@ -24,3 +25,5 @@ export const ToDoPluginApp = ({ basename }: ToDoPluginAppDeps) => {
     </BrowserRouter>
   );
 };
+
+export default withErrorBoundary(ToDoPluginApp);

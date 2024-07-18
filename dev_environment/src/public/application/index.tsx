@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppMountParameters, CoreStart } from '../../../../src/core/public';
-import { ToDoPluginApp } from './components/App';
+import ToDoPluginApp from './components/App';
 import { OpenSearchDashboardsContextProvider } from '../../../../src/plugins/opensearch_dashboards_react/public';
 import { ToDoPluginUseCases } from '../types';
 

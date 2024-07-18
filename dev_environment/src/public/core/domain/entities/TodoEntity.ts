@@ -3,7 +3,7 @@ import { Priority } from './Priority';
 import { Status } from './Status';
 
 export type TodoEntityId = string;
-export type TodoEntityRequest = Omit<TodoEntity, 'id' | 'createdAt'>;
+export type TodoEntityRequest = Omit<TodoEntity, 'id' | 'createdAt'> & Partial<TodoEntity>;
 
 export class TodoEntity {
   id: TodoEntityId;
@@ -15,11 +15,11 @@ export class TodoEntity {
   assignee?: string | undefined;
 
   constructor(data: TodoEntityRequest) {
-    this.id = UUID();
+    this.id = data.id ?? UUID();
     this.title = data.title;
     this.status = data.status;
     this.priority = data.priority;
-    this.createdAt = new Date().toISOString();
+    this.createdAt = data.createdAt ?? new Date().toISOString();
     this.tags = data.tags ?? [];
     this.assignee = data.assignee;
   }

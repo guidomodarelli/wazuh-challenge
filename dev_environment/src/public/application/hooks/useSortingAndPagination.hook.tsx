@@ -74,18 +74,10 @@ function useSortingAndPagination<T extends { [x: string]: any }>({
     sortDirection
   );
 
-  const pagination = {
-    pageIndex: pageIndex,
-    pageSize: pageSize,
-    totalItemCount: totalItemCount,
-    pageSizeOptions,
-  };
+  const pagination = { pageIndex, pageSize, totalItemCount, pageSizeOptions };
 
   const sorting: EuiTableSortingType<T> = {
-    sort: {
-      field: sortField,
-      direction: sortDirection,
-    },
+    sort: { field: sortField, direction: sortDirection },
   };
 
   const resultsCount =

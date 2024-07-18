@@ -5,7 +5,6 @@ import { Status } from '../../core/domain/entities/Status';
 import { TodoEntity, TodoEntityRequest } from '../../core/domain/entities/TodoEntity';
 import { Services } from '../../services';
 import { ToDoPluginServices } from '../../types';
-import { isError } from '../utils/is_error';
 
 interface ToDoContextType {
   todoItems: TodoEntity[];
@@ -14,7 +13,7 @@ interface ToDoContextType {
   search: string;
   setSearch: (search: string) => void;
   createTodo: (item: TodoEntityRequest) => void;
-  updateTodo: (itemIdToUpdate: string, itemToUpdate: TodoEntityRequest) => void;
+  updateTodo: (itemIdToUpdate: string, itemToUpdate: TodoEntity) => void;
   deleteTodosByIds: (...ids: string[]) => void;
   addSampleData: (fakes?: number) => void;
 }
@@ -38,12 +37,19 @@ interface ToDoProviderProps {
   services: Services;
 }
 
-function ToDoProvider({ children, services: { updateTodo } }: ToDoProviderProps) {
+function ToDoProvider({ children }: ToDoProviderProps) {
   const [todoItems, setTodoItems] = useState<TodoEntity[]>([]);
   const [search, setSearch] = useState('');
 
   const {
-    services: { notifications, createTodo, getAllTodos, addSampleTodos, deleteTodosByIds },
+    services: {
+      notifications,
+      createTodo,
+      getAllTodos,
+      addSampleTodos,
+      deleteTodosByIds,
+      updateTodo,
+    },
   } = useOpenSearchDashboards<ToDoPluginServices>();
 
   const filteredTodoItems = todoItems.filter(({ title, tags, assignee }) => {
@@ -85,17 +91,13 @@ function ToDoProvider({ children, services: { updateTodo } }: ToDoProviderProps)
           })
         );
         setTodoItems([response, ...todoItems]);
-      } catch (error) {
-        // TODO: Handle error
-      }
+      } catch (error) {}
     },
 
     /* The `updateTodo` function is responsible for updating an existing todo item. */
-    async updateTodo(itemIdToUpdate: string, updatedItem: TodoEntityRequest) {
-      const response = await updateTodo(itemIdToUpdate, updatedItem);
-      if (isError(response)) {
-        // TODO: Handle Error
-      } else {
+    async updateTodo(itemIdToUpdate: string, updatedItem: TodoEntity) {
+      try {
+        await updateTodo(itemIdToUpdate, updatedItem);
         notifications.toasts.addSuccess(
           i18n.translate('todoPlugin.todoItemUpdatedSuccessfully', {
             defaultMessage: 'Todo item updated successfully',
@@ -108,7 +110,7 @@ function ToDoProvider({ children, services: { updateTodo } }: ToDoProviderProps)
           return previousTodo;
         });
         setTodoItems(newTodos);
-      }
+      } catch (error) {}
     },
 
     /* The `deleteTodosByIds` function in the code snippet is responsible for deleting multiple todo items by their IDs.

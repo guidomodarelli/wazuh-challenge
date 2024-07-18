@@ -34,7 +34,6 @@ export const useTodoContext = () => React.useContext(TodoContext);
 
 interface ToDoProviderProps {
   children?: React.ReactNode;
-  services: Services;
 }
 
 function ToDoProvider({ children }: ToDoProviderProps) {

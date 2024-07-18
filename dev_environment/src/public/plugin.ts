@@ -7,7 +7,6 @@ import { deleteTodoByIdsUseCase } from './core/domain/usecases/DeleteTodoByIds';
 import { getAllTodosUseCase } from './core/domain/usecases/GetAllTodos';
 import { markTodoAsCompletedUseCase } from './core/domain/usecases/MarkTodoAsCompleted';
 import { updateTodoUseCase } from './core/domain/usecases/UpdateTodo';
-import { getServices } from './services';
 import { ToDoPluginSetup, ToDoPluginStart } from './types';
 
 export class ToDoPlugin implements Plugin<ToDoPluginSetup, ToDoPluginStart> {
@@ -21,7 +20,6 @@ export class ToDoPlugin implements Plugin<ToDoPluginSetup, ToDoPluginStart> {
         const { renderApp } = await import('./application');
         // Get start services as specified in opensearch_dashboards.json
         const [coreStart] = await core.getStartServices();
-        const startServices = getServices(coreStart);
         const todoPort = new TodoAdapterOpenSearchHTTP(coreStart);
 
         const useCases = {
@@ -36,7 +34,6 @@ export class ToDoPlugin implements Plugin<ToDoPluginSetup, ToDoPluginStart> {
         // Render the application
         return renderApp(
           coreStart,
-          startServices,
           useCases,
           params
         );

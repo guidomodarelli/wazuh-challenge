@@ -1,14 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppMountParameters, CoreStart } from '../../../../src/core/public';
-import { Services } from '../services';
 import { ToDoPluginApp } from './components/App';
 import { OpenSearchDashboardsContextProvider } from '../../../../src/plugins/opensearch_dashboards_react/public';
 import { ToDoPluginUseCases } from "../types";
 
 export const renderApp = (
   { notifications, http }: CoreStart,
-  services: Services,
   useCases: ToDoPluginUseCases,
   { appBasePath, element }: AppMountParameters
 ) => {
@@ -16,7 +14,6 @@ export const renderApp = (
     <OpenSearchDashboardsContextProvider services={{ ...useCases, http, notifications }}>
       <ToDoPluginApp
         basename={appBasePath}
-        services={services}
       />
     </OpenSearchDashboardsContextProvider>,
     element

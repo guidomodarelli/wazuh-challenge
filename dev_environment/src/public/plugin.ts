@@ -2,6 +2,7 @@ import { AppMountParameters, CoreSetup, CoreStart, Plugin } from '../../../src/c
 import { PLUGIN_NAME } from '../common';
 import { TodoAdapterOpenSearchHTTP } from './core/adapters/TodoAdapterOpenSearchHTTP';
 import { addSampleTodosUseCase } from './core/domain/usecases/AddSampleTodos';
+import { countTodosCompletedUseCase } from './core/domain/usecases/CountTodosCompletedUseCase';
 import { createTodoUseCase } from './core/domain/usecases/CreateTodo';
 import { deleteTodoByIdsUseCase } from './core/domain/usecases/DeleteTodoByIds';
 import { getAllTodosUseCase } from './core/domain/usecases/GetAllTodos';
@@ -31,6 +32,7 @@ export class ToDoPlugin implements Plugin<ToDoPluginSetup, ToDoPluginStart> {
           markTodoAsCompleted: markTodoAsCompletedUseCase(todoPort),
           addSampleTodos: addSampleTodosUseCase(todoPort),
           searchTodos: searchTodoUseCase(),
+          countTodosCompleted: countTodosCompletedUseCase(),
         };
 
         // Render the application

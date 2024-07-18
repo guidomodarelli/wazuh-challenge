@@ -46,6 +46,7 @@ function ToDoProvider({ children }: ToDoProviderProps) {
       deleteTodosByIds,
       updateTodo,
       searchTodos,
+      countTodosCompleted,
     },
   } = useOpenSearchDashboards<ToDoPluginServices>();
   const {
@@ -57,10 +58,6 @@ function ToDoProvider({ children }: ToDoProviderProps) {
     setTodoItemsInStore,
   } = useTodoStore(notifications);
 
-  const completedTodos = todoItems.reduce((previous, { status }) => {
-    return status === Status.COMPLETED ? previous + 1 : previous;
-  }, 0);
-
   React.useEffect(() => {
     getAllTodos()
       .then(setTodoItemsInStore)
@@ -70,7 +67,7 @@ function ToDoProvider({ children }: ToDoProviderProps) {
   const value: ToDoContextType = {
     todoItems,
     filteredTodoItems: todoItems.filter(searchTodos(search)),
-    completedTodos,
+    completedTodos: countTodosCompleted(todoItems),
     search,
     setSearch,
     /* The `createTodo` function is responsible for creating a new todo item. */

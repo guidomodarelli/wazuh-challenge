@@ -47,21 +47,9 @@ function ToDoProvider({ children }: ToDoProviderProps) {
       addSampleTodos,
       deleteTodosByIds,
       updateTodo,
+      searchTodos,
     },
   } = useOpenSearchDashboards<ToDoPluginServices>();
-
-  const filteredTodoItems = todoItems.filter(({ title, tags, assignee }) => {
-    const lcTitle = title.toLowerCase();
-    const lcAssignee = assignee?.toLowerCase() ?? '';
-    const lcSearch = search.toLowerCase();
-
-    // You can complicate it as much as you want
-    return (
-      lcTitle.includes(lcSearch) ||
-      lcAssignee.includes(lcSearch) ||
-      tags?.some((tag) => tag.toLowerCase().includes(lcSearch))
-    );
-  });
 
   const completedTodos = todoItems.reduce((previous, { status }) => {
     return status === Status.COMPLETED ? previous + 1 : previous;
@@ -75,7 +63,7 @@ function ToDoProvider({ children }: ToDoProviderProps) {
 
   const value: ToDoContextType = {
     todoItems,
-    filteredTodoItems,
+    filteredTodoItems: todoItems.filter(searchTodos(search)),
     completedTodos,
     search,
     setSearch,

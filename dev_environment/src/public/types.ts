@@ -5,6 +5,7 @@ import { DeleteTodoByIdsUseCase } from './core/domain/usecases/DeleteTodoByIds';
 import { GetAllTodosUseCase } from './core/domain/usecases/GetAllTodos';
 import { MarkTodoAsCompletedUseCase } from './core/domain/usecases/MarkTodoAsCompleted';
 import { UpdateTodoUseCase } from './core/domain/usecases/UpdateTodo';
+import { SearchTodoUseCase } from './core/domain/usecases/SearchTodoUseCase';
 
 export interface ToDoPluginSetup {}
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -17,6 +18,7 @@ export interface ToDoPluginUseCases {
   deleteTodosByIds: DeleteTodoByIdsUseCase;
   markTodoAsCompleted: MarkTodoAsCompletedUseCase;
   addSampleTodos: AddSampleTodosUseCase;
+  searchTodos: SearchTodoUseCase;
 }
 
 export interface ToDoPluginServices extends ToDoPluginUseCases {

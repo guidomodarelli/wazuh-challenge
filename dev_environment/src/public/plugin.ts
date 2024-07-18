@@ -6,8 +6,9 @@ import { createTodoUseCase } from './core/domain/usecases/CreateTodo';
 import { deleteTodoByIdsUseCase } from './core/domain/usecases/DeleteTodoByIds';
 import { getAllTodosUseCase } from './core/domain/usecases/GetAllTodos';
 import { markTodoAsCompletedUseCase } from './core/domain/usecases/MarkTodoAsCompleted';
+import { searchTodoUseCase } from './core/domain/usecases/SearchTodoUseCase';
 import { updateTodoUseCase } from './core/domain/usecases/UpdateTodo';
-import { ToDoPluginSetup, ToDoPluginStart } from './types';
+import { ToDoPluginSetup, ToDoPluginStart, ToDoPluginUseCases } from './types';
 
 export class ToDoPlugin implements Plugin<ToDoPluginSetup, ToDoPluginStart> {
   public setup(core: CoreSetup): ToDoPluginSetup {
@@ -22,21 +23,18 @@ export class ToDoPlugin implements Plugin<ToDoPluginSetup, ToDoPluginStart> {
         const [coreStart] = await core.getStartServices();
         const todoPort = new TodoAdapterOpenSearchHTTP(coreStart);
 
-        const useCases = {
+        const useCases: ToDoPluginUseCases = {
           createTodo: createTodoUseCase(todoPort),
           getAllTodos: getAllTodosUseCase(todoPort),
           updateTodo: updateTodoUseCase(todoPort),
           deleteTodosByIds: deleteTodoByIdsUseCase(todoPort),
           markTodoAsCompleted: markTodoAsCompletedUseCase(todoPort),
           addSampleTodos: addSampleTodosUseCase(todoPort),
+          searchTodos: searchTodoUseCase(),
         };
 
         // Render the application
-        return renderApp(
-          coreStart,
-          useCases,
-          params
-        );
+        return renderApp(coreStart, useCases, params);
       },
     });
 

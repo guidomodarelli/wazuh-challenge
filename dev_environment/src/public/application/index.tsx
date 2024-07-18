@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppMountParameters, CoreStart } from '../../../../src/core/public';
-import { AppPluginStartDependencies } from '../types';
-import { ToDoPluginApp } from './components/App';
 import { Services } from '../services';
+import { ToDoPluginApp } from './components/App';
 
 export const renderApp = (
   { notifications, http }: CoreStart,

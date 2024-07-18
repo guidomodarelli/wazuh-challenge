@@ -1,12 +1,12 @@
 import { NotificationsStart } from 'opensearch-dashboards/public';
-import { AddSampleTodosUseCase } from './core/domain/usecases/AddSampleTodos';
-import { CreateTodoUseCase } from './core/domain/usecases/CreateTodo';
-import { DeleteTodoByIdsUseCase } from './core/domain/usecases/DeleteTodoByIds';
-import { GetAllTodosUseCase } from './core/domain/usecases/GetAllTodos';
-import { MarkTodoAsCompletedUseCase } from './core/domain/usecases/MarkTodoAsCompleted';
-import { UpdateTodoUseCase } from './core/domain/usecases/UpdateTodo';
-import { SearchTodoUseCase } from './core/domain/usecases/SearchTodoUseCase';
-import { CountTodosCompletedUseCase } from './core/domain/usecases/CountTodosCompletedUseCase';
+import { AddSampleTodosUseCase } from './core/domain/useCases/AddSampleTodosUseCase';
+import { CreateTodoUseCase } from './core/domain/useCases/CreateTodoUseCase';
+import { DeleteTodoByIdsUseCase } from './core/domain/useCases/DeleteTodoByIdsUseCase';
+import { GetAllTodosUseCase } from './core/domain/useCases/GetAllTodosUseCase';
+import { MarkTodoAsCompletedUseCase } from './core/domain/useCases/MarkTodoAsCompletedUseCase';
+import { UpdateTodoUseCase } from './core/domain/useCases/UpdateTodoUseCase';
+import { SearchTodoUseCase } from './core/domain/useCases/SearchTodoUseCase';
+import { CountTodosCompletedUseCase } from './core/domain/useCases/CountTodosCompletedUseCase';
 
 export interface ToDoPluginSetup {}
 // eslint-disable-next-line @typescript-eslint/no-empty-interface

@@ -1,14 +1,14 @@
 import { AppMountParameters, CoreSetup, CoreStart, Plugin } from '../../../src/core/public';
 import { PLUGIN_NAME } from '../common';
 import { TodoAdapterOpenSearchHTTP } from './core/adapters/TodoAdapterOpenSearchHTTP';
-import { addSampleTodosUseCase } from './core/domain/usecases/AddSampleTodos';
-import { countTodosCompletedUseCase } from './core/domain/usecases/CountTodosCompletedUseCase';
-import { createTodoUseCase } from './core/domain/usecases/CreateTodo';
-import { deleteTodoByIdsUseCase } from './core/domain/usecases/DeleteTodoByIds';
-import { getAllTodosUseCase } from './core/domain/usecases/GetAllTodos';
-import { markTodoAsCompletedUseCase } from './core/domain/usecases/MarkTodoAsCompleted';
-import { searchTodoUseCase } from './core/domain/usecases/SearchTodoUseCase';
-import { updateTodoUseCase } from './core/domain/usecases/UpdateTodo';
+import { addSampleTodosUseCase } from './core/domain/useCases/AddSampleTodosUseCase';
+import { countTodosCompletedUseCase } from './core/domain/useCases/CountTodosCompletedUseCase';
+import { createTodoUseCase } from './core/domain/useCases/CreateTodoUseCase';
+import { deleteTodoByIdsUseCase } from './core/domain/useCases/DeleteTodoByIdsUseCase';
+import { getAllTodosUseCase } from './core/domain/useCases/GetAllTodosUseCase';
+import { markTodoAsCompletedUseCase } from './core/domain/useCases/MarkTodoAsCompletedUseCase';
+import { searchTodoUseCase } from './core/domain/useCases/SearchTodoUseCase';
+import { updateTodoUseCase } from './core/domain/useCases/UpdateTodoUseCase';
 import { ToDoPluginSetup, ToDoPluginStart, ToDoPluginUseCases } from './types';
 
 export class ToDoPlugin implements Plugin<ToDoPluginSetup, ToDoPluginStart> {

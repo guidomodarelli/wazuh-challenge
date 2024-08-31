@@ -19,10 +19,10 @@ interesting according to the requirements and the provided context.
 
 We expect our candidates to be able to work with:
 
--   NodeJS.
--   ReactJS.
--   A testing framework (preferably Jest).
--   Docker.
+-   NodeJS
+-   ReactJS
+-   A testing framework (preferably Jest)
+-   Docker
 
 We expect knowledge as a user of virtual machines like Virtualbox, Hyper-V, KVM, etc.
 
